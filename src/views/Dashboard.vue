@@ -1,7 +1,6 @@
 <template>
   <div>
     <time-tracked-this-week />
-    <time-tracked-today />
   </div>
 </template>
 
