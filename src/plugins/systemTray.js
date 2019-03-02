@@ -1,7 +1,7 @@
 const electron = require('electron')
 const currentWindow = electron.remote.getCurrentWindow()
 const { Menu } = electron.remote
-const trayIcon = currentWindow.systemTray;
+const trayIcon = currentWindow.systemTray
 
 const trayMenuTemplate = [
   {

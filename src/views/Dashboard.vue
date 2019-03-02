@@ -13,3 +13,9 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+div {
+  width 100%
+}
+</style>

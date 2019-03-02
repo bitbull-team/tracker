@@ -5,10 +5,12 @@
     class="elevation-1"
   >
     <template v-slot:items="props">
-      <td class="text-xs-right">{{ props.item.project.name }}</td>
-      <td class="text-xs-right">{{ props.item.issue.id }}</td>
-      <td class="text-xs-right">{{ props.item.hours }}</td>
-      <td class="text-xs-right">{{ props.item.comments }}</td>
+      <td class="text-xs-center">{{ props.item.project.name }}</td>
+      <td class="text-xs-center">
+        {{ props.item.issue ? props.item.issue.id : '--NO ISSUE ASSIGNED--' }}
+      </td>
+      <td class="text-xs-center">{{ props.item.hours }}</td>
+      <td class="text-xs-center">{{ props.item.comments }}</td>
     </template>
   </v-data-table>
 </template>
@@ -20,10 +22,10 @@ export default {
   data: () => ({
     loading: false,
     headers: [
-      { text: 'Project' },
-      { text: 'Issue' },
-      { text: 'Hours' },
-      { text: 'Comment' }
+      { text: 'Project', value: 'name', align: 'center' },
+      { text: 'Issue', value: 'id', align: 'center' },
+      { text: 'Hours', value: 'hours', align: 'center' },
+      { text: 'Comment', value: 'comments', align: 'center' }
     ]
   }),
   async mounted() {

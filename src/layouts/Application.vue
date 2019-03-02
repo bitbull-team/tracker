@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content class="align-start">
     <toolbar @toggle-nav-menu="drawer = !drawer" />
     <nav-menu v-model="drawer" />
     <v-container fluid fill-height class="white">
@@ -23,7 +23,7 @@ export default {
     NavMenu
   },
   async mounted() {
-    await this.loadCurrentUser();
+    await this.loadCurrentUser()
   },
   methods: {
     ...mapActions({
