@@ -3,11 +3,11 @@ export default {
     return dispatch(
       'api/get',
       {
-        path: 'projects.xml'
+        path: 'projects.json'
       },
       { root: true }
     ).then(response => {
-      const projects = response.projects.project
+      const projects = response.projects
       commit('setItems', projects)
     })
   }

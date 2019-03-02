@@ -1,8 +1,13 @@
 import actions from './actions'
+import mutations from './mutations'
 
 export default function API() {
   return {
     namespaced: true,
-    actions
+    state: {
+      currentUser: null
+    },
+    actions,
+    mutations,
   }
 }

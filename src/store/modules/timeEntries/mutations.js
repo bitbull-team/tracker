@@ -1,5 +1,8 @@
 export default {
-  setItems(state, items) {
-    state.items = items
-  }
+  setTodayItems(state, items) {
+    state.todayItems = items
+  },
+  setThisWeekItems(state, items) {
+    state.thisWeekItems = items
+  },
 }

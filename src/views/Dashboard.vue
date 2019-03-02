@@ -1,15 +1,16 @@
 <template>
   <div>
-    <today-tracked />
+    <time-tracked-this-week />
+    <time-tracked-today />
   </div>
 </template>
 
 <script>
-import TodayTracked from '@/components/dashboard/TodayTracked'
+import TimeTrackedThisWeek from '@/components/dashboard/TimeTrackedThisWeek'
 
 export default {
   components: {
-    TodayTracked
+    TimeTrackedThisWeek
   }
 }
 </script>

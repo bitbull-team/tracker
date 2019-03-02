@@ -5,7 +5,9 @@ export default function TimeEntries() {
   return {
     namespaced: true,
     state: {
-      items: []
+      items: [],
+      todayItems: [],
+      thisWeekItems: [],
     },
     actions,
     mutations

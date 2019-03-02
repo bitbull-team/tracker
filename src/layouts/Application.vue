@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 import Toolbar from '@/components/Toolbar'
 import NavMenu from '@/components/NavMenu'
 
@@ -19,6 +21,14 @@ export default {
   components: {
     Toolbar,
     NavMenu
+  },
+  async mounted() {
+    await this.loadCurrentUser();
+  },
+  methods: {
+    ...mapActions({
+      loadCurrentUser: 'api/loadCurrentUser'
+    })
   }
 }
 </script>
