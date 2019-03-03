@@ -19,8 +19,8 @@
         <v-list-tile
           avatar
           ripple
-          v-for="notification in $store.state.notification.items"
-          :key="notification.date"
+          v-for="(notification, index) in $store.state.notification.items"
+          :key="index"
         >
           <v-list-tile-content>
             <v-list-tile-title>{{ notification.title }}</v-list-tile-title>

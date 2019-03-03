@@ -22,6 +22,7 @@ export default {
     } else {
       commit('setSnackBar', title)
     }
+    commit('setLastNewNow')
 
     commit('recordNotification', {
       title,
@@ -75,7 +76,7 @@ export default {
     if (response.total_count === 0) {
       return
     }
-    commit('setPollingLastCheckNewNow')
+    commit('setLastNewNow')
     dispatch('send', {
       title: `${response.total_count} Issue${
         response.total_count > 1 ? 's' : ''

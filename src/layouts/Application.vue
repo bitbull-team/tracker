@@ -31,7 +31,7 @@ export default {
     await this.loadCurrentUser()
     this.startPolling()
     this.$store.watch(
-      state => state.notification.polling.lastNew,
+      state => state.notification.lastNew,
       () => {
         this.snackBar = true
       }

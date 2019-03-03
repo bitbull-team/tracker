@@ -1,29 +1,33 @@
 <template>
   <div>
-    <time-tracked-this-week />
-    <v-btn @click="sendNotification">Send</v-btn>
+    <time-tracked-this-week/>
+    <v-btn @click="sendTestNotification">Send</v-btn>
   </div>
 </template>
 
 <script>
 import TimeTrackedThisWeek from '@/components/dashboard/TimeTrackedThisWeek'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
     TimeTrackedThisWeek
   },
   methods: {
-    sendNotification() {
-      this.$systemNotify.send(
-        'test',
-        () => {
-          //console.log('clicked')
-        },
-        {
+    ...mapActions({
+      sendNotification: 'notification/send'
+    }),
+    sendTestNotification() {
+      this.sendNotification({
+        title: 'test',
+        options: {
           subtitle: 'Prova subtitle',
           body: 'Prova body'
+        },
+        callback: () => {
+          console.log('ok')
         }
-      )
+      })
     }
   }
 }

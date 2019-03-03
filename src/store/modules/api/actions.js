@@ -1,4 +1,4 @@
-/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+/*eslint no-console: ["error", { allow: ["error"] }] */
 const electron = require('electron')
 const currentWindow = electron.remote.getCurrentWindow()
 
@@ -39,6 +39,33 @@ export default {
         method: 'POST',
         url: `${profile.url}${path}`,
         data,
+        headers: { 'X-Redmine-API-Key': profile.apiKey }
+      })
+      .then(response => response.data)
+      .catch(error => {
+        console.error(error.response)
+      })
+  },
+  put({ rootState }, { path, data }) {
+    const profile = rootState.profile.current
+    return currentWindow
+      .axios({
+        method: 'PUT',
+        url: `${profile.url}${path}`,
+        data,
+        headers: { 'X-Redmine-API-Key': profile.apiKey }
+      })
+      .then(response => response.data)
+      .catch(error => {
+        console.error(error.response)
+      })
+  },
+  delete({ rootState }, { path }) {
+    const profile = rootState.profile.current
+    return currentWindow
+      .axios({
+        method: 'DELETE',
+        url: `${profile.url}${path}`,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
       .then(response => response.data)

@@ -17,7 +17,7 @@ export default {
   setPollingLastCheckNow(state) {
     state.polling.lastCheck = new Date()
   },
-  setPollingLastCheckNewNow(state) {
-    state.polling.lastNew = new Date()
+  setLastNewNow(state) {
+    state.lastNew = new Date()
   }
 }

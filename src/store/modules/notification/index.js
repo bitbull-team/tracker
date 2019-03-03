@@ -19,9 +19,9 @@ export default function Notification() {
         enable: false, //NOTE: this internally disable notification system
         timer: null,
         lastCheck: new Date(),
-        lastNew: null,
         interval: 10 * 1000
-      }
+      },
+      lastNew: null,
     },
     actions,
     mutations
