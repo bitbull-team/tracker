@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import electron from 'electron'
 
 const currentWindow = electron.remote.getCurrentWindow()
@@ -9,10 +8,10 @@ const trayMenuTemplate = [
   {
     label: 'Show application',
     click: () => {
-      if(currentWindow.isVisible() === false){
+      if (currentWindow.isVisible() === false) {
         currentWindow.show()
       }
-      if(currentWindow.isFocused() === false){
+      if (currentWindow.isFocused() === false) {
         currentWindow.focus()
       }
     }

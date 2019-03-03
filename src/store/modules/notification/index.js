@@ -1,3 +1,4 @@
+/*global __static*/
 import path from 'path'
 
 import actions from './actions'
@@ -19,7 +20,7 @@ export default function Notification() {
         timer: null,
         lastCheck: new Date(),
         lastNew: null,
-        interval: 10 * 1000,
+        interval: 10 * 1000
       }
     },
     actions,

@@ -11,7 +11,7 @@ export default {
         params: {
           from: moment().format(DATE_FORMAT),
           to: moment().format(DATE_FORMAT),
-          user_id: rootState.api.currentUser.id 
+          user_id: rootState.api.currentUser.id
         }
       },
       { root: true }
@@ -26,7 +26,9 @@ export default {
       {
         path: 'time_entries.json',
         params: {
-          from: moment().startOf('week').format(DATE_FORMAT),
+          from: moment()
+            .startOf('week')
+            .format(DATE_FORMAT),
           to: moment().format(DATE_FORMAT),
           user_id: rootState.api.currentUser.id,
           limit: 1000

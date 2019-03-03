@@ -7,7 +7,7 @@ export default function TimeEntries() {
     state: {
       items: [],
       todayItems: [],
-      thisWeekItems: [],
+      thisWeekItems: []
     },
     actions,
     mutations

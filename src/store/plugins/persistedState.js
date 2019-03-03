@@ -11,11 +11,13 @@ export default options => {
       store.replaceState(Object.assign(store.state, savedState))
     }
 
-    store.subscribe((mutation) => {
+    store.subscribe(mutation => {
       if (Array.isArray(options.excludes)) {
-        const found = options.excludes.find((exclude) => mutation.type && mutation.type.startsWith(exclude))
+        const found = options.excludes.find(
+          exclude => mutation.type && mutation.type.startsWith(exclude)
+        )
         if (found !== undefined) {
-          return;
+          return
         }
       }
       storage.set(options.key, store.state)

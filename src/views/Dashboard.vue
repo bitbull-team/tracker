@@ -1,6 +1,6 @@
 <template>
   <div>
-    <time-tracked-this-week/>
+    <time-tracked-this-week />
     <v-btn @click="sendNotification">Send</v-btn>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
       this.$systemNotify.send(
         'test',
         () => {
-          console.log('clicked')
+          //console.log('clicked')
         },
         {
           subtitle: 'Prova subtitle',

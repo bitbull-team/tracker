@@ -6,7 +6,10 @@ const currentWindow = electron.remote.getCurrentWindow()
 export default {
   send({ commit, state }, { title, options, callback, issues }) {
     if (state.inApp === false && currentWindow.isFocused() === false) {
-      const notification = new Notification(title, Object.assign(state.defaultOption, options || {}));
+      const notification = new Notification(
+        title,
+        Object.assign(state.defaultOption, options || {})
+      )
       notification.onclick = () => {
         if (currentWindow.isVisible() === false) {
           currentWindow.show()
@@ -26,38 +29,46 @@ export default {
       date: new Date()
     })
   },
-  togglePolling({commit, dispatch}, status) {
+  togglePolling({ commit, dispatch }, status) {
     if (status === true) {
-      commit('setPollingEnable', true); 
+      commit('setPollingEnable', true)
       dispatch('startPolling')
-    }else{
-      commit('setPollingEnable', false); 
+    } else {
+      commit('setPollingEnable', false)
       dispatch('stopPolling')
     }
   },
-  startPolling({commit, state, dispatch}) {
+  startPolling({ commit, state, dispatch }) {
     if (state.polling.enable === false) {
-      commit('setPollingTimer', null);
-      return;
+      commit('setPollingTimer', null)
+      return
     }
-    commit('setPollingTimer', setInterval(() => {
-      dispatch('retrieveNewNotification')
-    }, state.polling.interval || (10 * 1000)))
+    commit(
+      'setPollingTimer',
+      setInterval(() => {
+        dispatch('retrieveNewNotification')
+      }, state.polling.interval || 10 * 1000)
+    )
   },
-  stopPolling({commit, state}) {
+  stopPolling({ commit, state }) {
     if (state.polling.timer === null) {
       return
     }
-    clearInterval(state.polling.timer);
-    commit('setPollingTimer', null);
+    clearInterval(state.polling.timer)
+    commit('setPollingTimer', null)
   },
-  async retrieveNewNotification({dispatch, state, commit}) {
+  async retrieveNewNotification({ dispatch, state, commit }) {
     const response = await dispatch(
       'api/get',
       {
         path: 'issues.json',
         params: {
-          updated_on: '>='+moment(state.polling.lastCheck).subtract(1, 'years').format('YYYY-MM-DDThh:mm:ss')+'Z'
+          updated_on:
+            '>=' +
+            moment(state.polling.lastCheck)
+              .subtract(1, 'years')
+              .format('YYYY-MM-DDThh:mm:ss') +
+            'Z'
         }
       },
       { root: true }
@@ -68,7 +79,9 @@ export default {
     }
     commit('setPollingLastCheckNewNow')
     dispatch('send', {
-      title: `${response.total_count} Issue${response.total_count > 1 ? 's' : ''} updated`,
+      title: `${response.total_count} Issue${
+        response.total_count > 1 ? 's' : ''
+      } updated`,
       issues: response.issues
     })
   }
