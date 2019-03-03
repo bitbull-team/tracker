@@ -1,9 +1,9 @@
 <template>
   <v-content class="align-start">
-    <toolbar @toggle-nav-menu="drawer = !drawer"/>
-    <nav-menu v-model="drawer"/>
+    <toolbar @toggle-nav-menu="drawer = !drawer" />
+    <nav-menu v-model="drawer" />
     <v-container fluid fill-height class="white">
-      <router-view/>
+      <router-view />
     </v-container>
     <v-snackbar v-model="snackBar" :right="true" :bottom="true">
       {{ $store.state.notification.snackBar }}

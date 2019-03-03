@@ -14,8 +14,8 @@ const store = new Vuex.Store({
     PersistedState({
       key: 'db',
       excludes: [
-        'notification/setPollingTimer', 
-        'notification/setPollingLastCheckNow', 
+        'notification/setPollingTimer',
+        'notification/setPollingLastCheckNow',
         'notification/setPollingLastCheckNewNow'
       ]
     })
@@ -25,7 +25,7 @@ const store = new Vuex.Store({
     api: new API(),
     project: new Project(),
     timeEntries: new TimeEntries(),
-    notification: new Notification(),
+    notification: new Notification()
   }
 })
 

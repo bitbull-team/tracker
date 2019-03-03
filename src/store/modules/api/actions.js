@@ -1,3 +1,4 @@
+/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 const electron = require('electron')
 const currentWindow = electron.remote.getCurrentWindow()
 
@@ -10,7 +11,8 @@ export default {
         url: `${profile.url}/users/current.json`,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
-      .then(response => response.data).catch(error => {
+      .then(response => response.data)
+      .catch(error => {
         console.error(error.response)
       })
 
@@ -25,7 +27,8 @@ export default {
         params,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
-      .then(response => response.data).catch(error => {
+      .then(response => response.data)
+      .catch(error => {
         console.error(error.response)
       })
   },
@@ -38,7 +41,8 @@ export default {
         data,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
-      .then(response => response.data).catch(error => {
+      .then(response => response.data)
+      .catch(error => {
         console.error(error.response)
       })
   }
