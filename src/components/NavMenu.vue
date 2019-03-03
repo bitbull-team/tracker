@@ -7,7 +7,31 @@
     fixed
     app
   >
-    <v-list> </v-list>
+    <v-toolbar flat class="transparent">
+      <v-list three-line>
+        <v-list-tile avatar>
+          <v-list-tile-avatar>
+            <v-icon x-large>person</v-icon>
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title
+              >{{ $store.state.api.currentUser.firstname }}
+              {{ $store.state.api.currentUser.lastname }}</v-list-tile-title
+            >
+            <v-list-tile-sub-title>{{
+              $store.state.api.currentUser.mail
+            }}</v-list-tile-sub-title>
+            <v-list-tile-sub-title
+              >Last login:
+              {{
+                $store.state.api.currentUser.last_login_on | moment('LLL')
+              }}</v-list-tile-sub-title
+            >
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-toolbar>
+    <v-list></v-list>
     <v-icon
       class="side-btn"
       @click.stop="miniVariant = !miniVariant"
