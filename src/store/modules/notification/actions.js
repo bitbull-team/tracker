@@ -65,9 +65,7 @@ export default {
         params: {
           updated_on:
             '>=' +
-            moment(state.polling.lastCheck)
-              .subtract(1, 'years')
-              .format('YYYY-MM-DDThh:mm:ss') +
+            moment(state.polling.lastCheck).format('YYYY-MM-DDThh:mm:ss') +
             'Z'
         }
       },
