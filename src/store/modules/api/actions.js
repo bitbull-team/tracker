@@ -10,7 +10,9 @@ export default {
         url: `${profile.url}/users/current.json`,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
-      .then(response => response.data)
+      .then(response => response.data).catch(error => {
+        console.error(error.response)
+      })
 
     commit('setCurrentUser', currentUser.user)
   },
@@ -23,7 +25,9 @@ export default {
         params,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
-      .then(response => response.data)
+      .then(response => response.data).catch(error => {
+        console.error(error.response)
+      })
   },
   post({ rootState }, { path, data }) {
     const profile = rootState.profile.current
@@ -34,6 +38,8 @@ export default {
         data,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
-      .then(response => response.data)
+      .then(response => response.data).catch(error => {
+        console.error(error.response)
+      })
   }
 }
