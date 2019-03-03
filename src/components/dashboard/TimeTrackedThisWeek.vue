@@ -1,18 +1,21 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="$store.state.timeEntries.thisWeekItems"
-    class="elevation-1"
-  >
-    <template v-slot:items="props">
-      <td class="text-xs-center">{{ props.item.project.name }}</td>
-      <td class="text-xs-center">
-        {{ props.item.issue ? props.item.issue.id : '--NO ISSUE ASSIGNED--' }}
-      </td>
-      <td class="text-xs-center">{{ props.item.hours }}</td>
-      <td class="text-xs-center">{{ props.item.comments }}</td>
-    </template>
-  </v-data-table>
+  <div>
+    <h4>{{ $t('Time tracked this week') }}</h4>
+    <v-data-table
+      :headers="headers"
+      :items="$store.state.timeEntries.thisWeekItems"
+      class="elevation-1"
+    >
+      <template v-slot:items="props">
+        <td class="text-xs-center">{{ props.item.project.name }}</td>
+        <td class="text-xs-center">
+          {{ props.item.issue ? props.item.issue.id : '--NO ISSUE ASSIGNED--' }}
+        </td>
+        <td class="text-xs-center">{{ props.item.hours }}</td>
+        <td class="text-xs-center">{{ props.item.comments }}</td>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>

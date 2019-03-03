@@ -16,7 +16,7 @@ let win
 protocol.registerStandardSchemes(['app'], { secure: true })
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600 })
+  win = new BrowserWindow({ width: 350, height: 800 })
   win.setMenuBarVisibility(false)
   win.axios = axios
   win.systemTray = require('./system/tray')
