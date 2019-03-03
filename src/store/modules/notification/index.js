@@ -16,7 +16,7 @@ export default function Notification() {
         icon: path.join(__static, 'static/imgs/clock-off@2x.png')
       },
       polling: {
-        enable: true, //NOTE: this internally disable notification system
+        enable: false, //NOTE: this internally disable notification system
         timer: null,
         lastCheck: new Date(),
         lastNew: null,
