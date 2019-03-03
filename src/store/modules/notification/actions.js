@@ -30,12 +30,12 @@ export default {
       date: new Date()
     })
   },
-  togglePolling({ commit, dispatch }, status) {
-    if (status === true) {
-      commit('setPollingEnable', true)
+  togglePolling({ commit, dispatch, state }) {
+    if (state.polling.enable === true) {
+      commit('setPollingEnable', false)
       dispatch('startPolling')
     } else {
-      commit('setPollingEnable', false)
+      commit('setPollingEnable', true)
       dispatch('stopPolling')
     }
   },

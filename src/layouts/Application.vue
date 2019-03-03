@@ -36,11 +36,13 @@ export default {
         this.snackBar = true
       }
     )
+    this.drawMenu()
   },
   methods: {
     ...mapActions({
       loadCurrentUser: 'api/loadCurrentUser',
-      startPolling: 'notification/startPolling'
+      startPolling: 'notification/startPolling',
+      drawMenu: 'systemTray/drawMenu'
     })
   }
 }
