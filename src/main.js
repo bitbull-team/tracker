@@ -12,7 +12,7 @@ Vue.use(VueI18n)
 
 // this is just a test, needs to be moved in config
 const lang = document.documentElement.lang.substr(0, 2)
-import Locale from './system/locale'
+import Locale from './locales/messages'
 const i18n = new VueI18n({
   locale: lang,
   messages: Locale
