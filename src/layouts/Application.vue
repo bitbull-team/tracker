@@ -1,10 +1,14 @@
 <template>
   <v-content class="align-start">
-    <toolbar @toggle-nav-menu="drawer = !drawer" />
-    <nav-menu v-model="drawer" />
+    <toolbar @toggle-nav-menu="drawer = !drawer"/>
+    <nav-menu v-model="drawer"/>
     <v-container fluid fill-height class="white">
-      <router-view />
+      <router-view/>
     </v-container>
+    <v-snackbar v-model="snackBar" :right="true" :bottom="true">
+      {{ $store.state.notification.snackBar }}
+      <v-btn flat @click="snackBar = false">Close</v-btn>
+    </v-snackbar>
   </v-content>
 </template>
 
@@ -16,7 +20,8 @@ import NavMenu from '@/components/NavMenu'
 
 export default {
   data: () => ({
-    drawer: false
+    drawer: false,
+    snackBar: false
   }),
   components: {
     Toolbar,
@@ -24,10 +29,18 @@ export default {
   },
   async mounted() {
     await this.loadCurrentUser()
+    this.startPolling()
+    this.$store.watch(
+      state => state.notification.polling.lastNew,
+      () => {
+        this.snackBar = true
+      }
+    )
   },
   methods: {
     ...mapActions({
-      loadCurrentUser: 'api/loadCurrentUser'
+      loadCurrentUser: 'api/loadCurrentUser',
+      startPolling: 'notification/startPolling'
     })
   }
 }

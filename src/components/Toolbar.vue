@@ -13,6 +13,7 @@
       </v-flex>
       <v-flex xs5 sm3 class="text-xs-right">
         <v-layout row justify-end align-center>
+          <notification />
           <profile-switcher />
         </v-layout>
       </v-flex>
@@ -22,10 +23,12 @@
 
 <script>
 import ProfileSwitcher from '@/components/toolbar/ProfileSwitcher'
+import Notification from '@/components/toolbar/Notification'
 
 export default {
   components: {
-    ProfileSwitcher
+    ProfileSwitcher,
+    Notification
   }
 }
 </script>

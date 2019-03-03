@@ -1,6 +1,7 @@
 <template>
   <div>
-    <time-tracked-this-week />
+    <time-tracked-this-week/>
+    <v-btn @click="sendNotification">Send</v-btn>
   </div>
 </template>
 
@@ -10,12 +11,26 @@ import TimeTrackedThisWeek from '@/components/dashboard/TimeTrackedThisWeek'
 export default {
   components: {
     TimeTrackedThisWeek
+  },
+  methods: {
+    sendNotification() {
+      this.$systemNotify.send(
+        'test',
+        () => {
+          console.log('clicked')
+        },
+        {
+          subtitle: 'Prova subtitle',
+          body: 'Prova body'
+        }
+      )
+    }
   }
 }
 </script>
 
-<style lang="stylus" scoped>
+<style scoped>
 div {
-  width 100%
+  width: 100%;
 }
 </style>
