@@ -13,7 +13,7 @@ export default function Notification() {
       inApp: false,
       snackBar: null,
       defaultOption: {
-        icon: path.join(__static, 'static/imgs/clock-off@2x.png')
+        icon: path.join(__static, 'img/icons/logo.png')
       },
       polling: {
         enable: false, //NOTE: this internally disable notification system

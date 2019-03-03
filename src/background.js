@@ -1,5 +1,7 @@
 'use strict'
+/*global __static*/
 
+import path from 'path'
 import { app, protocol, BrowserWindow } from 'electron'
 import {
   createProtocol,
@@ -16,7 +18,11 @@ let win
 protocol.registerStandardSchemes(['app'], { secure: true })
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({ width: 350, height: 800 })
+  win = new BrowserWindow({
+    width: 350,
+    height: 800,
+    icon: path.join(__static, 'img/icons/logo.png')
+  })
   win.setMenuBarVisibility(false)
   win.axios = axios
   win.systemTray = require('./system/tray')
