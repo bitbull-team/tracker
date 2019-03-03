@@ -3,8 +3,6 @@
     <time-tracker />
     <time-tracked-this-week />
     <v-btn @click="sendTestNotification">Send</v-btn>
-    <v-btn @click="changeSystemTrayIcon('timerOn')">Timer ON</v-btn>
-    <v-btn @click="changeSystemTrayIcon('timerOff')">Timer OFF</v-btn>
   </div>
 </template>
 
@@ -20,8 +18,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      sendNotification: 'notification/send',
-      changeSystemTrayIcon: 'systemTray/changeIcon'
+      sendNotification: 'notification/send'
     }),
     sendTestNotification() {
       this.sendNotification({

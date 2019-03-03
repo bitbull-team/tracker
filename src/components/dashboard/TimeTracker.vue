@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -35,6 +36,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      changeSystemTrayIcon: 'systemTray/changeIcon'
+    }),
     runTimer() {
       if (this.status === 'started' || this.status === 'paused') {
         this.stop()
@@ -47,6 +51,7 @@ export default {
       this.status = 'started'
       this._tick()
       this.interval = setInterval(this._tick, 1000)
+      this.changeSystemTrayIcon('timerOn')
     },
     pause() {
       if (this.status === 'paused') {
@@ -63,6 +68,7 @@ export default {
       this.hour = 0
       this.minute = 0
       this.second = 0
+      this.changeSystemTrayIcon('timerOff')
     },
     _tick() {
       this.second++
