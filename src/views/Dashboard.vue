@@ -2,6 +2,7 @@
   <div>
     <time-tracker />
     <time-tracked-this-week />
+    <issues />
     <v-btn @click="sendTestNotification">Send</v-btn>
   </div>
 </template>
@@ -9,12 +10,14 @@
 <script>
 import TimeTracker from '@/components/dashboard/TimeTracker'
 import TimeTrackedThisWeek from '@/components/dashboard/TimeTrackedThisWeek'
+import Issues from '@/components/dashboard/Issues'
 import { mapActions } from 'vuex'
 
 export default {
   components: {
     TimeTracker,
-    TimeTrackedThisWeek
+    TimeTrackedThisWeek,
+    Issues
   },
   methods: {
     ...mapActions({

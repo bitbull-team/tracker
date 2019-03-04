@@ -5,5 +5,5 @@ export default {
   overrideItem(state, issue) {
     const index = state.items.findIndex(item => item.id === issue.id)
     state.items[index] = issue
-  },
+  }
 }

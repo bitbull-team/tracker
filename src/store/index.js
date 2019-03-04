@@ -19,16 +19,8 @@ const store = new Vuex.Store({
   plugins: [
     PersistedState({
       key: 'db',
-      excludeMutations: [
-        'notification',
-        'systemTray',
-        'window'
-      ],
-      excludeState: [
-        'systemTray', 
-        'window', 
-        'notification'
-      ]
+      excludeMutations: ['notification', 'systemTray', 'window'],
+      excludeState: ['systemTray', 'window', 'notification']
     })
   ],
   modules: {
@@ -42,7 +34,7 @@ const store = new Vuex.Store({
     timeEntry: new TimeEntry(),
     timeEntryActivity: new TimeEntryActivity(),
     timer: new Timer(),
-    window: new Window(),
+    window: new Window()
   }
 })
 

@@ -41,14 +41,11 @@ export default {
     })
   },
   add({ dispatch }, timeEntry) {
-    return dispatch(
-      'api/post',
-      {
-        path: 'time_entries.json',
-        data: {
-          time_entry: timeEntry
-        }
+    return dispatch('api/post', {
+      path: 'time_entries.json',
+      data: {
+        time_entry: timeEntry
       }
-    )
+    })
   }
 }
