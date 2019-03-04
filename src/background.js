@@ -2,7 +2,7 @@
 /*global __static*/
 
 import path from 'path'
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import {
   createProtocol,
   installVueDevtools
@@ -40,18 +40,23 @@ function createWindow() {
     win.loadURL('app://./index.html')
   }
 
+  win.on('close', event => {
+    win.hide()
+    event.preventDefault()
+    event.returnValue = false
+    return false
+  })
+
   win.on('closed', () => {
     win = null
   })
 }
 
-// Quit when all windows are closed.
-app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+// Force close
+ipcMain.on('force-close', () => {
+  win.destroy()
+  app.quit()
+  win = null
 })
 
 app.on('activate', () => {

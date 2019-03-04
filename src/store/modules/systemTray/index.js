@@ -15,13 +15,17 @@ export default function SystemTray() {
         {
           label: 'Toggle notification',
           event: 'notification/togglePolling'
+        },
+        {
+          label: 'Close',
+          event: 'window/forceClose'
         }
       ],
       icons: {
         timerOff: path.join(__static, 'img/icons/clock-off@2x.png'),
-        timerOn: path.join(__static, 'img/icons/clock-on@2x.png'),
+        timerOn: path.join(__static, 'img/icons/clock-on@2x.png')
       },
-      currentIcon: 'timerOff',
+      currentIcon: 'timerOff'
     },
     actions,
     mutations

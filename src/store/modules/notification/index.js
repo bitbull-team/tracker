@@ -21,7 +21,7 @@ export default function Notification() {
         lastCheck: new Date(),
         interval: 10 * 1000
       },
-      lastNew: null,
+      lastNew: null
     },
     actions,
     mutations

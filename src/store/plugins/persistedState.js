@@ -10,7 +10,7 @@ export default options => {
     if (typeof savedState === 'object' && savedState !== null) {
       if (Array.isArray(options.excludeState)) {
         for (const excludeState of options.excludeState) {
-          delete savedState[excludeState];
+          delete savedState[excludeState]
         }
       }
       store.replaceState(Object.assign(store.state, savedState))
@@ -28,7 +28,7 @@ export default options => {
       const storeToSave = Object.assign({}, store.state)
       if (Array.isArray(options.excludeState)) {
         for (const excludeState of options.excludeState) {
-          delete storeToSave[excludeState];
+          delete storeToSave[excludeState]
         }
       }
       storage.set(options.key, storeToSave)
