@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="$store.state.timeEntries.todayItems"
+    :items="$store.state.timeEntry.todayItems"
     class="elevation-1"
   >
     <template v-slot:items="props">
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      loadTimeEntries: 'timeEntries/loadToday'
+      loadTimeEntries: 'timeEntry/loadToday'
     })
   }
 }

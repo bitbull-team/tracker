@@ -39,5 +39,16 @@ export default {
       const timeEntries = response.time_entries
       commit('setThisWeekItems', timeEntries)
     })
+  },
+  add({ dispatch }, timeEntry) {
+    return dispatch(
+      'api/post',
+      {
+        path: 'time_entries.json',
+        data: {
+          time_entry: timeEntry
+        }
+      }
+    )
   }
 }

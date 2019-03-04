@@ -1,13 +1,11 @@
 import actions from './actions'
 import mutations from './mutations'
 
-export default function TimeEntries() {
+export default function IssueStatus() {
   return {
     namespaced: true,
     state: {
-      items: [],
-      todayItems: [],
-      thisWeekItems: []
+      items: []
     },
     actions,
     mutations

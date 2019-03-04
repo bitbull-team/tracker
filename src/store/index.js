@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import PersistedState from './plugins/persistedState'
-import Profile from './modules/profile'
 import API from './modules/api'
-import Project from './modules/project'
-import TimeEntries from './modules/timeEntries'
+import Issue from './modules/issue'
+import IssueStatus from './modules/issueStatus'
 import Notification from './modules/notification'
+import Profile from './modules/profile'
+import Project from './modules/project'
 import SystemTray from './modules/systemTray'
+import TimeEntry from './modules/timeEntry'
+import TimeEntryActivity from './modules/timeEntryActivity'
+import Timer from './modules/timer'
 import Window from './modules/window'
 
 Vue.use(Vuex)
@@ -16,23 +20,29 @@ const store = new Vuex.Store({
     PersistedState({
       key: 'db',
       excludeMutations: [
-        'notification/setPollingTimer',
-        'notification/setPollingLastCheckNow',
-        'notification/setPollingLastCheckNewNow',
+        'notification',
         'systemTray',
         'window'
       ],
-      excludeState: ['systemTray', 'window']
+      excludeState: [
+        'systemTray', 
+        'window', 
+        'notification'
+      ]
     })
   ],
   modules: {
-    profile: new Profile(),
     api: new API(),
-    project: new Project(),
-    timeEntries: new TimeEntries(),
+    issue: new Issue(),
+    issueStatus: new IssueStatus(),
     notification: new Notification(),
+    profile: new Profile(),
+    project: new Project(),
     systemTray: new SystemTray(),
-    window: new Window()
+    timeEntry: new TimeEntry(),
+    timeEntryActivity: new TimeEntryActivity(),
+    timer: new Timer(),
+    window: new Window(),
   }
 })
 

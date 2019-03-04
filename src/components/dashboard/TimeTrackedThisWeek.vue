@@ -3,7 +3,7 @@
     <h4>{{ $t('Time tracked this week') }}</h4>
     <v-data-table
       :headers="headers"
-      :items="$store.state.timeEntries.thisWeekItems"
+      :items="$store.state.timeEntry.thisWeekItems"
       class="elevation-1"
     >
       <template v-slot:items="props">
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      loadTimeEntries: 'timeEntries/loadThisWeek'
+      loadTimeEntries: 'timeEntry/loadThisWeek'
     })
   }
 }
