@@ -1,4 +1,18 @@
 export default {
+  loadWithFilter({ commit, dispatch }, filters) {
+    return dispatch(
+      'api/get',
+      {
+        path: 'issues.json',
+        params: filters
+      },
+      { root: true }
+    ).then(response => {
+      const issues = response.issues
+      commit('setItems', issues)
+      return issues
+    })
+  },
   loadAll({ commit, dispatch }) {
     return dispatch(
       'api/get',

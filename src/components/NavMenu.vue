@@ -8,35 +8,32 @@
     app
   >
     <v-toolbar flat class="transparent">
-      <v-list three-line>
+      <v-list class="pa-0">
         <v-list-tile avatar>
           <v-list-tile-avatar>
             <v-icon x-large>person</v-icon>
           </v-list-tile-avatar>
+
           <v-list-tile-content>
-            <v-list-tile-title
-              >{{ $store.state.api.currentUser.firstname }}
-              {{ $store.state.api.currentUser.lastname }}</v-list-tile-title
-            >
-            <v-list-tile-sub-title>{{
-              $store.state.api.currentUser.mail
-            }}</v-list-tile-sub-title>
-            <v-list-tile-sub-title
-              >Last login:
-              {{
-                $store.state.api.currentUser.last_login_on | moment('LLL')
-              }}</v-list-tile-sub-title
-            >
+            <v-list-tile-title>
+              {{ $store.state.api.currentUser.firstname }}
+              {{ $store.state.api.currentUser.lastname }}
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-toolbar>
-    <v-list></v-list>
-    <v-icon
-      class="side-btn"
-      @click.stop="miniVariant = !miniVariant"
-      v-html="miniVariant ? 'chevron_right' : 'chevron_left'"
-    />
+    <v-list dense>
+      <v-divider></v-divider>
+      <v-list-tile :to="{ name: 'issues' }">
+        <v-list-tile-action>
+          <v-icon>assignment</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>{{ $t('Issues') }}</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+    </v-list>
   </v-navigation-drawer>
 </template>
 

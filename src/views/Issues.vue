@@ -1,0 +1,80 @@
+<template>
+  <v-layout row wrap>
+    <v-flex xs6>
+      <v-switch v-model="assignedToMe" :label="$t('Assigned to me')"></v-switch>
+    </v-flex>
+    <v-flex xs6>
+      <v-select
+        v-model="filters.status_id"
+        :items="statuses"
+        :label="$t('Status')"
+        item-text="name"
+        item-value="id"
+        :disable="loading"
+      ></v-select>
+    </v-flex>
+    <v-progress-linear
+      height="2"
+      v-if="loading"
+      :indeterminate="true"
+    ></v-progress-linear>
+    <v-flex xs12>
+      <issues :items="issues" :disable="loading" />
+    </v-flex>
+  </v-layout>
+</template>
+
+<script>
+import { mapActions, mapState } from 'vuex'
+import Issues from '@/components/issues/List'
+
+export default {
+  data: () => ({
+    loading: false,
+    filters: {
+      status_id: 'open',
+      assigned_to_id: 'me'
+    },
+    assignedToMe: true,
+    issues: []
+  }),
+  components: {
+    Issues
+  },
+  mounted() {
+    this.loadIssuesWithFilters()
+  },
+  methods: {
+    ...mapActions({
+      loadIssues: 'issue/loadWithFilter'
+    }),
+    async loadIssuesWithFilters() {
+      this.loading = true
+      this.issues = await this.loadIssues(this.filters)
+      this.loading = false
+    }
+  },
+  watch: {
+    filters: {
+      handler() {
+        this.loadIssuesWithFilters()
+      },
+      deep: true
+    },
+    assignedToMe(value) {
+      this.filters.assigned_to_id = value ? 'me' : undefined
+    }
+  },
+  computed: {
+    ...mapState({
+      statuses: state => state.issueStatus.items
+    })
+  }
+}
+</script>
+
+<style scoped>
+div {
+  width: 100%;
+}
+</style>

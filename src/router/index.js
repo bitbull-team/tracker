@@ -5,6 +5,7 @@ import Empty from '@/layouts/Empty'
 import Application from '@/layouts/Application'
 
 import Dashboard from '@/views/Dashboard.vue'
+import Issues from '@/views/Issues.vue'
 import NewProfile from '@/views/profile/NewProfile.vue'
 
 import store from '../store'
@@ -23,6 +24,12 @@ const router = new Router({
           path: '',
           name: 'dashboard',
           component: Dashboard,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/issues',
+          name: 'issues',
+          component: Issues,
           meta: { requiresAuth: true }
         }
       ]

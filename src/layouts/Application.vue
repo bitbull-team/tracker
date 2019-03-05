@@ -29,6 +29,7 @@ export default {
   },
   async mounted() {
     await this.loadCurrentUser()
+    this.loadIssueStatuses()
     this.startPolling()
     this.$store.watch(
       state => state.notification.lastNew,
@@ -41,6 +42,7 @@ export default {
   methods: {
     ...mapActions({
       loadCurrentUser: 'api/loadCurrentUser',
+      loadIssueStatuses: 'issueStatus/loadAll',
       startPolling: 'notification/startPolling',
       drawMenu: 'systemTray/drawMenu'
     })
