@@ -14,4 +14,15 @@ export default {
 html {
   overflow: auto;
 }
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #9e9e9e;
+}
 </style>
