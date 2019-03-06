@@ -15,7 +15,7 @@
               v-model="form.name"
               :error-messages="nameErrors"
               name="name"
-              label="Name"
+              label="Workspace name"
               :disabled="loading"
               @input="$v.form.name.$touch()"
               @blur="$v.form.name.$touch()"
