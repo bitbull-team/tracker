@@ -5,17 +5,7 @@ import './plugins/moment'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import VueI18n from 'vue-i18n'
-
-Vue.use(VueI18n)
-
-// this is just a test, needs to be moved in config
-const lang = document.documentElement.lang.substr(0, 2)
-import Locale from './locales/messages'
-const i18n = new VueI18n({
-  locale: lang,
-  messages: Locale
-})
+import i18n from './i18n'
 
 Vue.config.productionTip = false
 
