@@ -1,7 +1,9 @@
 export default {
-  add(state, issueId) {
+  add(state, { issueId, comments, activityId }) {
     state.items.push({
       issueId,
+      comments,
+      activityId,
       start: new Date(),
       end: null,
       isRunning: true,

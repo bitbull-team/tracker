@@ -1,8 +1,8 @@
 import moment from 'moment'
 
 export default {
-  start({ commit }, issueId) {
-    commit('add', issueId)
+  start({ commit }, { issueId, comments, activityId }) {
+    commit('add', { issueId, comments, activityId })
   },
   pause({ commit }, issueId) {
     commit('pause', issueId)
@@ -12,12 +12,14 @@ export default {
   },
   async record(
     { commit, dispatch, state },
-    { issueId, description, activityId }
+    { issueId, comments, activityId }
   ) {
-    const timer = state.items.find(timer => timer.issueId === issueId)
+    let timer = state.items.find(timer => timer.issueId === issueId)
     if (timer === undefined) {
       return false
     }
+    timer = Object.assign(timer, { comments, activityId });
+
     await dispatch(
       'api/add',
       {
@@ -27,8 +29,8 @@ export default {
           moment(timer.end || new Date()),
           'hours'
         ),
-        activity_id: activityId,
-        comments: description
+        activity_id: timer.activityId,
+        comments: timer.comments
       },
       { root: true }
     )

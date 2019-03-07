@@ -6,6 +6,7 @@ import Application from '@/layouts/Application'
 
 import Dashboard from '@/views/Dashboard.vue'
 import Issues from '@/views/Issues.vue'
+import Timers from '@/views/Timers.vue'
 import NewProfile from '@/views/profile/NewProfile.vue'
 
 import store from '../store'
@@ -30,6 +31,12 @@ const router = new Router({
           path: '/issues',
           name: 'issues',
           component: Issues,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/timers',
+          name: 'timers',
+          component: Timers,
           meta: { requiresAuth: true }
         }
       ]

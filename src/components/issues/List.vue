@@ -14,18 +14,31 @@
         </v-list-tile-sub-title>
       </v-list-tile-content>
       <v-list-tile-action>
-        <v-icon>play_circle_outline</v-icon>
+        <v-icon @click="startNewTimer({issueId: issue.id})">
+          play_circle_outline
+        </v-icon>
       </v-list-tile-action>
     </v-list-tile>
   </v-list>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
   props: {
     items: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    ...mapActions({
+      startTimer: 'timer/start'
+    }),
+    startNewTimer(issue) {
+      this.startTimer({issueId: issue.id})
+      this.$router.push({ name: 'timers' })
     }
   }
 }
