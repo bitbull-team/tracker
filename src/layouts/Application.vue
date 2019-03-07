@@ -2,12 +2,25 @@
   <v-content class="align-start">
     <toolbar @toggle-nav-menu="drawer = !drawer" />
     <nav-menu v-model="drawer" />
-    <v-container fluid fill-height class="white">
+    <v-container
+      fluid
+      fill-height
+      class="white"
+    >
       <router-view />
     </v-container>
-    <v-snackbar v-model="snackBar" :right="true" :bottom="true">
+    <v-snackbar
+      v-model="snackBar"
+      :right="true"
+      :bottom="true"
+    >
       {{ $store.state.notification.snackBar }}
-      <v-btn flat @click="snackBar = false">Close</v-btn>
+      <v-btn
+        flat
+        @click="snackBar = false"
+      >
+        Close
+      </v-btn>
     </v-snackbar>
   </v-content>
 </template>
@@ -19,14 +32,14 @@ import Toolbar from '@/components/Toolbar'
 import NavMenu from '@/components/NavMenu'
 
 export default {
-  data: () => ({
-    drawer: false,
-    snackBar: false
-  }),
   components: {
     Toolbar,
     NavMenu
   },
+  data: () => ({
+    drawer: false,
+    snackBar: false
+  }),
   async mounted() {
     await this.loadCurrentUser()
     this.loadIssueStatuses()

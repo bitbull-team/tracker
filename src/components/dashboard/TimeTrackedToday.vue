@@ -5,10 +5,18 @@
     class="elevation-1"
   >
     <template v-slot:items="props">
-      <td class="text-xs-right">{{ props.item.project.name }}</td>
-      <td class="text-xs-right">{{ props.item.issue.id }}</td>
-      <td class="text-xs-right">{{ props.item.hours }}</td>
-      <td class="text-xs-right">{{ props.item.comments }}</td>
+      <td class="text-xs-right">
+        {{ props.item.project.name }}
+      </td>
+      <td class="text-xs-right">
+        {{ props.item.issue.id }}
+      </td>
+      <td class="text-xs-right">
+        {{ props.item.hours }}
+      </td>
+      <td class="text-xs-right">
+        {{ props.item.comments }}
+      </td>
     </template>
   </v-data-table>
 </template>

@@ -1,7 +1,13 @@
 <template>
-  <v-layout row wrap>
+  <v-layout
+    row
+    wrap
+  >
     <v-flex xs6>
-      <v-switch v-model="assignedToMe" :label="$t('Assigned to me')"></v-switch>
+      <v-switch
+        v-model="assignedToMe"
+        :label="$t('Assigned to me')"
+      />
     </v-flex>
     <v-flex xs6>
       <v-select
@@ -11,15 +17,18 @@
         item-text="name"
         item-value="id"
         :disable="loading"
-      ></v-select>
+      />
     </v-flex>
     <v-progress-linear
-      height="2"
       v-if="loading"
+      height="2"
       :indeterminate="true"
-    ></v-progress-linear>
+    />
     <v-flex xs12>
-      <issues :items="issues" :disable="loading" />
+      <issues
+        :items="issues"
+        :disable="loading"
+      />
     </v-flex>
   </v-layout>
 </template>
@@ -29,6 +38,9 @@ import { mapActions, mapState } from 'vuex'
 import Issues from '@/components/issues/List'
 
 export default {
+  components: {
+    Issues
+  },
   data: () => ({
     loading: false,
     filters: {
@@ -38,8 +50,21 @@ export default {
     assignedToMe: true,
     issues: []
   }),
-  components: {
-    Issues
+  computed: {
+    ...mapState({
+      statuses: state => state.issueStatus.items
+    })
+  },
+  watch: {
+    filters: {
+      handler() {
+        this.loadIssuesWithFilters()
+      },
+      deep: true
+    },
+    assignedToMe(value) {
+      this.filters.assigned_to_id = value ? 'me' : undefined
+    }
   },
   mounted() {
     this.loadIssuesWithFilters()
@@ -54,22 +79,6 @@ export default {
       this.loading = false
     }
   },
-  watch: {
-    filters: {
-      handler() {
-        this.loadIssuesWithFilters()
-      },
-      deep: true
-    },
-    assignedToMe(value) {
-      this.filters.assigned_to_id = value ? 'me' : undefined
-    }
-  },
-  computed: {
-    ...mapState({
-      statuses: state => state.issueStatus.items
-    })
-  }
 }
 </script>
 

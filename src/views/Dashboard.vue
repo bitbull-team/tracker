@@ -3,7 +3,9 @@
     <time-tracker />
     <time-tracked-this-week />
     <issues />
-    <v-btn @click="sendTestNotification">Send</v-btn>
+    <v-btn @click="sendTestNotification">
+      Send
+    </v-btn>
   </div>
 </template>
 

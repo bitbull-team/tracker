@@ -1,17 +1,22 @@
 <template>
   <v-navigation-drawer
+    v-model="isOpen"
     :mini-variant="miniVariant"
     :mini-variant-width="90"
     :clipped="clipped"
-    v-model="isOpen"
     fixed
     app
   >
-    <v-toolbar flat class="transparent">
+    <v-toolbar
+      flat
+      class="transparent"
+    >
       <v-list class="pa-0">
         <v-list-tile avatar>
           <v-list-tile-avatar>
-            <v-icon x-large>person</v-icon>
+            <v-icon x-large>
+              person
+            </v-icon>
           </v-list-tile-avatar>
 
           <v-list-tile-content>
@@ -24,7 +29,7 @@
       </v-list>
     </v-toolbar>
     <v-list dense>
-      <v-divider></v-divider>
+      <v-divider />
       <v-list-tile :to="{ name: 'issues' }">
         <v-list-tile-action>
           <v-icon>assignment</v-icon>

@@ -2,16 +2,16 @@
   <div class="timer">
     <div class="actions">
       <button
-        @click="runTimer()"
         :class="status === 'started' || status === 'paused' ? 'stop' : 'start'"
+        @click="runTimer()"
       >
         {{ label }}
       </button>
       <button
-        @click="pause()"
+        v-show="status !== 'stopped'"
         :class="status === 'paused' ? 'start' : 'pause'"
         class="pause"
-        v-show="status !== 'stopped'"
+        @click="pause()"
       >
         {{ $t('Pause') }}
       </button>
@@ -33,6 +33,31 @@ export default {
       minute: 0,
       second: 0,
       issue: 'prova'
+    }
+  },
+  computed: {
+    label() {
+      return this.status === 'started' || this.status === 'paused'
+        ? 'Stop'
+        : 'Start'
+    },
+    h() {
+      if (this.hour < 10) {
+        return '0' + this.hour
+      }
+      return this.hour
+    },
+    min() {
+      if (this.minute < 10) {
+        return '0' + this.minute
+      }
+      return this.minute
+    },
+    sec() {
+      if (this.second < 10) {
+        return '0' + this.second
+      }
+      return this.second
     }
   },
   methods: {
@@ -85,31 +110,6 @@ export default {
       let loggedTime = h + '.' + m * 1.6
       return loggedTime
       // console.log(loggedTime)
-    }
-  },
-  computed: {
-    label() {
-      return this.status === 'started' || this.status === 'paused'
-        ? 'Stop'
-        : 'Start'
-    },
-    h() {
-      if (this.hour < 10) {
-        return '0' + this.hour
-      }
-      return this.hour
-    },
-    min() {
-      if (this.minute < 10) {
-        return '0' + this.minute
-      }
-      return this.minute
-    },
-    sec() {
-      if (this.second < 10) {
-        return '0' + this.second
-      }
-      return this.second
     }
   }
 }

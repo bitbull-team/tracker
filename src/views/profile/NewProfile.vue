@@ -1,7 +1,17 @@
 <template>
-  <v-layout align-center justify-center>
-    <v-flex xs12 sm8 md4>
-      <form novalidate @submit.prevent="validateForm">
+  <v-layout
+    align-center
+    justify-center
+  >
+    <v-flex
+      xs12
+      sm8
+      md4
+    >
+      <form
+        novalidate
+        @submit.prevent="validateForm"
+      >
         <v-card class="elevation-2">
           <v-card-title primary-title>
             <div>

@@ -7,20 +7,23 @@
     </div>
 
     <v-list three-line>
-      <v-list-tile v-for="task in taskList" :key="task.id">
+      <v-list-tile
+        v-for="task in taskList"
+        :key="task.id"
+      >
         <v-list-tile-content>
           <v-list-tile-title>
-            <strong class="issue"
-              >#{{ task.issue ? task.issue.id : 'no task' }}</strong
-            >:
+            <strong
+              class="issue"
+            >#{{ task.issue ? task.issue.id : 'no task' }}</strong>:
             <span class="comment">{{ task.comments }}</span>
           </v-list-tile-title>
-          <v-list-tile-sub-title
-            >{{ $t('Hours') }}: {{ task.hours }}</v-list-tile-sub-title
-          >
-          <v-list-tile-sub-title
-            >{{ $t('Project') }}: {{ task.project.name }}</v-list-tile-sub-title
-          >
+          <v-list-tile-sub-title>
+            {{ $t('Hours') }}: {{ task.hours }}
+          </v-list-tile-sub-title>
+          <v-list-tile-sub-title>
+            {{ $t('Project') }}: {{ task.project.name }}
+          </v-list-tile-sub-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -35,16 +38,6 @@ export default {
     loading: false,
     circle: 310
   }),
-  async mounted() {
-    this.loading = true
-    await this.loadTimeEntries()
-    this.loading = false
-  },
-  methods: {
-    ...mapActions({
-      loadTimeEntries: 'timeEntry/loadThisWeek'
-    })
-  },
   computed: {
     taskList() {
       return this.$store.state.timeEntry.thisWeekItems
@@ -60,6 +53,16 @@ export default {
       let totWeekHour = 40
       return (this.totalHours * 100) / totWeekHour + ',100'
     }
+  },
+  async mounted() {
+    this.loading = true
+    await this.loadTimeEntries()
+    this.loading = false
+  },
+  methods: {
+    ...mapActions({
+      loadTimeEntries: 'timeEntry/loadThisWeek'
+    })
   }
 }
 </script>
