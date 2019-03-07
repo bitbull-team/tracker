@@ -7,15 +7,13 @@
     </div>
 
     <v-list three-line>
-      <v-list-tile
-        v-for="task in taskList"
-        :key="task.id"
-      >
+      <v-list-tile v-for="task in taskList" :key="task.id">
         <v-list-tile-content>
           <v-list-tile-title>
-            <strong
-              class="issue"
-            >#{{ task.issue ? task.issue.id : 'no task' }}</strong>:
+            <strong class="issue">
+              #{{ task.issue ? task.issue.id : 'no task' }}
+            </strong>
+            :
             <span class="comment">{{ task.comments }}</span>
           </v-list-tile-title>
           <v-list-tile-sub-title>

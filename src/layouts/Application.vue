@@ -2,23 +2,12 @@
   <v-content class="align-start">
     <toolbar @toggle-nav-menu="drawer = !drawer" />
     <nav-menu v-model="drawer" />
-    <v-container
-      fluid
-      fill-height
-      class="white"
-    >
+    <v-container fluid fill-height class="white">
       <router-view />
     </v-container>
-    <v-snackbar
-      v-model="snackBar"
-      :right="true"
-      :bottom="true"
-    >
+    <v-snackbar v-model="snackBar" :right="true" :bottom="true">
       {{ $store.state.notification.snackBar }}
-      <v-btn
-        flat
-        @click="snackBar = false"
-      >
+      <v-btn flat @click="snackBar = false">
         Close
       </v-btn>
     </v-snackbar>

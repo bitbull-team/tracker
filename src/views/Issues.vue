@@ -1,13 +1,7 @@
 <template>
-  <v-layout
-    row
-    wrap
-  >
+  <v-layout row wrap>
     <v-flex xs6>
-      <v-switch
-        v-model="assignedToMe"
-        :label="$t('Assigned to me')"
-      />
+      <v-switch v-model="assignedToMe" :label="$t('Assigned to me')" />
     </v-flex>
     <v-flex xs6>
       <v-select
@@ -19,16 +13,9 @@
         :disable="loading"
       />
     </v-flex>
-    <v-progress-linear
-      v-if="loading"
-      height="2"
-      :indeterminate="true"
-    />
+    <v-progress-linear v-if="loading" height="2" :indeterminate="true" />
     <v-flex xs12>
-      <issues
-        :items="issues"
-        :disable="loading"
-      />
+      <issues :items="issues" :disable="loading" />
     </v-flex>
   </v-layout>
 </template>
@@ -78,7 +65,7 @@ export default {
       this.issues = await this.loadIssues(this.filters)
       this.loading = false
     }
-  },
+  }
 }
 </script>
 

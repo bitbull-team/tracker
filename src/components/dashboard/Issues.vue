@@ -1,9 +1,6 @@
 <template>
   <v-list three-line>
-    <v-list-tile
-      v-for="issue in issues"
-      :key="issue.id"
-    >
+    <v-list-tile v-for="issue in issues" :key="issue.id">
       <v-list-tile-content>
         <v-list-tile-title>{{ issue.subject }}</v-list-tile-title>
         <v-list-tile-sub-title>

@@ -10,15 +10,12 @@ export default {
   resume({ commit }, issueId) {
     commit('resume', issueId)
   },
-  async record(
-    { commit, dispatch, state },
-    { issueId, comments, activityId }
-  ) {
+  async record({ commit, dispatch, state }, { issueId, comments, activityId }) {
     let timer = state.items.find(timer => timer.issueId === issueId)
     if (timer === undefined) {
       return false
     }
-    timer = Object.assign(timer, { comments, activityId });
+    timer = Object.assign(timer, { comments, activityId })
 
     await dispatch(
       'api/add',

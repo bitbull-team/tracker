@@ -1,9 +1,6 @@
 <template>
   <v-list three-line>
-    <v-list-tile
-      v-for="timer in items"
-      :key="timer.issueId"
-    >
+    <v-list-tile v-for="timer in items" :key="timer.issueId">
       <v-list-tile-content>
         <v-list-tile-title>{{ timer.issueId }}</v-list-tile-title>
       </v-list-tile-content>

@@ -2,11 +2,7 @@
   <div class="text-xs-center">
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
-        <v-btn
-          flat
-          class="transparent ma-0 pr-1 pl-1"
-          v-on="on"
-        >
+        <v-btn flat class="transparent ma-0 pr-1 pl-1" v-on="on">
           {{ $store.state.profile.current.name }}
         </v-btn>
       </template>

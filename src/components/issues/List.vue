@@ -1,9 +1,6 @@
 <template>
   <v-list three-line>
-    <v-list-tile
-      v-for="issue in items"
-      :key="issue.id"
-    >
+    <v-list-tile v-for="issue in items" :key="issue.id">
       <v-list-tile-content>
         <v-list-tile-title>{{ issue.subject }}</v-list-tile-title>
         <v-list-tile-sub-title>
@@ -14,7 +11,7 @@
         </v-list-tile-sub-title>
       </v-list-tile-content>
       <v-list-tile-action>
-        <v-icon @click="startNewTimer({issueId: issue.id})">
+        <v-icon @click="startNewTimer({ issueId: issue.id })">
           play_circle_outline
         </v-icon>
       </v-list-tile-action>
@@ -23,7 +20,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   props: {
@@ -37,7 +34,7 @@ export default {
       startTimer: 'timer/start'
     }),
     startNewTimer(issue) {
-      this.startTimer({issueId: issue.id})
+      this.startTimer({ issueId: issue.id })
       this.$router.push({ name: 'timers' })
     }
   }
