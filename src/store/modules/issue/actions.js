@@ -80,5 +80,18 @@ export default {
       commit('setItems', issues)
       return issues
     })
+  },
+  loadSingle({ commit, dispatch }, issueId) {
+    return dispatch(
+      'api/get',
+      {
+        path: `issues/${issueId}.json`
+      },
+      { root: true }
+    ).then(response => {
+      const issue = response.issue
+      commit('overrideItem', issue)
+      return issue
+    })
   }
 }

@@ -3,13 +3,15 @@ import { required, url, alphaNum, minLength } from 'vuelidate/lib/validators'
 
 const exactLength = param => value => value.length === param
 
+const getDefaultData = () => ({
+  name: '',
+  url: '',
+  apiKey: ''
+})
+
 export default {
   data: () => ({
-    form: {
-      name: '',
-      url: '',
-      apiKey: ''
-    }
+    form: Object.assign({}, getDefaultData())
   }),
   mixins: [validationMixin],
   validations: {
@@ -51,6 +53,12 @@ export default {
       if (!this.$v.form.apiKey.alphaNum) errors.push('only letters and number')
       if (!this.$v.form.apiKey.exactLength) errors.push('invalid length')
       return errors
+    }
+  },
+  methods: {
+    resetForm() {
+      this.form = Object.assign(this.form, getDefaultData())
+      this.$v.$reset()
     }
   }
 }

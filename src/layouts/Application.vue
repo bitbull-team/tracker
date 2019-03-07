@@ -11,6 +11,15 @@
         Close
       </v-btn>
     </v-snackbar>
+    <v-layout
+      v-if="loading"
+      class="loading-modal white"
+      fill-height
+      justify-center
+      align-center
+    >
+      <v-btn :loading="true" large flat icon />
+    </v-layout>
   </v-content>
 </template>
 
@@ -19,6 +28,7 @@ import { mapActions } from 'vuex'
 
 import Toolbar from '@/components/Toolbar'
 import NavMenu from '@/components/NavMenu'
+import { Promise } from 'q'
 
 export default {
   components: {
@@ -27,11 +37,17 @@ export default {
   },
   data: () => ({
     drawer: false,
-    snackBar: false
+    snackBar: false,
+    loading: false
   }),
   async mounted() {
-    await this.loadCurrentUser()
-    this.loadIssueStatuses()
+    this.loading = true
+    await Promise.all([
+      this.loadCurrentUser(),
+      this.loadIssueStatuses(),
+      this.loadTimeEntryActivity()
+    ])
+
     this.startPolling()
     this.$store.watch(
       state => state.notification.lastNew,
@@ -40,11 +56,14 @@ export default {
       }
     )
     this.drawMenu()
+
+    this.loading = false
   },
   methods: {
     ...mapActions({
       loadCurrentUser: 'api/loadCurrentUser',
       loadIssueStatuses: 'issueStatus/loadAll',
+      loadTimeEntryActivity: 'timeEntryActivity/loadAll',
       startPolling: 'notification/startPolling',
       drawMenu: 'systemTray/drawMenu'
     })
@@ -57,5 +76,13 @@ export default {
 .transparent.v-btn:hover::before,
 .transparent.v-btn:focus::before {
   background-color: transparent;
+}
+.loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
 }
 </style>
