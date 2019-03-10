@@ -4,5 +4,10 @@ export default {
   Project: 'Progetto',
   Hours: 'Ore',
   hours: 'ore',
-  'Insert comment': 'Inserisci un commento'
+  'Insert comment': 'Inserisci un commento',
+  Dashboard: 'Dashboard',
+  Status: 'Stato',
+  Timers: 'Timers',
+  'Assigned to me': 'Assegnati a me',
+  Issues: 'Segnalazioni'
 }

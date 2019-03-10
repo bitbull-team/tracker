@@ -27,7 +27,7 @@ export default {
         path: 'time_entries.json',
         params: {
           from: moment()
-            .startOf('week')
+            .startOf('isoWeek')
             .format(DATE_FORMAT),
           to: moment().format(DATE_FORMAT),
           user_id: rootState.api.currentUser.id,
