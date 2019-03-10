@@ -1,6 +1,8 @@
 <template>
-  <div class="timer">
-    <div class="actions">
+  <div v-if="getRunning.length > 0" class="timer">
+    <single-timer :issue="timer.issueId" />
+    <!-- NEEDS TO BE REFACTOR WITH SUBCOMPONENTS, WORK IN PROGRESS!! -->
+    <!-- <div class="actions">
       <button
         :class="status === 'started' || status === 'paused' ? 'stop' : 'start'"
         @click="runTimer()"
@@ -19,99 +21,112 @@
     <div>
       <time>{{ h }} : {{ min }} : {{ sec }}</time>
       <span class="issue">{{ issue }}</span>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import SingleTimer from '@/components/timers/Single'
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  data() {
-    return {
-      status: 'stopped',
-      hour: 0,
-      minute: 0,
-      second: 0,
-      issue: 'prova'
-    }
+  components: {
+    SingleTimer
   },
   computed: {
-    label() {
-      return this.status === 'started' || this.status === 'paused'
-        ? 'Stop'
-        : 'Start'
-    },
-    h() {
-      if (this.hour < 10) {
-        return '0' + this.hour
-      }
-      return this.hour
-    },
-    min() {
-      if (this.minute < 10) {
-        return '0' + this.minute
-      }
-      return this.minute
-    },
-    sec() {
-      if (this.second < 10) {
-        return '0' + this.second
-      }
-      return this.second
-    }
-  },
-  methods: {
-    ...mapActions({
-      changeSystemTrayIcon: 'systemTray/changeIcon'
+    ...mapGetters({
+      getRunning: 'timer/getRunning'
     }),
-    runTimer() {
-      if (this.status === 'started' || this.status === 'paused') {
-        this.stop()
-        return false
-      }
-
-      this.start()
-    },
-    start() {
-      this.status = 'started'
-      this._tick()
-      this.interval = setInterval(this._tick, 1000)
-      this.changeSystemTrayIcon('timerOn')
-    },
-    pause() {
-      if (this.status === 'paused') {
-        this.start()
-        return false
-      }
-      this.status = 'paused'
-      clearInterval(this.interval)
-    },
-    stop() {
-      this.status = 'stopped'
-      clearInterval(this.interval)
-      this.saveTime(this.hour, this.minute)
-      this.hour = 0
-      this.minute = 0
-      this.second = 0
-      this.changeSystemTrayIcon('timerOff')
-    },
-    _tick() {
-      this.second++
-      if (this.second === 60) {
-        this.minute++
-        this.second = 0
-      }
-      if (this.minute === 60) {
-        this.hour++
-        this.minute = 0
-      }
-    },
-    saveTime(h, m) {
-      let loggedTime = h + '.' + m * 1.6
-      return loggedTime
-      // console.log(loggedTime)
+    timer() {
+      return this.getRunning[0]
     }
   }
+  // NEEDS TO BE REFACTOR WITH SUBCOMPONENTS, WORK IN PROGRESS!!
+  // data() {
+  //   return {
+  //     status: 'stopped',
+  //     hour: 0,
+  //     minute: 0,
+  //     second: 0,
+  //     issue: 'prova'
+  //   }
+  // },
+  // computed: {
+  //   label() {
+  //     return this.status === 'started' || this.status === 'paused'
+  //       ? 'Stop'
+  //       : 'Start'
+  //   },
+  //   h() {
+  //     if (this.hour < 10) {
+  //       return '0' + this.hour
+  //     }
+  //     return this.hour
+  //   },
+  //   min() {
+  //     if (this.minute < 10) {
+  //       return '0' + this.minute
+  //     }
+  //     return this.minute
+  //   },
+  //   sec() {
+  //     if (this.second < 10) {
+  //       return '0' + this.second
+  //     }
+  //     return this.second
+  //   }
+  // },
+  // methods: {
+  //   ...mapActions({
+  //     changeSystemTrayIcon: 'systemTray/changeIcon'
+  //   }),
+  //   runTimer() {
+  //     if (this.status === 'started' || this.status === 'paused') {
+  //       this.stop()
+  //       return false
+  //     }
+
+  //     this.start()
+  //   },
+  //   start() {
+  //     this.status = 'started'
+  //     this._tick()
+  //     this.interval = setInterval(this._tick, 1000)
+  //     this.changeSystemTrayIcon('timerOn')
+  //   },
+  //   pause() {
+  //     if (this.status === 'paused') {
+  //       this.start()
+  //       return false
+  //     }
+  //     this.status = 'paused'
+  //     clearInterval(this.interval)
+  //   },
+  //   stop() {
+  //     this.status = 'stopped'
+  //     clearInterval(this.interval)
+  //     this.saveTime(this.hour, this.minute)
+  //     this.hour = 0
+  //     this.minute = 0
+  //     this.second = 0
+  //     this.changeSystemTrayIcon('timerOff')
+  //   },
+  //   _tick() {
+  //     this.second++
+  //     if (this.second === 60) {
+  //       this.minute++
+  //       this.second = 0
+  //     }
+  //     if (this.minute === 60) {
+  //       this.hour++
+  //       this.minute = 0
+  //     }
+  //   },
+  //   saveTime(h, m) {
+  //     let loggedTime = h + '.' + m * 1.6
+  //     return loggedTime
+  //     // console.log(loggedTime)
+  //   }
+  // }
 }
 </script>
 

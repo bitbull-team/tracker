@@ -1,5 +1,5 @@
 <template>
-  <v-layout row>
+  <v-layout row align-center>
     <v-flex v-if="showButtons">
       <v-btn v-if="timer.isRunning" text icon @click="stop">
         <v-icon>stop</v-icon>
