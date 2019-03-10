@@ -4,14 +4,14 @@
       <v-list-tile-content>
         <v-list-tile-title>{{ issue.subject }}</v-list-tile-title>
         <v-list-tile-sub-title>
-          Status: {{ issue.status.name }}
+          {{ $t('Status') }}: {{ issue.status.name }}
         </v-list-tile-sub-title>
         <v-list-tile-sub-title>
-          Project: {{ issue.project.name }}
+          {{ $t('Project') }}: {{ issue.project.name }}
         </v-list-tile-sub-title>
       </v-list-tile-content>
       <v-list-tile-action>
-        <v-icon @click="startNewTimer({ issueId: issue.id })">
+        <v-icon @click="startNewTimer({ issueId: issue.id, comments: '' })">
           play_circle_outline
         </v-icon>
       </v-list-tile-action>
@@ -33,8 +33,8 @@ export default {
     ...mapActions({
       startTimer: 'timer/start'
     }),
-    startNewTimer(issue) {
-      this.startTimer({ issueId: issue.id })
+    startNewTimer({ issueId, comments, activityId }) {
+      this.startTimer({ issueId: issueId, comments: comments })
       this.$router.push({ name: 'dashboard' })
     }
   }

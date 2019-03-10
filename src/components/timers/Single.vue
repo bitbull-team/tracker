@@ -58,14 +58,16 @@ export default {
     }
   },
   async mounted() {
-    this.timer = this.timerGetByIssue(this.issue)
-    const duration = moment.duration(moment().diff(this.timer.start))
-    this.hour = duration.get('hours')
-    this.minute = duration.get('minutes')
-    this.second = duration.get('seconds')
-    this.showButtons = true
-    if (this.timer.isRunning) {
-      this.start()
+    if (this.issue) {
+      this.timer = this.timerGetByIssue(this.issue)
+      const duration = moment.duration(moment().diff(this.timer.start))
+      this.hour = duration.get('hours')
+      this.minute = duration.get('minutes')
+      this.second = duration.get('seconds')
+      this.showButtons = true
+      if (this.timer.isRunning) {
+        this.start()
+      }
     }
   },
   methods: {
