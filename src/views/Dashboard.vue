@@ -2,7 +2,7 @@
   <div>
     <time-tracker />
     <time-tracked-this-week />
-    <issues />
+    <issues :items="allMyIssues" />
     <v-btn @click="sendTestNotification">
       Send
     </v-btn>
@@ -12,7 +12,7 @@
 <script>
 import TimeTracker from '@/components/dashboard/TimeTracker'
 import TimeTrackedThisWeek from '@/components/dashboard/TimeTrackedThisWeek'
-import Issues from '@/components/dashboard/Issues'
+import Issues from '@/components/issues/List'
 import { mapActions } from 'vuex'
 
 export default {
@@ -21,9 +21,18 @@ export default {
     TimeTrackedThisWeek,
     Issues
   },
+  data() {
+    return {
+      allMyIssues: []
+    }
+  },
+  async mounted() {
+    this.allMyIssues = await this.loadMyIssues()
+  },
   methods: {
     ...mapActions({
-      sendNotification: 'notification/send'
+      sendNotification: 'notification/send',
+      loadMyIssues: 'issue/loadAllMy'
     }),
     sendTestNotification() {
       this.sendNotification({
