@@ -8,15 +8,15 @@ export default {
     }
     const duplicatedTimer = state.items.find(timer => timer.issueId === issueId)
     if (duplicatedTimer !== undefined) {
-      commit('resume', issueId)
+      commit('resume', duplicatedTimer.issueId)
     } else {
       commit('add', { issueId, comments, activityId })
     }
   },
-  pause({ commit }, { issueId }) {
+  pause({ commit }, issueId) {
     commit('pause', issueId)
   },
-  resume({ commit }, { issueId }) {
+  resume({ commit }, issueId) {
     commit('resume', issueId)
   },
   async record({ commit, dispatch, state }, { issueId, comments, activityId }) {
@@ -44,7 +44,7 @@ export default {
     )
     commit('delete', issueId)
   },
-  discard({ commit }, { issueId }) {
+  discard({ commit }, issueId) {
     commit('delete', issueId)
   }
 }

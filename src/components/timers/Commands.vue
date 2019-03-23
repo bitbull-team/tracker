@@ -61,15 +61,11 @@ export default {
       this.$emit('start')
     },
     pause() {
-      this.executePause({
-        issueId: this.issue
-      })
+      this.executePause(this.issue)
       this.$emit('pause')
     },
     discard() {
-      this.executeDiscard({
-        issueId: this.issue
-      })
+      this.executeDiscard(this.issue)
       this.$emit('discard')
     }
   }

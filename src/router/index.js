@@ -4,10 +4,12 @@ import Router from 'vue-router'
 import Empty from '@/layouts/Empty'
 import Application from '@/layouts/Application'
 
+import Dashboard from '@/views/Dashboard.vue'
 import Timers from '@/views/Timers.vue'
 import Reports from '@/views/Reports.vue'
 import Issues from '@/views/Issues.vue'
-import NewProfile from '@/views/profile/NewProfile.vue'
+import NewProfile from '@/views/profile/New.vue'
+import EditProfile from '@/views/profile/Edit.vue'
 
 import store from '../store'
 
@@ -22,7 +24,13 @@ const router = new Router({
       meta: { requiresAuth: true },
       children: [
         {
-          path: '',
+          path: '/',
+          name: 'dashboard',
+          component: Dashboard,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/timers',
           name: 'timers',
           component: Timers,
           meta: { requiresAuth: true }
@@ -49,6 +57,11 @@ const router = new Router({
           path: '/profile/create',
           name: 'create-profile',
           component: NewProfile
+        },
+        {
+          path: '/profile/:id',
+          name: 'edit-profile',
+          component: EditProfile
         }
       ]
     }

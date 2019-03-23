@@ -10,7 +10,7 @@
         <v-list-tile
           v-for="profile in profiles"
           :key="profile.id"
-          @click="selectProfile(profile)"
+          @click="selectProfile(profile.id)"
         >
           <v-list-tile-title>{{ profile.name }}</v-list-tile-title>
         </v-list-tile>
