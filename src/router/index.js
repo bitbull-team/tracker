@@ -4,9 +4,9 @@ import Router from 'vue-router'
 import Empty from '@/layouts/Empty'
 import Application from '@/layouts/Application'
 
-import Dashboard from '@/views/Dashboard.vue'
-import Issues from '@/views/Issues.vue'
 import Timers from '@/views/Timers.vue'
+import Reports from '@/views/Reports.vue'
+import Issues from '@/views/Issues.vue'
 import NewProfile from '@/views/profile/NewProfile.vue'
 
 import store from '../store'
@@ -23,8 +23,8 @@ const router = new Router({
       children: [
         {
           path: '',
-          name: 'dashboard',
-          component: Dashboard,
+          name: 'timers',
+          component: Timers,
           meta: { requiresAuth: true }
         },
         {
@@ -34,9 +34,9 @@ const router = new Router({
           meta: { requiresAuth: true }
         },
         {
-          path: '/timers',
-          name: 'timers',
-          component: Timers,
+          path: '/reports',
+          name: 'reports',
+          component: Reports,
           meta: { requiresAuth: true }
         }
       ]

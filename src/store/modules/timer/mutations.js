@@ -1,23 +1,28 @@
+import moment from 'moment'
+
 export default {
   add(state, { issueId, comments, activityId }) {
     state.items.push({
       issueId,
       comments,
       activityId,
-      start: new Date(),
-      end: null,
-      isRunning: true,
-      isPaused: false
+      duration: 0,
+      startedAt: new Date(),
+      isRunning: true
     })
+    state.items = state.items.slice(0)
   },
   pause(state, issueId) {
     const timer = state.items.find(timer => timer.issueId === issueId)
     if (timer === undefined) {
       return false
     }
+    const from =
+      timer.resumedAt !== undefined ? timer.resumedAt : timer.startedAt
+    timer.duration += moment.duration(moment().diff(from)).as('seconds')
+    timer.pausedAt = new Date()
     timer.isRunning = false
-    timer.isPaused = true
-    timer.end = new Date()
+    state.items = state.items.slice(0)
   },
   resume(state, issueId) {
     const timer = state.items.find(timer => timer.issueId === issueId)
@@ -25,8 +30,9 @@ export default {
       return false
     }
     timer.isRunning = true
-    timer.isPaused = false
-    timer.end = null
+    timer.resumedAt = new Date()
+    delete timer.pausedAt
+    state.items = state.items.slice(0)
   },
   delete(state, issueId) {
     const index = state.items.findIndex(timer => timer.issueId === issueId)
@@ -34,5 +40,6 @@ export default {
       return false
     }
     state.items.splice(index, 1)
+    state.items = state.items.slice(0)
   }
 }

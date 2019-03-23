@@ -35,7 +35,7 @@ export default {
     }),
     startNewTimer({ issueId, comments, activityId }) {
       this.startTimer({ issueId: issueId, comments: comments })
-      this.$router.push({ name: 'dashboard' })
+      this.$router.push({ name: 'timers' })
     }
   }
 }

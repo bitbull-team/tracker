@@ -1,13 +1,22 @@
 import moment from 'moment'
 
 export default {
-  start({ commit }, { issueId, comments, activityId }) {
-    commit('add', { issueId, comments, activityId })
+  start({ commit, state }, { issueId, comments, activityId }) {
+    const runningTimer = state.items.find(timer => timer.isRunning === true)
+    if (runningTimer !== undefined) {
+      commit('pause', runningTimer.issueId)
+    }
+    const duplicatedTimer = state.items.find(timer => timer.issueId === issueId)
+    if (duplicatedTimer !== undefined) {
+      commit('resume', issueId)
+    } else {
+      commit('add', { issueId, comments, activityId })
+    }
   },
-  pause({ commit }, issueId) {
+  pause({ commit }, { issueId }) {
     commit('pause', issueId)
   },
-  resume({ commit }, issueId) {
+  resume({ commit }, { issueId }) {
     commit('resume', issueId)
   },
   async record({ commit, dispatch, state }, { issueId, comments, activityId }) {
@@ -15,17 +24,19 @@ export default {
     if (timer === undefined) {
       return false
     }
+    if (timer.isRunning === true) {
+      commit('pause', issueId)
+      timer = state.items.find(timer => timer.issueId === issueId)
+    }
+
     timer = Object.assign(timer, { comments, activityId })
 
     await dispatch(
-      'api/add',
+      'timeEntry/add',
       {
         issue_id: timer.issueId,
-        spent_on: moment(timer.start).format('YYYY-MM-DD'),
-        hours: moment(timer.start).diff(
-          moment(timer.end || new Date()),
-          'hours'
-        ),
+        spent_on: moment(timer.startedAt).format('YYYY-MM-DD'),
+        hours: moment.duration(timer.duration, 'seconds').as('hours'),
         activity_id: timer.activityId,
         comments: timer.comments
       },
@@ -33,7 +44,7 @@ export default {
     )
     commit('delete', issueId)
   },
-  discard({ commit }, issueId) {
+  discard({ commit }, { issueId }) {
     commit('delete', issueId)
   }
 }

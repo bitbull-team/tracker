@@ -27,12 +27,12 @@
     </v-toolbar>
     <v-list dense>
       <v-divider />
-      <v-list-tile :to="{ name: 'dashboard' }">
+      <v-list-tile :to="{ name: 'timers' }">
         <v-list-tile-action>
-          <v-icon>dashboard</v-icon>
+          <v-icon>timer</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title>{{ $t('Dashboard') }}</v-list-tile-title>
+          <v-list-tile-title>{{ $t('Timers') }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-divider />
@@ -44,12 +44,12 @@
           <v-list-tile-title>{{ $t('Issues') }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile :to="{ name: 'timers' }">
+      <v-list-tile :to="{ name: 'reports' }">
         <v-list-tile-action>
-          <v-icon>timer</v-icon>
+          <v-icon>bar_chart</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title>{{ $t('Timers') }}</v-list-tile-title>
+          <v-list-tile-title>{{ $t('Reports') }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>

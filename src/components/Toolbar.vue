@@ -6,7 +6,7 @@
       </v-flex>
       <v-flex xs6 class="text-xs-center">
         <v-toolbar-title>
-          <v-btn :to="{ name: 'dashboard' }" class="transparent" flat>
+          <v-btn :to="{ name: 'timers' }" class="transparent" flat>
             Tracker
           </v-btn>
         </v-toolbar-title>

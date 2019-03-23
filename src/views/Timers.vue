@@ -1,22 +1,28 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12>
-      <timers-list :items="timers" />
-    </v-flex>
-  </v-layout>
+  <div>
+    Running:
+    <running-timer v-if="runningTimer !== undefined" :timer="runningTimer" />
+    Paused:
+    <div v-for="timer in pausedTimers" :key="timer.issueId">
+      <paused-timer :timer="timer" />
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import TimersList from '@/components/timers/List'
+import RunningTimer from '@/components/timers/Running'
+import PausedTimer from '@/components/timers/Paused'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    TimersList
+    RunningTimer,
+    PausedTimer
   },
   computed: {
-    ...mapState({
-      timers: state => state.timer.items
+    ...mapGetters({
+      runningTimer: 'timer/getRunning',
+      pausedTimers: 'timer/getPaused'
     })
   }
 }
