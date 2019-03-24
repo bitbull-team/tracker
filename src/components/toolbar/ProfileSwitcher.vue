@@ -14,6 +14,7 @@
         >
           <v-list-tile-title>{{ profile.name }}</v-list-tile-title>
           <v-list-tile-action>
+            <v-spacer />
             <v-btn
               icon
               :to="{ name: 'edit-profile', params: { id: profile.id } }"
