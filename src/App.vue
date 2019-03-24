@@ -28,7 +28,4 @@ html {
 .theme--light.application {
   background-color: white;
 }
-.v-toolbar {
-  background-color: transparent !important;
-}
 </style>

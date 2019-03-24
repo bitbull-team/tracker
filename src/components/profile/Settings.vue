@@ -46,12 +46,18 @@ export default {
         this.value = Object.assign(this.value, this.form)
       },
       deep: true
+    },
+    value: {
+      handler(newValue) {
+        this.form = Object.assign(this.form, newValue)
+      },
+      deep: true
     }
   },
   methods: {
     validate() {
       this.$v.$touch()
-      return this.formValid
+      return this.isValid
     }
   }
 }

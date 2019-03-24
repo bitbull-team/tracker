@@ -73,4 +73,7 @@ export default {
 div {
   width: 100%;
 }
+.v-list {
+  background-color: transparent;
+}
 </style>

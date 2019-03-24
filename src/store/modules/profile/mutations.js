@@ -1,3 +1,5 @@
+import i18n from '@/i18n'
+
 export default {
   pushItem(state, profile) {
     state.items.push(profile)
@@ -12,5 +14,8 @@ export default {
   },
   setCurrent(state, profile) {
     state.current = profile
+    i18n.locale =
+      state.current.language ||
+      (window.navigator.language.split('-')[0] || 'en')
   }
 }

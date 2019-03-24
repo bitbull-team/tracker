@@ -64,7 +64,13 @@ export default {
   watch: {
     form: {
       handler(newValue) {
-        this.value = Object.assign(this.value, this.form)
+        this.value = Object.assign(this.value, newValue)
+      },
+      deep: true
+    },
+    value: {
+      handler(newValue) {
+        this.form = Object.assign(this.form, newValue)
       },
       deep: true
     }
@@ -72,7 +78,7 @@ export default {
   methods: {
     validate() {
       this.$v.$touch()
-      return this.formValid
+      return this.isValid
     }
   }
 }

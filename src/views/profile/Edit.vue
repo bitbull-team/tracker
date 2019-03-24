@@ -1,92 +1,109 @@
 <template>
   <v-layout align-center justify-center>
     <v-flex xs12 sm8 md4>
-      <form novalidate @submit.prevent="validateForm">
-        <v-card class="elevation-2">
-          <v-card-title primary-title>
-            <div>
-              <div class="headline">
-                Create new profile
-              </div>
-            </div>
-          </v-card-title>
-          <v-card-text>
-            <v-text-field
-              v-model="form.name"
-              :error-messages="nameErrors"
-              name="name"
-              label="Workspace name"
-              :disabled="loading"
-              @input="$v.form.name.$touch()"
-              @blur="$v.form.name.$touch()"
-            />
-            <v-text-field
-              v-model="form.url"
-              :error-messages="urlErrors"
-              name="url"
-              label="Tracker URL"
-              :disabled="loading"
-              @input="$v.form.url.$touch()"
-              @blur="$v.form.url.$touch()"
-            />
-            <v-text-field
-              v-model="form.apiKey"
-              :error-messages="apiKeyErrors"
-              name="apiKey"
-              label="API access key"
-              :type="showApiKey ? 'text' : 'password'"
-              :append-icon="showApiKey ? 'visibility_off' : 'visibility'"
-              counter="40"
-              :disabled="loading"
-              @input="$v.form.apiKey.$touch()"
-              @blur="$v.form.apiKey.$touch()"
-              @click:append="showApiKey = !showApiKey"
-            />
-            <v-card-actions>
-              <v-spacer />
-              <v-btn
-                type="submit"
-                color="primary"
-                :loading="loading"
-                @click.native="validateForm()"
-              >
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card-text>
-        </v-card>
-      </form>
+      <v-card class="elevation-0">
+        <v-card-title primary-title>
+          <div>
+            <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
+            <h3 class="headline mb-0">Edit profile {{ form.name }}</h3>
+          </div>
+        </v-card-title>
+
+        <v-card-text>
+          <profile-details
+            ref="form1"
+            v-model="form"
+            :loading="loading"
+            @submit="validateForm()"
+          />
+          <profile-settings
+            ref="form2"
+            v-model="form"
+            :loading="loading"
+            @submit="validateForm()"
+          />
+          <issues-preference
+            ref="form3"
+            v-model="form"
+            :loading="loading"
+            @submit="validateForm()"
+          />
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="warning" flat :loading="loading" @click="cancel()">
+            Cancel
+          </v-btn>
+          <v-btn
+            color="primary"
+            flat
+            :disabled="$v.form.$invalid"
+            :loading="loading"
+            @click="validateForm()"
+          >
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import profileValidation from '@/mixins/validations/profile'
+import ProfileDetails from '@/components/profile/Details'
+import ProfileSettings from '@/components/profile/Settings'
+import IssuesPreference from '@/components/profile/IssuesPreference'
 
 export default {
+  components: {
+    ProfileDetails,
+    ProfileSettings,
+    IssuesPreference
+  },
   mixins: [profileValidation],
   data: () => ({
-    loading: false,
-    showApiKey: false
+    loading: false
   }),
+  computed: {
+    ...mapGetters({
+      getProfileById: 'profile/getProfileById'
+    })
+  },
+  mounted() {
+    this.form = Object.assign(
+      this.form,
+      this.getProfileById(this.$route.params.id)
+    )
+    if (this.$refs.form1) this.$refs.form1.validate()
+    if (this.$refs.form2) this.$refs.form2.validate()
+    if (this.$refs.form3) this.$refs.form3.validate()
+  },
   methods: {
     ...mapActions({
-      save: 'profile/save',
-      selectDefaultProfile: 'profile/select'
+      save: 'profile/save'
     }),
-    validateForm() {
+    async validateForm() {
       this.$v.$touch()
+      if (this.$refs.form1) this.$refs.form1.validate()
+      if (this.$refs.form2) this.$refs.form2.validate()
+      if (this.$refs.form3) this.$refs.form3.validate()
 
-      if (!this.$v.$invalid) {
-        this.loading = true
-        this.saveProfile()
+      if (this.$v.form.$invalid) {
+        return
       }
+
+      await this.saveProfile()
     },
     async saveProfile() {
+      this.loading = true
       await this.save(this.form)
-      await this.selectDefaultProfile(this.form)
       this.loading = false
+      this.$router.push({ name: 'dashboard' })
+    },
+    cancel() {
       this.$router.push({ name: 'dashboard' })
     }
   }

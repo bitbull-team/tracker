@@ -13,6 +13,14 @@
           @click="selectProfile(profile.id)"
         >
           <v-list-tile-title>{{ profile.name }}</v-list-tile-title>
+          <v-list-tile-action>
+            <v-btn
+              icon
+              :to="{ name: 'edit-profile', params: { id: profile.id } }"
+            >
+              <v-icon>edit</v-icon>
+            </v-btn>
+          </v-list-tile-action>
         </v-list-tile>
         <v-list-tile :to="{ name: 'create-profile' }">
           <v-list-tile-title>Create new</v-list-tile-title>

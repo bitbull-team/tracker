@@ -13,7 +13,11 @@
     </v-snackbar>
     <v-layout
       v-if="loading"
-      class="loading-modal white"
+      :class="{
+        white: !$store.state.profile.current.darkMode,
+        'grey darken-3': $store.state.profile.current.darkMode
+      }"
+      class="loading-modal"
       fill-height
       justify-center
       align-center
@@ -42,11 +46,16 @@ export default {
   }),
   async mounted() {
     this.loading = true
-    await Promise.all([
-      this.loadCurrentUser(),
-      this.loadIssueStatuses(),
-      this.loadTimeEntryActivity()
-    ])
+    try {
+      const user = await this.loadCurrentUser()
+    } catch (error) {
+      this.$router.push({
+        name: 'edit-profile',
+        params: { id: this.$store.state.profile.current.id }
+      })
+    }
+
+    await Promise.all([this.loadIssueStatuses(), this.loadTimeEntryActivity()])
 
     this.startPolling()
     this.$store.watch(
