@@ -4,5 +4,8 @@ export default {
   },
   setThisWeekItems(state, items) {
     state.thisWeekItems = items
+  },
+  setThisMonthItems(state, items) {
+    state.thisMonthItems = items
   }
 }
