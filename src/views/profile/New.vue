@@ -3,50 +3,32 @@
     <v-flex xs12 sm8 md4>
       <v-stepper v-model="step" vertical class="elevation-0">
         <v-stepper-step :complete="step > 1" step="1">
-          Create
+          Create new profile
         </v-stepper-step>
 
         <v-stepper-items>
           <v-stepper-content step="1">
-            <form novalidate @submit.prevent="validateForm1">
-              <v-text-field
-                v-model="form.name"
-                :error-messages="nameErrors"
-                name="name"
-                label="Workspace name"
-                :disabled="loading"
-                @input="$v.form.name.$touch()"
-                @blur="$v.form.name.$touch()"
-              />
-              <v-text-field
-                v-model="form.url"
-                :error-messages="urlErrors"
-                name="url"
-                label="Tracker URL"
-                :disabled="loading"
-                @input="$v.form.url.$touch()"
-                @blur="$v.form.url.$touch()"
-              />
-              <v-text-field
-                v-model="form.apiKey"
-                :error-messages="apiKeyErrors"
-                name="apiKey"
-                label="API access key"
-                :type="showApiKey ? 'text' : 'password'"
-                :append-icon="showApiKey ? 'visibility_off' : 'visibility'"
-                counter="40"
-                :disabled="loading"
-                @input="$v.form.apiKey.$touch()"
-                @blur="$v.form.apiKey.$touch()"
-                @click:append="showApiKey = !showApiKey"
-              />
-            </form>
+            <profile-details
+              ref="form1"
+              v-model="form"
+              :loading="loading"
+              @submit="validateForm1()"
+            />
             <v-layout>
               <v-spacer />
               <v-btn
+                v-if="canBeCanceled"
+                color="warning"
+                flat
+                :loading="loading"
+                @click="cancel()"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
                 color="primary"
                 flat
-                :disabled="!form1Valid"
+                :disabled="!$refs.form1 || !$refs.form1.isValid"
                 :loading="loading"
                 @click="validateForm1()"
               >
@@ -56,25 +38,23 @@
           </v-stepper-content>
 
           <v-stepper-step :complete="step > 2" step="2">
-            Settings
+            Change profile settings
           </v-stepper-step>
 
           <v-stepper-content step="2">
-            <form novalidate @submit.prevent="validateForm2">
-              <v-switch v-model="form.darkMode" :label="`Dark theme`" />
-              <v-select
-                v-model="form.language"
-                :items="languages"
-                label="Language"
-              />
-            </form>
+            <profile-settings
+              ref="form2"
+              v-model="form"
+              :loading="loading"
+              @submit="validateForm2()"
+            />
 
             <v-layout>
               <v-spacer />
               <v-btn
                 color="primary"
                 flat
-                :disabled="!form2Valid"
+                :disabled="!$refs.form2 || !$refs.form2.isValid"
                 :loading="loading"
                 @click="validateForm2()"
               >
@@ -84,18 +64,23 @@
           </v-stepper-content>
 
           <v-stepper-step step="3">
-            Issue preference
+            Provide issues preference
           </v-stepper-step>
 
           <v-stepper-content step="3">
-            <form novalidate @submit.prevent="validateForm3" />
+            <issues-preference
+              ref="form3"
+              v-model="form"
+              :loading="loading"
+              @submit="validateForm3()"
+            />
 
             <v-layout>
               <v-spacer />
               <v-btn
                 color="primary"
                 flat
-                :disabled="!form3Valid"
+                :disabled="!$refs.form3 || !$refs.form3.isValid"
                 :loading="loading"
                 @click="validateForm3()"
               >
@@ -110,39 +95,27 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import profileValidation from '@/mixins/validations/profile'
-import availableLanguages from '@/mixins/availableLanguages'
+import ProfileDetails from '@/components/profile/Details'
+import ProfileSettings from '@/components/profile/Settings'
+import IssuesPreference from '@/components/profile/IssuesPreference'
 
 export default {
-  mixins: [profileValidation, availableLanguages],
+  components: {
+    ProfileDetails,
+    ProfileSettings,
+    IssuesPreference
+  },
+  mixins: [profileValidation],
   data: () => ({
     loading: false,
-    step: 1,
-    showApiKey: false
+    step: 1
   }),
   computed: {
-    form1Valid() {
-      return (
-        this.nameErrors.length === 0 ||
-        this.urlErrors.length === 0 ||
-        this.apiKeyErrors.length === 0
-      )
-    },
-    form2Valid() {
-      return (
-        this.nameErrors.length === 0 ||
-        this.urlErrors.length === 0 ||
-        this.apiKeyErrors.length === 0
-      )
-    },
-    form3Valid() {
-      return (
-        this.nameErrors.length === 0 ||
-        this.urlErrors.length === 0 ||
-        this.apiKeyErrors.length === 0
-      )
-    }
+    ...mapGetters({
+      canBeCanceled: 'profile/isAtLeastOneConfigured'
+    })
   },
   watch: {
     'form.language': function(value) {
@@ -163,7 +136,7 @@ export default {
     async validateForm1() {
       this.$v.$touch()
 
-      if (this.form1Valid === false) {
+      if (this.$refs.form1.isValid === false) {
         return
       }
 
@@ -174,7 +147,7 @@ export default {
     async validateForm2() {
       this.$v.$touch()
 
-      if (this.form2Valid === false) {
+      if (this.$refs.form2.isValid === false) {
         return
       }
       await this.saveProfile()
@@ -183,7 +156,7 @@ export default {
     async validateForm3() {
       this.$v.$touch()
 
-      if (this.form3Valid === false) {
+      if (this.$refs.form3.isValid === false) {
         return
       }
 
@@ -194,6 +167,9 @@ export default {
       this.loading = true
       this.form.id = await this.save(this.form)
       this.loading = false
+    },
+    cancel() {
+      this.$router.push({ name: 'dashboard' })
     }
   }
 }

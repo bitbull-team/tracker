@@ -1,7 +1,9 @@
+import { languages } from '@/i18n'
+
 export default {
   computed: {
     languages() {
-      return Object.keys(this.$i18n.messages)
+      return languages
     }
   }
 }

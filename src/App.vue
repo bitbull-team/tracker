@@ -25,4 +25,10 @@ html {
 *::-webkit-scrollbar-thumb {
   background: #9e9e9e;
 }
+.theme--light.application {
+  background-color: white;
+}
+.v-toolbar {
+  background-color: transparent !important;
+}
 </style>
