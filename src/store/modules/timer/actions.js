@@ -31,14 +31,23 @@ export default {
 
     timer = Object.assign(timer, { comments, activityId })
 
+    const hours = moment.duration(timer.duration, 'seconds').as('hours')
+
     await dispatch(
       'timeEntry/add',
       {
         issue_id: timer.issueId,
         spent_on: moment(timer.startedAt).format('YYYY-MM-DD'),
-        hours: moment.duration(timer.duration, 'seconds').as('hours'),
+        hours: hours,
         activity_id: timer.activityId,
         comments: timer.comments
+      },
+      { root: true }
+    )
+    await dispatch(
+      'notification/send',
+      {
+        title: `Tracked ${hours} hours on issue ${timer.issueId}`
       },
       { root: true }
     )

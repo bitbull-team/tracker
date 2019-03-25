@@ -7,11 +7,13 @@
       :search-input.sync="search"
       :label="label"
       :placeholder="placeholder"
+      :error-messages="errorMessages"
       item-text="subject"
       return-object
       hide-no-data
       no-filter
       hide-selected
+      @change="$emit('change')"
     >
       <template slot="selection" slot-scope="{ item }">
         <span v-if="item !== null">{{ item.id }} - {{ item.subject }}</span>
@@ -48,6 +50,10 @@ export default {
     placeholder: {
       type: String,
       default: () => 'Start typing to Search'
+    },
+    errorMessages: {
+      type: Array,
+      default: () => []
     }
   },
   data: () => ({

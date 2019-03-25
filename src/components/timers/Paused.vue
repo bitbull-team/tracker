@@ -4,7 +4,11 @@
       <time-view :duration="timer.duration" />
     </v-flex>
     <v-flex>
-      <timer-commands :issue="timer.issueId" :running="false" />
+      <timer-commands
+        :issue="timer.issueId"
+        :running="false"
+        @stop="$emit('stop')"
+      />
     </v-flex>
   </v-layout>
 </template>
