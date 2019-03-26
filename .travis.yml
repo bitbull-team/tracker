@@ -35,8 +35,24 @@ script:
       npm install
       npm run build:mac
     fi
+    
+after_script:
+   - zip windows.zip dist_electron/*.exe
+   - zip linux.zip dist_electron/*.deb 
+   - zip mac.zip dist_electron/*.dmg
 
 branches:
   only:
     - master
 
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  file:
+    - windows.zip
+    - linux.zip
+    - mac.zip
+  skip_cleanup: true
+  on:
+    tags: true
+    
