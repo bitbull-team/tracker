@@ -1,18 +1,16 @@
 <template>
-  <v-toolbar class="top-toolbar white" fixed app flat>
+  <v-toolbar class="top-toolbar" fixed app flat>
     <v-layout align-center justify-space-between row fill-height>
-      <v-flex xs1 sm3>
+      <v-flex xs5 sm3>
         <v-toolbar-side-icon @click="$emit('toggle-nav-menu')" />
+        <v-btn icon flat :to="{ name: 'dashboard' }" class="transparent">
+          <v-icon>home</v-icon>
+        </v-btn>
       </v-flex>
-      <v-flex xs6 class="text-xs-center">
-        <v-toolbar-title>
-          <v-btn :to="{ name: 'dashboard' }" class="transparent" flat
-            >Tracker</v-btn
-          >
-        </v-toolbar-title>
-      </v-flex>
+      <v-spacer />
       <v-flex xs5 sm3 class="text-xs-right">
         <v-layout row justify-end align-center>
+          <notification />
           <profile-switcher />
         </v-layout>
       </v-flex>
@@ -22,10 +20,12 @@
 
 <script>
 import ProfileSwitcher from '@/components/toolbar/ProfileSwitcher'
+import Notification from '@/components/toolbar/Notification'
 
 export default {
   components: {
-    ProfileSwitcher
+    ProfileSwitcher,
+    Notification
   }
 }
 </script>

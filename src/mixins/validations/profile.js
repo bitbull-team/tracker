@@ -1,15 +1,21 @@
 import { validationMixin } from 'vuelidate'
 import { required, url, alphaNum, minLength } from 'vuelidate/lib/validators'
+import { languages } from '@/i18n'
 
 const exactLength = param => value => value.length === param
+const validLang = value => languages.indexOf(value) !== -1
+
+const getDefaultData = () => ({
+  name: '',
+  url: '',
+  apiKey: '',
+  darkMode: false,
+  language: 'en'
+})
 
 export default {
   data: () => ({
-    form: {
-      name: '',
-      url: '',
-      apiKey: ''
-    }
+    form: Object.assign({}, getDefaultData())
   }),
   mixins: [validationMixin],
   validations: {
@@ -26,6 +32,10 @@ export default {
         required,
         alphaNum,
         exactLength: exactLength(40)
+      },
+      language: {
+        required,
+        validLang
       }
     }
   },
@@ -51,6 +61,19 @@ export default {
       if (!this.$v.form.apiKey.alphaNum) errors.push('only letters and number')
       if (!this.$v.form.apiKey.exactLength) errors.push('invalid length')
       return errors
+    },
+    languageErrors() {
+      const errors = []
+      if (!this.$v.form.language.$dirty) return errors
+      if (!this.$v.form.language.required) errors.push('is required')
+      if (!this.$v.form.language.validLang) errors.push('not valid language')
+      return errors
+    }
+  },
+  methods: {
+    resetForm() {
+      this.form = Object.assign(this.form, getDefaultData())
+      this.$v.$reset()
     }
   }
 }

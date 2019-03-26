@@ -1,24 +1,40 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import PersistedState from './plugins/persistedState'
-import Profile from './modules/profile'
 import API from './modules/api'
+import Issue from './modules/issue'
+import IssueStatus from './modules/issueStatus'
+import Notification from './modules/notification'
+import Profile from './modules/profile'
 import Project from './modules/project'
-import TimeEntries from './modules/timeEntries'
+import SystemTray from './modules/systemTray'
+import TimeEntry from './modules/timeEntry'
+import TimeEntryActivity from './modules/timeEntryActivity'
+import Timer from './modules/timer'
+import Window from './modules/window'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   plugins: [
     PersistedState({
-      key: 'db'
+      key: 'db',
+      excludeMutations: ['notification', 'systemTray', 'window'],
+      excludeState: ['systemTray', 'window', 'notification']
     })
   ],
   modules: {
-    profile: new Profile(),
     api: new API(),
+    issue: new Issue(),
+    issueStatus: new IssueStatus(),
+    notification: new Notification(),
+    profile: new Profile(),
     project: new Project(),
-    timeEntries: TimeEntries()
+    systemTray: new SystemTray(),
+    timeEntry: new TimeEntry(),
+    timeEntryActivity: new TimeEntryActivity(),
+    timer: new Timer(),
+    window: new Window()
   }
 })
 
