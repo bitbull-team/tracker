@@ -2,9 +2,13 @@
   "name": "redmine-tracker",
   "version": "0.1.0",
   "private": true,
+  "author": "Bitbull <devel@bitbull.it> (https://www.bitbull.it/)",
   "scripts": {
     "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
     "serve": "vue-cli-service electron:serve",
+    "build:linux": "vue-cli-service electron:build -p never --linux deb",
+    "build:win": "vue-cli-service electron:build -p never --win nsis",
+    "build:mac": "vue-cli-service electron:build -p never --mac dmg",
     "build": "vue-cli-service electron:build",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"

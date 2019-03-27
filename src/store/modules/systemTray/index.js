@@ -22,8 +22,8 @@ export default function SystemTray() {
         }
       ],
       icons: {
-        timerOff: path.join(__static, 'img/icons/clock-off@2x.png'),
-        timerOn: path.join(__static, 'img/icons/clock-on@2x.png')
+        timerOff: path.join(__static, 'tray/clock-off@2x.png'),
+        timerOn: path.join(__static, 'tray/clock-on@2x.png')
       },
       currentIcon: 'timerOff'
     },
