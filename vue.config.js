@@ -10,6 +10,7 @@ module.exports = {
       builderOptions: {
         appId: 'com.bitbull.tracker',
         productName: 'Redmine Tracker',
+        publish: null,
         asar: true,
         mac: {
           icon: 'icons/mac/icon.icns'
