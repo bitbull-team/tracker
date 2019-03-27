@@ -33,15 +33,13 @@ script:
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
         electronuserland/builder:wine \
         /bin/bash -c "npm install && npm run build:win && npm run build:linux"
+      zip windows.zip dist_electron/*.exe  
+      zip linux.zip dist_electron/*.deb
     else
       npm install
       npm run build:mac
+      zip mac.zip dist_electron/*.dmg
     fi
-    
-after_script:
-   - zip windows.zip dist_electron/*.exe
-   - zip linux.zip dist_electron/*.deb 
-   - zip mac.zip dist_electron/*.dmg
 
 deploy:
   provider: releases
