@@ -46,6 +46,8 @@ function createWindow() {
       event.preventDefault()
       event.returnValue = false
       return false
+    } else {
+      app.quit()
     }
   })
 
@@ -59,6 +61,20 @@ ipcMain.on('force-close', () => {
   win.destroy()
   app.quit()
   win = null
+})
+
+// Force show
+ipcMain.on('force-show', () => {
+  if (process.platform !== 'darwin') {
+    if (win.isVisible() === false) {
+      win.show()
+    }
+    if (win.isFocused() === false) {
+      win.focus()
+    }
+  } else {
+    createWindow()
+  }
 })
 
 app.on('activate', () => {
