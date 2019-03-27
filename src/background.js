@@ -41,12 +41,10 @@ function createWindow() {
   }
 
   win.on('close', event => {
-    if (process.platform !== 'darwin') {
-      win.hide()
-      event.preventDefault()
-      event.returnValue = false
-      return false
-    }
+    win.hide()
+    event.preventDefault()
+    event.returnValue = false
+    return false
   })
 
   win.on('closed', () => {
