@@ -16,7 +16,7 @@ export default {
   },
   hide() {
     currentWindow.hide()
-    app.dock.show()
+    app.dock.hide()
   },
   forceClose() {
     ipcRenderer.send('force-close')
