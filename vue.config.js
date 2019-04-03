@@ -13,16 +13,16 @@ module.exports = {
         publish: null,
         asar: true,
         mac: {
-          icon: 'icons/mac/icon.icns',
+          icon: 'public/icons/mac/icon.icns',
           extendInfo: {
             LSUIElement: 1
           }
         },
         win: {
-          icon: 'icons/win/icon.ico'
+          icon: 'public/icons/win/icon.ico'
         },
         linux: {
-          icon: 'icons/png/1024x1024.png'
+          icon: 'public/icons/png/1024x1024.png'
         }
       }
     }
