@@ -13,10 +13,7 @@ module.exports = {
         publish: null,
         asar: true,
         mac: {
-          icon: 'public/icons/mac/icon.icns',
-          extendInfo: {
-            LSUIElement: 1
-          }
+          icon: 'public/icons/mac/icon.icns'
         },
         win: {
           icon: 'public/icons/win/icon.ico'
