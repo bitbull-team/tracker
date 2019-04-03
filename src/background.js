@@ -41,6 +41,7 @@ function createWindow() {
   }
 
   win.on('close', event => {
+    app.dock.hide()
     win.hide()
     event.preventDefault()
     event.returnValue = false
