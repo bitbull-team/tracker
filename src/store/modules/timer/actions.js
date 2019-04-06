@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 export default {
-  start({ commit, state }, { issueId, comments, activityId }) {
+  async start({ commit, state, dispatch }, { issueId, comments, activityId }) {
     const runningTimer = state.items.find(timer => timer.isRunning === true)
     if (runningTimer !== undefined) {
       commit('pause', runningTimer.issueId)
@@ -9,15 +9,46 @@ export default {
     const duplicatedTimer = state.items.find(timer => timer.issueId === issueId)
     if (duplicatedTimer !== undefined) {
       commit('resume', duplicatedTimer.issueId)
+      await dispatch(
+        'notification/send',
+        {
+          title: `Timer resumed for issue ${issueId}`
+        },
+        { root: true }
+      )
     } else {
       commit('add', { issueId, comments, activityId })
+      await dispatch(
+        'notification/send',
+        {
+          title: `New timer start for issue ${issueId}`
+        },
+        { root: true }
+      )
     }
+    await dispatch('systemTray/addTimerControlPause', issueId, { root: true })
   },
-  pause({ commit }, issueId) {
+  async pause({ commit, dispatch }, issueId) {
     commit('pause', issueId)
+    await dispatch('systemTray/addTimerControlResume', issueId, { root: true })
+    await dispatch(
+      'notification/send',
+      {
+        title: `Paused timer for issue ${issueId}`
+      },
+      { root: true }
+    )
   },
-  resume({ commit }, issueId) {
+  async resume({ commit, dispatch }, issueId) {
     commit('resume', issueId)
+    await dispatch('systemTray/addTimerControlPause', issueId, { root: true })
+    await dispatch(
+      'notification/send',
+      {
+        title: `Timer resumed for issue ${issueId}`
+      },
+      { root: true }
+    )
   },
   async record({ commit, dispatch, state }, { issueId, comments, activityId }) {
     let timer = state.items.find(timer => timer.issueId === issueId)
@@ -51,6 +82,9 @@ export default {
       },
       { root: true }
     )
+    await dispatch('systemTray/removeTimerControlForIssue', issueId, {
+      root: true
+    })
     commit('delete', issueId)
   },
   discard({ commit }, issueId) {

@@ -43,6 +43,9 @@ import debounce from 'debounce'
 export default {
   filters: {
     truncate: (text, stop) => {
+      if (text === undefined || text === null) {
+        return
+      }
       stop = stop || 20
       const clamp = '...'
       return text.slice(0, stop) + (stop < text.length ? clamp : '')
