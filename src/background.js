@@ -41,8 +41,10 @@ function createWindow() {
   }
 
   win.on('close', event => {
-    app.dock.hide()
     win.hide()
+    if (app.dock !== undefined) {
+      app.dock.hide()
+    }
     event.preventDefault()
     event.returnValue = false
     return false

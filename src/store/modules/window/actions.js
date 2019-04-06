@@ -12,11 +12,15 @@ export default {
     if (currentWindow.isFocused() === false) {
       currentWindow.focus()
     }
-    app.dock.show()
+    if (app.dock !== undefined) {
+      app.dock.show()
+    }
   },
   hide() {
     currentWindow.hide()
-    app.dock.hide()
+    if (app.dock !== undefined) {
+      app.dock.hide()
+    }
   },
   forceClose() {
     ipcRenderer.send('force-close')
