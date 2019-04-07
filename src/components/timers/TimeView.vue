@@ -31,7 +31,7 @@ export default {
   }),
   watch: {
     duration(value) {
-      if (isNaN(this.duration)) {
+      if (isNaN(value)) {
         value = 0
       }
       this.loadDuration(value)

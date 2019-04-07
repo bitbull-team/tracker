@@ -48,42 +48,42 @@ export default {
     commit('removeMenuItem', id)
     dispatch('drawMenu')
   },
-  addTimerControlPause({ commit, state, dispatch }, issueId) {
+  addTimerControlPause({ commit, state, dispatch }, id) {
     const duplicated = state.menu.find(
       menuItem => menuItem.id === 'pause-current-timer'
     )
     if (duplicated !== undefined) {
-      commit('updateMenuItem', Object.assign(duplicated, { params: issueId }))
+      commit('updateMenuItem', Object.assign(duplicated, { params: id }))
     } else {
       commit('addMenuItem', {
         label: 'Pause current timer',
         event: 'timer/pause',
-        params: issueId,
+        params: id,
         id: 'pause-current-timer'
       })
     }
     commit('removeMenuItem', 'resume-last-timer')
     dispatch('drawMenu')
   },
-  addTimerControlResume({ commit, state, dispatch }, issueId) {
+  addTimerControlResume({ commit, state, dispatch }, id) {
     const duplicated = state.menu.find(
       menuItem => menuItem.id === 'resume-last-timer'
     )
     if (duplicated !== undefined) {
-      commit('updateMenuItem', Object.assign(duplicated, { params: issueId }))
+      commit('updateMenuItem', Object.assign(duplicated, { params: id }))
     } else {
       commit('addMenuItem', {
         label: 'Resume last timer',
         event: 'timer/resume',
-        params: issueId,
+        params: id,
         id: 'resume-last-timer'
       })
     }
     commit('removeMenuItem', 'pause-current-timer')
     dispatch('drawMenu')
   },
-  removeTimerControlForIssue({ commit, dispatch }, issueId) {
-    const menuItemToRemove = state.menu.find(menuItem.params === issueId)
+  removeTimerControl({ commit, dispatch, state }, id) {
+    const menuItemToRemove = state.menu.find(menuItem => menuItem.params === id)
     if (menuItemToRemove === undefined) {
       return
     }

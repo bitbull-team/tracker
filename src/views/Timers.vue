@@ -6,8 +6,18 @@
       :timer="runningTimer"
       @stop="saveTimer(runningTimer)"
     />
+    New Timer for extra:
+    <div>
+      <v-btn
+        v-if="$store.state.profile.current.extraIssueId !== null"
+        icon
+        @click="startExtraTimer($store.state.profile.current.extraIssueId)"
+      >
+        <v-icon>play_arrow</v-icon>
+      </v-btn>
+    </div>
     Paused:
-    <div v-for="timer in pausedTimers" :key="timer.issueId">
+    <div v-for="timer in pausedTimers" :key="timer.id">
       <paused-timer :timer="timer" @stop="saveTimer(timer)" />
     </div>
 
@@ -23,7 +33,7 @@
 import RunningTimer from '@/components/timers/Running'
 import PausedTimer from '@/components/timers/Paused'
 import SaveTimer from '@/components/timers/Save'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -42,12 +52,20 @@ export default {
     })
   },
   methods: {
+    ...mapActions({
+      executeStart: 'timer/start'
+    }),
     saveTimer(timer) {
       this.timerToSave = timer
       this.modalSaveTimer = true
     },
     savedTimer(timer) {
       this.timerToSave = {}
+    },
+    startExtraTimer(issueId) {
+      this.executeStart({
+        issueId: issueId
+      })
     }
   }
 }
