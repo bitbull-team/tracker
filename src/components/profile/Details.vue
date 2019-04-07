@@ -52,15 +52,6 @@ export default {
   data: () => ({
     showApiKey: false
   }),
-  computed: {
-    isValid() {
-      return (
-        this.nameErrors.length === 0 ||
-        this.urlErrors.length === 0 ||
-        this.apiKeyErrors.length === 0
-      )
-    }
-  },
   watch: {
     form: {
       handler(newValue) {
@@ -78,7 +69,14 @@ export default {
   methods: {
     validate() {
       this.$v.$touch()
-      return this.isValid
+      return this.isValid()
+    },
+    isValid() {
+      return (
+        this.nameErrors.length === 0 ||
+        this.urlErrors.length === 0 ||
+        this.apiKeyErrors.length === 0
+      )
     }
   }
 }
