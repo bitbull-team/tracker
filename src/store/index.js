@@ -19,8 +19,8 @@ const store = new Vuex.Store({
   plugins: [
     PersistedState({
       key: 'db',
-      excludeMutations: ['notification', 'systemTray', 'window'],
-      excludeState: ['systemTray', 'window', 'notification']
+      excludeMutations: ['notification', 'window'],
+      excludeState: ['notification', 'window']
     })
   ],
   modules: {

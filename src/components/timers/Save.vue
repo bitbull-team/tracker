@@ -17,9 +17,11 @@
           </v-btn>
         </v-toolbar>
         <v-card-text class="headline">
-          <div>
-            {{ relatedIssue.subject }}
-          </div>
+          <issue-selector
+            v-model="relatedIssue"
+            :error-messages="issueIdErrors"
+            @change="form.issueId = relatedIssue.id"
+          />
           <div>
             <v-textarea
               v-model="form.comments"
@@ -32,10 +34,12 @@
               @blur="$v.form.comments.$touch()"
             />
             <v-select
+              v-model="form.activityId"
               :items="activites"
               item-text="name"
               item-value="id"
               label="Activity"
+              :error-messages="issueIdErrors"
             />
           </div>
         </v-card-text>
@@ -54,10 +58,14 @@
 </template>
 
 <script>
-import timeEntryValidation from '@/mixins/validations/timeEntry'
 import { mapState, mapActions } from 'vuex'
+import issueSelector from '@/components/issues/Selector'
+import timeEntryValidation from '@/mixins/validations/timeEntry'
 
 export default {
+  components: {
+    issueSelector
+  },
   mixins: [timeEntryValidation],
   props: {
     value: {
@@ -66,7 +74,7 @@ export default {
     },
     issue: {
       type: Number,
-      default: () => ({})
+      default: () => undefined
     }
   },
   data: () => ({
@@ -92,7 +100,7 @@ export default {
         this.loading = true
         this.loadIssue(this.issue).then(issue => {
           this.relatedIssue = issue
-          this.form.isseId = issue.id
+          this.form.issueId = issue.id
           this.loading = false
         })
       } else {
@@ -103,7 +111,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      saveTimeEntry: 'timeEntry/add',
+      saveTimeEntry: 'timer/record',
       loadIssue: 'issue/loadSingle'
     }),
     validateForm() {
@@ -114,12 +122,17 @@ export default {
       }
     },
     cancel() {
-      this.isOpen = false
+      this.$emit('input', false)
       this.$emit('canceled')
     },
     async save() {
       this.loading = true
-      await this.saveTimeEntry(this.form)
+      try {
+        await this.saveTimeEntry(this.form)
+      } catch (error) {
+        console.log(error)
+      }
+
       this.loading = false
       this.$emit('saved', this.form)
       this.$emit('input', false)

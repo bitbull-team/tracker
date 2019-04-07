@@ -1,10 +1,13 @@
 <template>
   <v-layout row align-center>
     <v-flex>
+      {{ timer.issueId }}
+    </v-flex>
+    <v-flex>
       <time-view :duration="duration" :running="true" />
     </v-flex>
     <v-flex>
-      <timer-commands :issue="timer.issueId" :running="true" />
+      <timer-commands :id="timer.id" :running="true" @stop="$emit('stop')" />
     </v-flex>
   </v-layout>
 </template>
@@ -28,15 +31,25 @@ export default {
   data: () => ({
     duration: 0
   }),
+  watch: {
+    timer() {
+      this.loadDuration()
+    }
+  },
   mounted() {
-    if (this.timer.resumedAt !== undefined) {
-      this.duration =
-        moment.duration(moment().diff(this.timer.resumedAt)).as('seconds') +
-        this.timer.duration
-    } else {
-      this.duration = moment
-        .duration(moment().diff(this.timer.startedAt))
-        .as('seconds')
+    this.loadDuration()
+  },
+  methods: {
+    loadDuration() {
+      if (this.timer.resumedAt !== undefined) {
+        this.duration =
+          moment.duration(moment().diff(this.timer.resumedAt)).as('seconds') +
+          this.timer.duration
+      } else {
+        this.duration = moment
+          .duration(moment().diff(this.timer.startedAt))
+          .as('seconds')
+      }
     }
   }
 }

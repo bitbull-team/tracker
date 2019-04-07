@@ -89,6 +89,9 @@ export default {
       },
       { root: true }
     ).then(response => {
+      if (response === undefined) {
+        return null
+      }
       const issue = response.issue
       commit('overrideItem', issue)
       return issue

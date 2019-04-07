@@ -1,29 +1,72 @@
 <template>
   <div>
     Running:
-    <running-timer v-if="runningTimer !== undefined" :timer="runningTimer" />
-    Paused:
-    <div v-for="timer in pausedTimers" :key="timer.issueId">
-      <paused-timer :timer="timer" />
+    <running-timer
+      v-if="runningTimer !== undefined"
+      :timer="runningTimer"
+      @stop="saveTimer(runningTimer)"
+    />
+    New Timer for extra:
+    <div>
+      <v-btn
+        v-if="$store.state.profile.current.extraIssueId !== null"
+        icon
+        @click="startExtraTimer($store.state.profile.current.extraIssueId)"
+      >
+        <v-icon>play_arrow</v-icon>
+      </v-btn>
     </div>
+    Paused:
+    <div v-for="timer in pausedTimers" :key="timer.id">
+      <paused-timer :timer="timer" @stop="saveTimer(timer)" />
+    </div>
+
+    <save-timer
+      v-model="modalSaveTimer"
+      :issue="timerToSave.issueId"
+      @saved="savedTimer(timerToSave)"
+    />
   </div>
 </template>
 
 <script>
 import RunningTimer from '@/components/timers/Running'
 import PausedTimer from '@/components/timers/Paused'
-import { mapGetters } from 'vuex'
+import SaveTimer from '@/components/timers/Save'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     RunningTimer,
-    PausedTimer
+    PausedTimer,
+    SaveTimer
   },
+  data: () => ({
+    timerToSave: {},
+    modalSaveTimer: false
+  }),
   computed: {
     ...mapGetters({
       runningTimer: 'timer/getRunning',
       pausedTimers: 'timer/getPaused'
     })
+  },
+  methods: {
+    ...mapActions({
+      executeStart: 'timer/start'
+    }),
+    saveTimer(timer) {
+      this.timerToSave = timer
+      this.modalSaveTimer = true
+    },
+    savedTimer(timer) {
+      this.timerToSave = {}
+    },
+    startExtraTimer(issueId) {
+      this.executeStart({
+        issueId: issueId
+      })
+    }
   }
 }
 </script>

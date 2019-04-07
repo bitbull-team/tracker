@@ -21,7 +21,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 480,
     height: 800,
-    icon: path.join(__static, 'img/icons/logo.png')
+    icon: path.join(__static, 'icons/png/64x64.png')
   })
   win.setMenuBarVisibility(false)
   win.axios = axios
@@ -42,6 +42,9 @@ function createWindow() {
 
   win.on('close', event => {
     win.hide()
+    if (app.dock !== undefined) {
+      app.dock.hide()
+    }
     event.preventDefault()
     event.returnValue = false
     return false
@@ -51,6 +54,15 @@ function createWindow() {
     win = null
   })
 }
+
+// Quit when all windows are closed.
+app.on('window-all-closed', () => {
+  // On macOS it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
 
 // Force close
 ipcMain.on('force-close', () => {

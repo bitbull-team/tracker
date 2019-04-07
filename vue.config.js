@@ -8,7 +8,19 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        appId: 'com.bitbull.tracker'
+        appId: 'com.bitbull.tracker',
+        productName: 'Redmine Tracker',
+        publish: null,
+        asar: true,
+        mac: {
+          icon: 'public/icons/mac/icon.icns'
+        },
+        win: {
+          icon: 'public/icons/win/icon.ico'
+        },
+        linux: {
+          icon: 'public/icons/png/1024x1024.png'
+        }
       }
     }
   }

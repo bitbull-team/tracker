@@ -1,10 +1,13 @@
 <template>
   <v-layout row align-center>
     <v-flex>
+      {{ timer.issueId }}
+    </v-flex>
+    <v-flex>
       <time-view :duration="timer.duration" />
     </v-flex>
     <v-flex>
-      <timer-commands :issue="timer.issueId" :running="false" />
+      <timer-commands :id="timer.id" :running="false" @stop="$emit('stop')" />
     </v-flex>
   </v-layout>
 </template>

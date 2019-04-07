@@ -1,8 +1,10 @@
 import moment from 'moment'
 
 export default {
-  add(state, { issueId, comments, activityId }) {
+  add(state, { id, issueId, comments, activityId }) {
+    id = id || new Date().getTime()
     state.items.push({
+      id,
       issueId,
       comments,
       activityId,
@@ -12,8 +14,8 @@ export default {
     })
     state.items = state.items.slice(0) //force state update
   },
-  pause(state, issueId) {
-    const timer = state.items.find(timer => timer.issueId === issueId)
+  pause(state, id) {
+    const timer = state.items.find(timer => timer.id === id)
     if (timer === undefined) {
       return false
     }
@@ -24,8 +26,8 @@ export default {
     timer.isRunning = false
     state.items = state.items.slice(0) //force state update
   },
-  resume(state, issueId) {
-    const timer = state.items.find(timer => timer.issueId === issueId)
+  resume(state, id) {
+    const timer = state.items.find(timer => timer.id === id)
     if (timer === undefined) {
       return false
     }
@@ -34,8 +36,8 @@ export default {
     delete timer.pausedAt
     state.items = state.items.slice(0) //force state update
   },
-  delete(state, issueId) {
-    const index = state.items.findIndex(timer => timer.issueId === issueId)
+  delete(state, id) {
+    const index = state.items.findIndex(timer => timer.id === id)
     if (index === -1) {
       return false
     }

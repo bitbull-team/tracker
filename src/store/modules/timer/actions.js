@@ -1,50 +1,103 @@
 import moment from 'moment'
 
 export default {
-  start({ commit, state }, { issueId, comments, activityId }) {
+  async start({ commit, state, dispatch }, { issueId, comments, activityId }) {
     const runningTimer = state.items.find(timer => timer.isRunning === true)
     if (runningTimer !== undefined) {
-      commit('pause', runningTimer.issueId)
+      commit('pause', runningTimer.id)
     }
-    const duplicatedTimer = state.items.find(timer => timer.issueId === issueId)
-    if (duplicatedTimer !== undefined) {
-      commit('resume', duplicatedTimer.issueId)
-    } else {
-      commit('add', { issueId, comments, activityId })
+    const id = new Date().getTime()
+    commit('add', { id, issueId, comments, activityId })
+    await dispatch(
+      'notification/send',
+      {
+        title: `New timer start for issue ${issueId}`
+      },
+      { root: true }
+    )
+    await dispatch('systemTray/addTimerControlPause', id, { root: true })
+  },
+  async pause({ state, commit, dispatch }, id) {
+    const timer = state.items.find(timer => timer.id === id)
+    if (timer === undefined) {
+      return
     }
+    commit('pause', timer.id)
+    await dispatch('systemTray/addTimerControlResume', timer.id, { root: true })
+    await dispatch(
+      'notification/send',
+      {
+        title: `Paused timer for issue ${timer.issueId}`
+      },
+      { root: true }
+    )
   },
-  pause({ commit }, issueId) {
-    commit('pause', issueId)
+  async resume({ commit, dispatch, state }, id) {
+    const timer = state.items.find(timer => timer.id === id)
+    if (timer === undefined) {
+      return
+    }
+    const runningTimer = state.items.find(timer => timer.isRunning === true)
+    if (runningTimer !== undefined) {
+      commit('pause', runningTimer.id)
+    }
+    commit('resume', timer.id)
+    await dispatch('systemTray/addTimerControlPause', timer.id, { root: true })
+    await dispatch(
+      'notification/send',
+      {
+        title: `Timer resumed for issue ${timer.issueId}`
+      },
+      { root: true }
+    )
   },
-  resume({ commit }, issueId) {
-    commit('resume', issueId)
-  },
-  async record({ commit, dispatch, state }, { issueId, comments, activityId }) {
-    let timer = state.items.find(timer => timer.issueId === issueId)
+  async record(
+    { commit, dispatch, state },
+    { id, issueId, comments, activityId }
+  ) {
+    let timer = state.items.find(timer => timer.id === id)
     if (timer === undefined) {
       return false
     }
     if (timer.isRunning === true) {
-      commit('pause', issueId)
-      timer = state.items.find(timer => timer.issueId === issueId)
+      commit('pause', timer.id)
     }
 
-    timer = Object.assign(timer, { comments, activityId })
+    timer = Object.assign(timer, { issueId, comments, activityId })
+
+    const hours = moment.duration(timer.duration, 'seconds').as('hours')
 
     await dispatch(
       'timeEntry/add',
       {
         issue_id: timer.issueId,
         spent_on: moment(timer.startedAt).format('YYYY-MM-DD'),
-        hours: moment.duration(timer.duration, 'seconds').as('hours'),
+        hours: hours,
         activity_id: timer.activityId,
         comments: timer.comments
       },
       { root: true }
     )
-    commit('delete', issueId)
+    await dispatch(
+      'notification/send',
+      {
+        title: `Tracked ${hours} hours on issue ${timer.issueId}`
+      },
+      { root: true }
+    )
+    await dispatch('systemTray/removeTimerControl', id, {
+      root: true
+    })
+    commit('delete', timer.id)
   },
-  discard({ commit }, issueId) {
-    commit('delete', issueId)
+  async discard({ commit, state, dispatch }, id) {
+    let timer = state.items.find(timer => timer.id === id)
+    if (timer === undefined) {
+      return false
+    }
+    await dispatch('systemTray/removeTimerControl', timer.id, {
+      root: true
+    })
+    commit('delete', timer.id)
   }
 }
