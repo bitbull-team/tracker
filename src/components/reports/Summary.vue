@@ -41,10 +41,15 @@ export default {
   },
   data() {
     return {
-      totalDays: {
-        day: 8,
-        week: 40,
-        month: 160
+      totals: {
+        day: this.$store.state.profile.current.dayHour || 8,
+        week:
+          (this.$store.state.profile.current.workingDays || 5) *
+          (this.$store.state.profile.current.dayHour || 8),
+        month:
+          (this.$store.state.profile.current.workingDays || 5) *
+          (this.$store.state.profile.current.dayHour || 8) *
+          4
       }
     }
   },
@@ -63,14 +68,15 @@ export default {
         : this.$t(period[0] + ' you worked for')
     },
     totalHours() {
-      let tot = 0
-      this.entries.forEach(element => {
-        tot += element.hours
-      })
-      return Math.round(tot.toFixed(2))
+      return Math.round(
+        this.entries.reduce(
+          (tot, trakedTime) => tot + parseFloat(trakedTime.hours),
+          0
+        )
+      )
     },
     progress() {
-      return this.totalHours * (100 / this.totalDays[this.type])
+      return this.totalHours * (100 / this.totals[this.type])
     },
     progressColor() {
       if (this.progress === 0) return colors.grey.lighten2
