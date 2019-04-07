@@ -6,7 +6,9 @@
       <span>{{ totalHours }}</span> <span class="label">{{ $t('hours') }}</span>
     </div>
 
-    <button>{{ $t('View details') }}</button>
+    <button v-if="totalHours > 0">
+      {{ $t('View details') }}
+    </button>
   </div>
 </template>
 
@@ -41,18 +43,15 @@ export default {
       this.entries.forEach(element => {
         tot += element.hours
       })
-      return Math.round(tot)
+      return Math.round(tot.toFixed(2))
     }
   }
 }
 </script>
 
 <style lang="scss">
-$color: #5dedd5;
-$color-danger: rgb(209, 0, 0);
-$color-button: #46beaa;
 h4 {
-  color: $color;
+  color: var(--v-primary-base);
   font-weight: normal;
   text-align: center;
   font-size: 1.5em;
@@ -63,14 +62,14 @@ h4 {
 .hours {
   width: 310px;
   height: 310px;
-  border: solid 10px $color;
+  border: solid 10px var(--v-primary-base);
   border-radius: 50%;
   font-size: 8em;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 1rem auto 2rem;
-  color: $color;
+  color: var(--v-primary-base);
   font-weight: 500;
   flex-wrap: wrap;
   flex-direction: column;
@@ -82,51 +81,12 @@ h4 {
     font-size: 0.4em;
   }
   &--not-worked {
-    border-color: $color-danger;
-    color: $color-danger;
-  }
-}
-.hours-chart {
-  margin: 1rem 0;
-  .circle-background {
-    stroke: lighten($color, 30%);
-  }
-  .circle-percentage {
-    stroke: $color;
-    animation: circle-chart-fill 2s reverse; /* 1 */
-    transform: rotate(-90deg) scale(1, -1); /* 2, 3 */
-    transform-origin: center; /* 4 */
-  }
-  .text {
-    animation: circle-chart-appear 2s forwards;
-    opacity: 0;
-    transform: translateY(0.3em);
-  }
-  .count {
-    font-size: 8em;
-    font-weight: 500;
-    fill: $color;
-  }
-  .label {
-    font-size: 3em;
-    font-weight: 500;
-    fill: $color;
-  }
-}
-ul {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  li {
-    border-bottom: dashed 1px #e5e5e5;
-    margin-bottom: 1rem;
-  }
-  p {
-    margin: 0;
+    border-color: var(--v-error-base);
+    color: var(--v-error-base);
   }
 }
 button {
-  background-color: $color-button;
+  background-color: var(--v-secondary-base);
   color: white;
   margin: 1em auto;
   padding: 0.5em 2em;
