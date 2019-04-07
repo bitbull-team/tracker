@@ -5,7 +5,6 @@
       :disabled="loading"
       @change="form.extraIssueId = extraIssue ? extraIssue.id : null"
     />
-    {{ form.extraIssueId }}
     <v-select
       v-model="form.timerApproximation"
       :items="availableTimerApproximation"
@@ -61,11 +60,6 @@ export default {
   data: () => ({
     extraIssue: null
   }),
-  computed: {
-    isValid() {
-      return true
-    }
-  },
   watch: {
     form: {
       async handler(newValue) {
@@ -90,7 +84,14 @@ export default {
     }),
     validate() {
       this.$v.$touch()
-      return this.isValid
+      return this.isValid()
+    },
+    isValid() {
+      return (
+        this.timerApproximationErrors.length === 0 ||
+        this.dayHourErrors.length === 0 ||
+        this.workingDaysErrors.length === 0
+      )
     }
   }
 }

@@ -35,11 +35,6 @@ export default {
       default: () => false
     }
   },
-  computed: {
-    isValid() {
-      return this.languageErrors.length === 0
-    }
-  },
   watch: {
     form: {
       handler(newValue) {
@@ -57,7 +52,10 @@ export default {
   methods: {
     validate() {
       this.$v.$touch()
-      return this.isValid
+      return this.isValid()
+    },
+    isValid() {
+      return this.languageErrors.length === 0
     }
   }
 }

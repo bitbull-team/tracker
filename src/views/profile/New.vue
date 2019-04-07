@@ -28,7 +28,7 @@
               <v-btn
                 color="primary"
                 flat
-                :disabled="!$refs.form1 || !$refs.form1.isValid"
+                :disabled="!isValid('form1')"
                 :loading="loading"
                 @click="validateForm1()"
               >
@@ -54,7 +54,7 @@
               <v-btn
                 color="primary"
                 flat
-                :disabled="!$refs.form2 || !$refs.form2.isValid"
+                :disabled="!isValid('form2')"
                 :loading="loading"
                 @click="validateForm2()"
               >
@@ -80,7 +80,7 @@
               <v-btn
                 color="primary"
                 flat
-                :disabled="!$refs.form3 || !$refs.form3.isValid"
+                :disabled="!isValid('form2')"
                 :loading="loading"
                 @click="validateForm3()"
               >
@@ -136,31 +136,32 @@ export default {
     async validateForm1() {
       this.$v.$touch()
 
-      if (this.$refs.form1.isValid === false) {
+      if (this.$refs.form1.validate() === false) {
         return
       }
 
       await this.saveProfile()
-      await this.selectDefaultProfile(this.form.id)
       this.step = 2
     },
     async validateForm2() {
       this.$v.$touch()
 
-      if (this.$refs.form2.isValid === false) {
+      if (this.$refs.form2.validate() === false) {
         return
       }
+
       await this.saveProfile()
       this.step = 3
     },
     async validateForm3() {
       this.$v.$touch()
 
-      if (this.$refs.form3.isValid === false) {
+      if (this.$refs.form3.validate() === false) {
         return
       }
 
       await this.saveProfile()
+      await this.selectDefaultProfile(this.form.id)
       this.$router.push({ name: 'dashboard' })
     },
     async saveProfile() {
@@ -170,6 +171,11 @@ export default {
     },
     cancel() {
       this.$router.push({ name: 'dashboard' })
+    },
+    isValid(form) {
+      return true
+      // this bind not working, only executed once
+      return this.$refs[form] !== undefined && this.$refs[form].isValid()
     }
   }
 }

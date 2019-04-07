@@ -26,15 +26,15 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: () => ''
     },
     message: {
       type: String,
-      default: ''
+      default: () => ''
     },
     value: {
       type: Boolean,
-      default: false
+      default: () => false
     }
   },
   computed: {
