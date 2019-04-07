@@ -2,17 +2,32 @@
   <div class="summary">
     <h4>{{ title }}</h4>
 
-    <div class="hours" :class="{ 'hours--not-worked': totalHours === 0 }">
-      <span>{{ totalHours }}</span> <span class="label">{{ $t('hours') }}</span>
-    </div>
+    <v-progress-circular
+      :rotate="-90"
+      :value="progress"
+      :size="300"
+      :width="10"
+      :color="progressColor"
+      class="hours"
+      :class="{ overworked: progress > 100 }"
+    >
+      <span class="total">{{ totalHours }}</span>
+      <span class="label">{{ $t('hours') }}</span>
+    </v-progress-circular>
 
-    <button v-if="totalHours > 0">
+    <router-link
+      v-if="totalHours > 0"
+      :to="{ name: 'logged-time', params: { range: type } }"
+      class="button"
+    >
       {{ $t('View details') }}
-    </button>
+    </router-link>
   </div>
 </template>
 
 <script>
+import colors from 'vuetify/es5/util/colors'
+
 export default {
   props: {
     entries: {
@@ -22,6 +37,15 @@ export default {
     type: {
       type: String,
       default: 'month'
+    }
+  },
+  data() {
+    return {
+      totalDays: {
+        day: 8,
+        week: 40,
+        month: 160
+      }
     }
   },
   computed: {
@@ -44,6 +68,14 @@ export default {
         tot += element.hours
       })
       return Math.round(tot.toFixed(2))
+    },
+    progress() {
+      return this.totalHours * (100 / this.totalDays[this.type])
+    },
+    progressColor() {
+      if (this.progress === 0) return colors.grey.lighten2
+      if (this.progress > 100) return colors.indigo.base
+      return colors.blue.base
     }
   }
 }
@@ -60,37 +92,33 @@ h4 {
   text-align: center;
 }
 .hours {
-  width: 310px;
-  height: 310px;
-  border: solid 10px var(--v-primary-base);
-  border-radius: 50%;
   font-size: 8em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem auto 2rem;
-  color: var(--v-primary-base);
   font-weight: 500;
-  flex-wrap: wrap;
-  flex-direction: column;
-  span {
-    display: block;
-    line-height: 1;
+  line-height: 1;
+  margin: 1rem auto 2rem;
+}
+span.total {
+  display: block;
+}
+span.label {
+  display: block;
+  font-size: 0.4em;
+}
+.overworked {
+  .v-progress-circular__overlay {
+    fill: var(--v-secondary-base);
   }
-  .label {
-    font-size: 0.4em;
-  }
-  &--not-worked {
-    border-color: var(--v-error-base);
-    color: var(--v-error-base);
+  .v-progress-circular__info {
+    color: white;
   }
 }
-button {
+.button {
   background-color: var(--v-secondary-base);
   color: white;
   margin: 1em auto;
   padding: 0.5em 2em;
   display: block;
   font-size: 1.3em;
+  text-decoration: none;
 }
 </style>

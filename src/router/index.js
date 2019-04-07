@@ -7,6 +7,7 @@ import Application from '@/layouts/Application'
 import Dashboard from '@/views/Dashboard.vue'
 import Timers from '@/views/Timers.vue'
 import Reports from '@/views/Reports.vue'
+import LoggedTime from '@/views/Reports/ListLogged.vue'
 import Issues from '@/views/Issues.vue'
 import NewProfile from '@/views/profile/New.vue'
 import EditProfile from '@/views/profile/Edit.vue'
@@ -45,6 +46,12 @@ const router = new Router({
           path: '/reports',
           name: 'reports',
           component: Reports,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/reports/logged/:range',
+          name: 'logged-time',
+          component: LoggedTime,
           meta: { requiresAuth: true }
         }
       ]

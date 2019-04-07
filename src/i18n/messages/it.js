@@ -17,5 +17,8 @@ export default {
   Status: 'Stato',
   Timers: 'Timers',
   'Assigned to me': 'Assegnati a me',
-  Issues: 'Segnalazioni'
+  Issues: 'Segnalazioni',
+  'View details': 'Dettagli',
+  Reports: 'Resoconti',
+  Settings: 'Impostazioni'
 }

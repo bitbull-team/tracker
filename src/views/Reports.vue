@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <summary-report :entries="daylyEntries" type="day" />
+    <summary-report :entries="dailyEntries" type="day" />
     <summary-report :entries="weeklyEntries" type="week" />
     <summary-report :entries="monthlyEntries" type="month" />
   </v-layout>
@@ -15,7 +15,7 @@ export default {
     SummaryReport
   },
   computed: {
-    daylyEntries() {
+    dailyEntries() {
       return this.$store.state.timeEntry.todayItems
     },
     weeklyEntries() {
