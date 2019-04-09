@@ -15,9 +15,14 @@
       v-if="progress"
       v-model="progress"
       :color="status"
-      height="4"
+      height="6"
     />
-    <v-progress-linear v-if="progress" v-model="done_ratio" height="4" />
+    <v-progress-linear
+      v-if="progress"
+      v-model="done_ratio"
+      height="3"
+      color="primary"
+    />
   </div>
 </template>
 
@@ -94,6 +99,14 @@ export default {
 
 <style lang="scss">
 .v-progress-linear {
-  margin: 0 0 0.5rem;
+  margin: 0 0 4px;
+}
+</style>
+
+<style lang="scss" scoped>
+.timer {
+  background-color: var(--v-line-lighten);
+  border-radius: 10px;
+  padding: 1em;
 }
 </style>

@@ -9,7 +9,7 @@ Vue.use(Vuetify, {
     primary: {
       base: colors.blue.base,
       darken: colors.blue.darken1,
-      lighten: colors.blue.lighten1
+      lighten: colors.blue.lighten2
     },
     secondary: {
       base: colors.indigo.base,

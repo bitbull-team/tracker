@@ -22,5 +22,8 @@ export default {
   Reports: 'Resoconti',
   Settings: 'Impostazioni',
   'Logged time of the': 'Logged time of the',
-  Assignee: 'Assegnatario'
+  Assignee: 'Assegnatario',
+  'Running:': 'In corso',
+  'New Timer for extra:': 'Timer per task extra',
+  'Paused:': 'In pausa'
 }

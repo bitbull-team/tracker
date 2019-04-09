@@ -1,12 +1,12 @@
 <template>
   <div>
-    Running:
+    <h4>{{ $t('Running:') }}</h4>
     <running-timer
       v-if="runningTimer !== undefined"
       :timer="runningTimer"
       @stop="saveTimer(runningTimer)"
     />
-    New Timer for extra:
+    {{ $t('New Timer for extra:') }}
     <div>
       <v-btn
         v-if="$store.state.profile.current.extraIssueId !== null"
@@ -16,7 +16,7 @@
         <v-icon>play_arrow</v-icon>
       </v-btn>
     </div>
-    Paused:
+    <h4>{{ $t('Paused:') }}</h4>
     <div v-for="timer in pausedTimers" :key="timer.id">
       <paused-timer :timer="timer" @stop="saveTimer(timer)" />
     </div>
@@ -74,5 +74,9 @@ export default {
 <style scoped>
 div {
   width: 100%;
+}
+h4 {
+  text-align: left;
+  margin: 0 0 1rem;
 }
 </style>
