@@ -21,5 +21,6 @@ export default {
   'View details': 'Dettagli',
   Reports: 'Resoconti',
   Settings: 'Impostazioni',
-  'Logged time of the': 'Logged time of the'
+  'Logged time of the': 'Logged time of the',
+  Assignee: 'Assegnatario'
 }
