@@ -2,7 +2,9 @@
   <v-list three-line>
     <v-list-tile v-for="issue in items" :key="issue.id">
       <v-list-tile-content>
-        <v-list-tile-title>{{ issue.subject }}</v-list-tile-title>
+        <v-list-tile-title>
+          #{{ issue.id }} {{ issue.subject }}
+        </v-list-tile-title>
         <v-list-tile-sub-title>
           {{ $t('Status') }}: {{ issue.status.name }}
         </v-list-tile-sub-title>

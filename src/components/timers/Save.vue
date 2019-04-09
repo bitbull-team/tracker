@@ -72,9 +72,9 @@ export default {
       type: Boolean,
       default: () => false
     },
-    issue: {
-      type: Number,
-      default: () => undefined
+    timer: {
+      type: Object,
+      default: () => {}
     }
   },
   data: () => ({
@@ -98,7 +98,7 @@ export default {
     isOpen(val) {
       if (val) {
         this.loading = true
-        this.loadIssue(this.issue).then(issue => {
+        this.loadIssue(this.timer.issueId).then(issue => {
           this.relatedIssue = issue
           this.form.issueId = issue.id
           this.loading = false
@@ -128,9 +128,17 @@ export default {
     async save() {
       this.loading = true
       try {
-        await this.saveTimeEntry(this.form)
+        await this.saveTimeEntry(
+          Object.assign(
+            {
+              id: this.timer.id
+            },
+            this.form
+          )
+        )
       } catch (error) {
-        console.log(error)
+        /*eslint no-console: ["error", { allow: ["error"] }] */
+        console.error(error)
       }
 
       this.loading = false

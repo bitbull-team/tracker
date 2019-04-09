@@ -23,7 +23,7 @@
 
     <save-timer
       v-model="modalSaveTimer"
-      :issue="timerToSave.issueId"
+      :timer="timerToSave"
       @saved="savedTimer(timerToSave)"
     />
   </div>

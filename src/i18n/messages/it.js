@@ -20,5 +20,6 @@ export default {
   Issues: 'Segnalazioni',
   'View details': 'Dettagli',
   Reports: 'Resoconti',
-  Settings: 'Impostazioni'
+  Settings: 'Impostazioni',
+  'Logged time of the': 'Logged time of the'
 }
