@@ -11,13 +11,12 @@
       />
     </v-flex>
     <v-flex xs6>
-      <v-select
-        v-model="filters.project_id"
-        :items="projects"
-        :label="$t('Project')"
-        item-text="name"
-        item-value="id"
-        :disable="loading"
+      <project-selector
+        v-model="projectToFilter"
+        :disabled="loading"
+        @change="
+          filters.project_id = projectToFilter ? projectToFilter.id : null
+        "
       />
     </v-flex>
     <v-flex xs6>
@@ -33,13 +32,16 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import Issues from '@/components/issues/List'
+import ProjectSelector from '@/components/project/Selector.vue'
 
 export default {
   components: {
-    Issues
+    Issues,
+    ProjectSelector
   },
   data: () => ({
     loading: false,
+    projectToFilter: null,
     filters: {
       status_id: 'open',
       assigned_to_id: 'me',

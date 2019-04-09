@@ -5,12 +5,28 @@
         <v-list-tile-title>
           #{{ issue.id }} {{ issue.subject }}
         </v-list-tile-title>
-        <v-list-tile-sub-title>
-          {{ $t('Status') }}: {{ issue.status.name }}
-        </v-list-tile-sub-title>
-        <v-list-tile-sub-title>
-          {{ $t('Project') }}: {{ issue.project.name }}
-        </v-list-tile-sub-title>
+        <v-layout class="issue-details" row wrap>
+          <v-flex xs12>
+            <v-list-tile-sub-title>
+              {{ $t('Status') }}: {{ issue.status.name }}
+            </v-list-tile-sub-title>
+          </v-flex>
+          <v-flex xs6>
+            <v-list-tile-sub-title>
+              {{ $t('Project') }}: {{ issue.project.name }}
+            </v-list-tile-sub-title>
+          </v-flex>
+          <v-flex v-if="issue.assigned_to" xs6>
+            <v-list-tile-sub-title>
+              {{ $t('Assignee') }}:
+              {{
+                issue.assigned_to.id === $store.state.api.currentUser.id
+                  ? 'You'
+                  : issue.assigned_to.name
+              }}
+            </v-list-tile-sub-title>
+          </v-flex>
+        </v-layout>
       </v-list-tile-content>
       <v-list-tile-action>
         <v-icon @click="startNewTimer({ issueId: issue.id, comments: '' })">
@@ -42,3 +58,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.issue-details {
+  width: 100%;
+}
+</style>
