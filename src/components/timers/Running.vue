@@ -108,5 +108,6 @@ export default {
   background-color: var(--v-line-lighten);
   border-radius: 10px;
   padding: 1em;
+  margin-bottom: 1rem;
 }
 </style>

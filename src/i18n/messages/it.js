@@ -25,5 +25,7 @@ export default {
   Assignee: 'Assegnatario',
   'Running:': 'In corso',
   'New Timer for extra:': 'Timer per task extra',
-  'Paused:': 'In pausa'
+  'Paused:': 'In pausa',
+  'There is no running timer. Please choose an issue to start.':
+    "Nessun timer in esecuzione. Scegli un'attività dall'elenco per iniziare."
 }

@@ -1,6 +1,9 @@
 <template>
   <div>
     <h4>{{ $t('Running:') }}</h4>
+    <p v-if="!runningTimer">
+      {{ $t('There is no running timer. Please choose an issue to start.') }}
+    </p>
     <running-timer
       v-if="runningTimer !== undefined"
       :timer="runningTimer"
@@ -16,7 +19,9 @@
         <v-icon>play_arrow</v-icon>
       </v-btn>
     </div>
-    <h4>{{ $t('Paused:') }}</h4>
+    <h4 v-if="pausedTimers.length > 0">
+      {{ $t('Paused:') }}
+    </h4>
     <div v-for="timer in pausedTimers" :key="timer.id">
       <paused-timer :timer="timer" @stop="saveTimer(timer)" />
     </div>
