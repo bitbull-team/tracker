@@ -1,9 +1,6 @@
 <template>
   <v-layout row wrap>
     <v-flex xs6>
-      <v-switch v-model="assignedToMe" :label="$t('Assigned to me')" />
-    </v-flex>
-    <v-flex xs6>
       <v-select
         v-model="filters.status_id"
         :items="statuses"
@@ -12,6 +9,19 @@
         item-value="id"
         :disable="loading"
       />
+    </v-flex>
+    <v-flex xs6>
+      <v-select
+        v-model="filters.project_id"
+        :items="projects"
+        :label="$t('Project')"
+        item-text="name"
+        item-value="id"
+        :disable="loading"
+      />
+    </v-flex>
+    <v-flex xs6>
+      <v-switch v-model="assignedToMe" :label="$t('Assigned to me')" />
     </v-flex>
     <v-progress-linear v-if="loading" height="2" :indeterminate="true" />
     <v-flex xs12>
@@ -32,14 +42,17 @@ export default {
     loading: false,
     filters: {
       status_id: 'open',
-      assigned_to_id: 'me'
+      assigned_to_id: 'me',
+      project_id: null
     },
     assignedToMe: true,
     issues: []
   }),
   computed: {
     ...mapState({
-      statuses: state => state.issueStatus.items
+      statuses: state =>
+        [{ name: 'All open', id: 'open' }].concat(state.issueStatus.items),
+      projects: state => [{ name: 'All', id: null }].concat(state.project.items)
     })
   },
   watch: {

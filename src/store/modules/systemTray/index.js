@@ -17,7 +17,7 @@ export default function SystemTray() {
           event: 'notification/togglePolling'
         },
         {
-          label: '-----------------------------',
+          label: '────────────────',
           enabled: false
         },
         {
@@ -25,7 +25,7 @@ export default function SystemTray() {
           event: 'timer/startExtra'
         },
         {
-          label: '-----------------------------',
+          label: '────────────────',
           enabled: false
         },
         {

@@ -55,7 +55,11 @@ export default {
       })
     }
 
-    await Promise.all([this.loadIssueStatuses(), this.loadTimeEntryActivity()])
+    await Promise.all([
+      this.loadIssueStatuses(),
+      this.loadTimeEntryActivity(),
+      this.loadProjects()
+    ])
 
     this.startPolling()
     this.$store.watch(
@@ -73,6 +77,7 @@ export default {
       loadCurrentUser: 'api/loadCurrentUser',
       loadIssueStatuses: 'issueStatus/loadAll',
       loadTimeEntryActivity: 'timeEntryActivity/loadAll',
+      loadProjects: 'project/loadAll',
       startPolling: 'notification/startPolling',
       drawMenu: 'systemTray/drawMenu'
     })

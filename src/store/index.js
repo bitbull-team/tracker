@@ -20,7 +20,12 @@ const store = new Vuex.Store({
     PersistedState({
       key: 'db',
       excludeMutations: ['notification', 'window'],
-      excludeState: ['notification', 'window']
+      excludeState: [
+        'notification/recordNotification',
+        'notification/setPollingTimer',
+        'notification/setSnackBar',
+        'window'
+      ]
     })
   ],
   modules: {

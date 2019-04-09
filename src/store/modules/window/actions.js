@@ -22,7 +22,8 @@ export default {
       app.dock.hide()
     }
   },
-  forceClose() {
+  forceClose({ dispatch }) {
+    dispatch('notification/stopPolling', null, { root: true })
     ipcRenderer.send('force-close')
   }
 }

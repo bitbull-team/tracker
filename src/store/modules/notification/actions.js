@@ -33,10 +33,10 @@ export default {
   togglePolling({ commit, dispatch, state }) {
     if (state.polling.enable === true) {
       commit('setPollingEnable', false)
-      dispatch('startPolling')
+      dispatch('stopPolling')
     } else {
       commit('setPollingEnable', true)
-      dispatch('stopPolling')
+      dispatch('startPolling')
     }
   },
   startPolling({ commit, state, dispatch }) {
@@ -50,13 +50,19 @@ export default {
         dispatch('retrieveNewNotification')
       }, state.polling.interval || 10 * 1000)
     )
+    dispatch('send', {
+      title: 'Start notification polling'
+    })
   },
-  stopPolling({ commit, state }) {
+  stopPolling({ commit, state, dispatch }) {
     if (state.polling.timer === null) {
       return
     }
     clearInterval(state.polling.timer)
     commit('setPollingTimer', null)
+    dispatch('send', {
+      title: 'Stop notification polling'
+    })
   },
   async retrieveNewNotification({ dispatch, state, commit }) {
     const response = await dispatch(
@@ -66,7 +72,7 @@ export default {
         params: {
           updated_on:
             '>=' +
-            moment(state.polling.lastCheck).format('YYYY-MM-DDThh:mm:ss') +
+            moment(state.polling.lastCheck).format('YYYY-MM-DDTHH:mm:ss') +
             'Z'
         }
       },

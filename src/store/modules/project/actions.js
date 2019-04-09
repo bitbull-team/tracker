@@ -3,11 +3,14 @@ export default {
     return dispatch(
       'api/get',
       {
-        path: 'projects.json'
+        path: 'projects.json',
+        params: {
+          limit: 200
+        }
       },
       { root: true }
     ).then(response => {
-      const projects = response.projects
+      const projects = response.projects.sort((a, b) => a.name > b.name)
       commit('setItems', projects)
     })
   }
