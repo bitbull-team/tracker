@@ -22,7 +22,14 @@
       justify-center
       align-center
     >
-      <v-btn :loading="true" large flat icon />
+      <div>
+        <div class="text-xs-center">
+          <v-btn :loading="true" large flat icon />
+        </div>
+        <div class="text-xs-center">
+          {{ loadingMsg }}
+        </div>
+      </div>
     </v-layout>
   </v-content>
 </template>
@@ -42,24 +49,34 @@ export default {
   data: () => ({
     drawer: false,
     snackBar: false,
-    loading: false
+    loading: false,
+    loadingMsg: ''
   }),
   async mounted() {
     this.loading = true
+    this.loadingMsg = 'perform login..'
     try {
       const user = await this.loadCurrentUser()
     } catch (error) {
+      this.loadingMsg = 'login error'
       this.$router.push({
         name: 'edit-profile',
         params: { id: this.$store.state.profile.current.id }
       })
     }
-
+    this.loadingMsg = 'loading data..'
     await Promise.all([
-      this.loadIssueStatuses(),
-      this.loadTimeEntryActivity(),
-      this.loadProjects()
+      this.loadIssueStatuses().then(
+        () => (this.loadingMsg = 'loaded issues statuses, still loading..')
+      ),
+      this.loadTimeEntryActivity().then(
+        () => (this.loadingMsg = 'loaded activities, still loading..')
+      ),
+      this.loadProjects().then(
+        () => (this.loadingMsg = 'loaded projects, still loading..')
+      )
     ])
+    this.loadingMsg = 'all data loaded!'
 
     this.startPolling()
     this.$store.watch(
