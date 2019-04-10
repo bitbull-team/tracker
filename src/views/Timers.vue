@@ -26,6 +26,8 @@
       <paused-timer :timer="timer" @stop="saveTimer(timer)" />
     </div>
 
+    <summary-report :entries="dailyEntries" type="day" />
+
     <save-timer
       v-model="modalSaveTimer"
       :timer="timerToSave"
@@ -38,13 +40,15 @@
 import RunningTimer from '@/components/timers/Running'
 import PausedTimer from '@/components/timers/Paused'
 import SaveTimer from '@/components/timers/Save'
+import SummaryReport from '@/components/reports/Summary'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     RunningTimer,
     PausedTimer,
-    SaveTimer
+    SaveTimer,
+    SummaryReport
   },
   data: () => ({
     timerToSave: {},
@@ -54,10 +58,19 @@ export default {
     ...mapGetters({
       runningTimer: 'timer/getRunning',
       pausedTimers: 'timer/getPaused'
-    })
+    }),
+    dailyEntries() {
+      return this.$store.state.timeEntry.todayItems
+    }
+  },
+  async mounted() {
+    this.loading = true
+    await this.loadTodayEntries()
+    this.loading = false
   },
   methods: {
     ...mapActions({
+      loadTodayEntries: 'timeEntry/loadToday',
       executeStart: 'timer/start'
     }),
     saveTimer(timer) {

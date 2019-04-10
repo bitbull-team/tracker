@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import colors from 'vuetify/es5/util/colors'
 
 export default {
@@ -54,6 +55,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      runningTimer: 'timer/getRunning'
+    }),
     title() {
       let period = []
       if (this.type === 'day') {
@@ -63,7 +67,7 @@ export default {
       } else {
         period = ['This month', 'this month']
       }
-      return this.entries.length === 0
+      return !this.runningTimer && this.entries.length === 0
         ? this.$t('You have not worked ' + period[1] + ', is it holiday?')
         : this.$t(period[0] + ' you worked for')
     },
