@@ -61,7 +61,6 @@ export default {
     })
   },
   add({ dispatch }, timeEntry) {
-    console.log(timeEntry)
     return dispatch(
       'api/post',
       {
