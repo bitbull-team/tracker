@@ -19,13 +19,15 @@ const store = new Vuex.Store({
   plugins: [
     PersistedState({
       key: 'db',
-      excludeMutations: ['notification', 'window'],
-      excludeState: [
+      excludeMutations: [
         'notification/recordNotification',
         'notification/setPollingTimer',
         'notification/setSnackBar',
-        'window'
-      ]
+        'notification',
+        'window',
+        'api'
+      ],
+      excludeState: ['notification', 'window', 'api']
     })
   ],
   modules: {

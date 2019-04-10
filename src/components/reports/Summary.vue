@@ -72,11 +72,9 @@ export default {
         : this.$t(period[0] + ' you worked for')
     },
     totalHours() {
-      return Math.round(
-        this.entries.reduce(
-          (tot, trakedTime) => tot + parseFloat(trakedTime.hours),
-          0
-        )
+      return this.entries.reduce(
+        (tot, trakedTime) => tot + parseFloat(trakedTime.hours),
+        0
       )
     },
     progress() {
