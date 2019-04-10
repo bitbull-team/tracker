@@ -1,9 +1,7 @@
 <template>
   <div class="timer">
     <v-layout row align-center>
-      <v-flex>
-        {{ timer.issueId }}
-      </v-flex>
+      <v-flex> {{ timer.issueId }} </v-flex>
       <v-flex>
         <time-view :duration="duration" :running="true" />
       </v-flex>
@@ -12,13 +10,13 @@
       </v-flex>
     </v-layout>
     <v-progress-linear
-      v-if="progress"
+      v-if="progress !== false"
       v-model="progress"
       :color="status"
       height="6"
     />
     <v-progress-linear
-      v-if="progress"
+      v-if="progress !== false"
       v-model="done_ratio"
       height="3"
       color="primary"
@@ -50,13 +48,18 @@ export default {
     done_ratio: 0
   }),
   computed: {
+    progressPercent() {
+      if (!this.estimated_hours) return false
+      if (this.spent_hours === 0) return 0
+      return Math.round(this.spent_hours * (100 / this.estimated_hours))
+    },
     progress() {
-      if (this.getProgress() > 100) return this.getProgress() - 100
-      return this.getProgress()
+      if (this.progressPercent > 100) return this.progressPercent - 100
+      return this.progressPercent
     },
     status() {
-      if (this.getProgress() > 100) return 'warning'
-      if (this.getProgress() > 150) return 'error'
+      if (this.progressPercent > 100) return 'warning'
+      if (this.progressPercent > 150) return 'error'
       return 'success'
     }
   },
@@ -87,11 +90,6 @@ export default {
           .duration(moment().diff(this.timer.startedAt))
           .as('seconds')
       }
-    },
-    getProgress() {
-      if (!this.estimated_hours) return false
-      if (this.spent_hours === 0) return 0
-      return Math.round(this.spent_hours * (100 / this.estimated_hours))
     }
   }
 }
