@@ -8,6 +8,6 @@ export default function API() {
       currentUser: null
     },
     actions,
-    mutations,
+    mutations
   }
 }

@@ -5,7 +5,12 @@ import Empty from '@/layouts/Empty'
 import Application from '@/layouts/Application'
 
 import Dashboard from '@/views/Dashboard.vue'
-import NewProfile from '@/views/profile/NewProfile.vue'
+import Timers from '@/views/Timers.vue'
+import Reports from '@/views/Reports.vue'
+import LoggedTime from '@/views/Reports/ListLogged.vue'
+import Issues from '@/views/Issues.vue'
+import NewProfile from '@/views/profile/New.vue'
+import EditProfile from '@/views/profile/Edit.vue'
 
 import store from '../store'
 
@@ -20,9 +25,33 @@ const router = new Router({
       meta: { requiresAuth: true },
       children: [
         {
-          path: '',
+          path: '/',
           name: 'dashboard',
           component: Dashboard,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/timers',
+          name: 'timers',
+          component: Timers,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/issues',
+          name: 'issues',
+          component: Issues,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/reports',
+          name: 'reports',
+          component: Reports,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/reports/logged/:range',
+          name: 'logged-time',
+          component: LoggedTime,
           meta: { requiresAuth: true }
         }
       ]
@@ -35,6 +64,11 @@ const router = new Router({
           path: '/profile/create',
           name: 'create-profile',
           component: NewProfile
+        },
+        {
+          path: '/profile/:id',
+          name: 'edit-profile',
+          component: EditProfile
         }
       ]
     }

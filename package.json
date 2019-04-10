@@ -2,20 +2,24 @@
   "name": "redmine-tracker",
   "version": "0.1.0",
   "private": true,
+  "author": "Bitbull <devel@bitbull.it> (https://www.bitbull.it/)",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
+    "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
+    "serve": "vue-cli-service electron:serve",
+    "build:linux": "vue-cli-service electron:build -p never --linux deb",
+    "build:win": "vue-cli-service electron:build -p never --win nsis",
+    "build:mac": "vue-cli-service electron:build -p never --mac dmg",
+    "build": "vue-cli-service electron:build",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "debounce": "^1.2.0",
     "electron-store": "^2.0.0",
     "uuid": "^3.3.2",
     "vue": "^2.6.6",
+    "vue-i18n": "^8.8.2",
     "vue-moment": "^4.0.0",
     "vue-router": "^3.0.1",
     "vuelidate": "^0.7.4",
@@ -25,7 +29,7 @@
   "devDependencies": {
     "@vue/cli-plugin-eslint": "^3.4.1",
     "@vue/cli-plugin-pwa": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
+    "@vue/cli-service": "^3.5.1",
     "@vue/eslint-config-prettier": "^4.0.1",
     "babel-eslint": "^10.0.1",
     "electron": "^4.0.0",
@@ -34,33 +38,15 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-vue": "^5.0.0",
     "lint-staged": "^8.1.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "vue-cli-plugin-electron-builder": "^1.1.0",
+    "vue-cli-plugin-electron-builder": "^1.1.3",
     "vue-cli-plugin-vuetify": "^0.4.6",
     "vue-svg-loader": "^0.12.0",
     "vue-template-compiler": "^2.5.21",
     "vuetify-loader": "^1.0.5"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/prettier"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
   },
   "browserslist": [
     "> 1%",

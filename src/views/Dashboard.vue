@@ -1,15 +1,3 @@
 <template>
-  <div>
-    <time-tracked-this-week />
-  </div>
+  <v-layout />
 </template>
-
-<script>
-import TimeTrackedThisWeek from '@/components/dashboard/TimeTrackedThisWeek'
-
-export default {
-  components: {
-    TimeTrackedThisWeek
-  }
-}
-</script>

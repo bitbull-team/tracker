@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :dark="$store.state.profile.current.darkMode">
     <router-view />
   </v-app>
 </template>
@@ -13,5 +13,19 @@ export default {
 <style>
 html {
   overflow: auto;
+}
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #9e9e9e;
+}
+.theme--light.application {
+  background-color: white;
 }
 </style>

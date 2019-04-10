@@ -1,6 +1,8 @@
 'use strict'
+/*global __static*/
 
-import { app, protocol, BrowserWindow } from 'electron'
+import path from 'path'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import {
   createProtocol,
   installVueDevtools
@@ -16,7 +18,11 @@ let win
 protocol.registerStandardSchemes(['app'], { secure: true })
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600 })
+  win = new BrowserWindow({
+    width: 480,
+    height: 800,
+    icon: path.join(__static, 'icons/png/64x64.png')
+  })
   win.setMenuBarVisibility(false)
   win.axios = axios
   win.systemTray = require('./system/tray')
@@ -34,6 +40,16 @@ function createWindow() {
     win.loadURL('app://./index.html')
   }
 
+  win.on('close', event => {
+    win.hide()
+    if (app.dock !== undefined) {
+      app.dock.hide()
+    }
+    event.preventDefault()
+    event.returnValue = false
+    return false
+  })
+
   win.on('closed', () => {
     win = null
   })
@@ -46,6 +62,13 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+// Force close
+ipcMain.on('force-close', () => {
+  win.destroy()
+  app.quit()
+  win = null
 })
 
 app.on('activate', () => {
