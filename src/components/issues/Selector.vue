@@ -14,6 +14,7 @@
       hide-no-data
       no-filter
       hide-selected
+      :clearable="true"
     >
       <template slot="selection" slot-scope="{ item }">
         <span v-if="item !== null">

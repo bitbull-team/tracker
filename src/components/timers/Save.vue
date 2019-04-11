@@ -9,7 +9,8 @@
       <v-card>
         <v-toolbar>
           <v-toolbar-title>
-            Save time spent on issue #{{ relatedIssue.id }}
+            Save time spent on issue
+            <span v-if="relatedIssue">#{{ relatedIssue.id }}</span>
           </v-toolbar-title>
           <v-spacer />
           <v-btn icon @click.native="cancel()">
@@ -20,7 +21,7 @@
           <issue-selector
             v-model="relatedIssue"
             :error-messages="issueIdErrors"
-            @change="form.issueId = relatedIssue.id"
+            @change="form.issueId = relatedIssue ? relatedIssue.id : null"
           />
           <div>
             <v-textarea
