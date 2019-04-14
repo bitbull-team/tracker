@@ -32,6 +32,7 @@
       <v-progress-linear
         v-if="issue.estimated_hours"
         v-model="progress"
+        background-color="grey lighten-3"
         :color="status"
         height="6"
         class="progress"
