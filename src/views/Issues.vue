@@ -23,7 +23,7 @@
       <v-switch v-model="assignedToMe" :label="$t('Assigned to me')" />
     </v-flex>
     <v-progress-linear v-if="loading" height="2" :indeterminate="true" />
-    <v-flex xs12>
+    <v-flex>
       <issues :items="issues" :disable="loading" />
     </v-flex>
   </v-layout>
