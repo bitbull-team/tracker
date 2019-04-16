@@ -28,5 +28,8 @@ export default {
   'Paused:': 'In pausa',
   'There is no running timer. Please choose an issue to start.':
     "Nessun timer in esecuzione. Scegli un'attività dall'elenco per iniziare.",
-  'Assigned to': 'Assegnato a'
+  'Assigned to': 'Assegnato a',
+  'hours on': 'ore di',
+  estimated: 'stimate',
+  'Add a comment': 'Aggiungi un commento'
 }

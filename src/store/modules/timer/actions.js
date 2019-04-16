@@ -99,5 +99,15 @@ export default {
       root: true
     })
     commit('delete', timer.id)
+  },
+  async update(
+    { commit, state, dispatch },
+    { id, issueId, comments, activityId }
+  ) {
+    let timer = state.items.find(timer => timer.id === id)
+    if (timer === undefined) {
+      return false
+    }
+    commit('overrideItem', { id, issueId, comments, activityId })
   }
 }

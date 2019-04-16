@@ -1,7 +1,10 @@
 <template>
   <div class="timer">
+    <p class="issue">
+      {{ subject }}
+    </p>
     <v-layout row align-center>
-      <v-flex> {{ timer.issueId }} </v-flex>
+      <v-flex>{{ timer.issueId }}</v-flex>
       <v-flex>
         <time-view :duration="duration" :running="true" />
       </v-flex>
@@ -9,12 +12,25 @@
         <timer-commands :id="timer.id" :running="true" @stop="$emit('stop')" />
       </v-flex>
     </v-layout>
-    <v-progress-linear
-      v-if="progress !== false"
-      v-model="progress"
-      :color="status"
-      height="6"
-    />
+
+    <v-text-field v-model="comment" :label="$t('Add a comment')" />
+
+    <v-tooltip v-if="progress !== false" top>
+      <template v-slot:activator="{ on }">
+        <v-progress-linear
+          v-model="progress"
+          :color="status"
+          height="6"
+          dark
+          v-on="on"
+        />
+      </template>
+      <span>
+        ({{ progressPercent }}%) {{ spent_hours }} {{ $t('hours on') }}
+        {{ estimated_hours }}
+        {{ $t('estimated') }}
+      </span>
+    </v-tooltip>
     <v-progress-linear
       v-if="progress !== false"
       v-model="done_ratio"
@@ -29,6 +45,7 @@ import { mapActions } from 'vuex'
 import moment from 'moment'
 import TimeView from '@/components/timers/TimeView'
 import TimerCommands from '@/components/timers/Commands'
+import debounce from 'debounce'
 
 export default {
   components: {
@@ -45,7 +62,9 @@ export default {
     duration: 0,
     estimated_hours: 0,
     spent_hours: 0,
-    done_ratio: 0
+    done_ratio: 0,
+    subject: '',
+    comment: ''
   }),
   computed: {
     progressPercent() {
@@ -66,7 +85,12 @@ export default {
   watch: {
     timer() {
       this.loadDuration()
-    }
+    },
+    comment: debounce(async function() {
+      if (this.comment !== this.timer.comments) {
+        this.updateTimer({ id: this.timer.id, comments: this.comment })
+      }
+    }, 800)
   },
   mounted() {
     this.loadDuration()
@@ -74,11 +98,14 @@ export default {
       this.estimated_hours = issue.estimated_hours
       this.spent_hours = issue.spent_hours
       this.done_ratio = issue.done_ratio
+      this.subject = issue.subject
+      this.comment = this.timer.comments
     })
   },
   methods: {
     ...mapActions({
-      loadIssue: 'issue/loadSingle'
+      loadIssue: 'issue/loadSingle',
+      updateTimer: 'timer/update'
     }),
     loadDuration() {
       if (this.timer.resumedAt !== undefined) {
@@ -107,5 +134,12 @@ export default {
   border-radius: 10px;
   padding: 1em;
   margin-bottom: 1rem;
+}
+.issue {
+  margin: 0;
+  font-weight: bold;
+  color: var(--v-secondary-base);
+  text-transform: uppercase;
+  font-size: 0.8em;
 }
 </style>

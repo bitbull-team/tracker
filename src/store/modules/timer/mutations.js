@@ -43,5 +43,15 @@ export default {
     }
     state.items.splice(index, 1)
     state.items = state.items.slice(0) //force state update
+  },
+  overrideItem(state, { id, issueId, comments, activityId }) {
+    const index = state.items.findIndex(item => item !== null && item.id === id)
+    if (index === -1) return
+    state.items[index] = Object.assign(state.items[index], {
+      issueId: issueId || state.items[index].issueId,
+      comments: comments || state.items[index].comments,
+      activityId: activityId || state.items[index].activityId
+    })
+    state.items = state.items.slice(0) //force state update
   }
 }
