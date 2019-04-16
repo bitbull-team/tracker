@@ -23,7 +23,14 @@
       </v-flex>
       <v-flex xs1>
         <v-list-tile-action>
-          <v-icon @click="startNewTimer({ issueId: issue.id, comments: '' })">
+          <v-icon
+            @click="
+              startNewTimer(
+                { issueId: issue.id, comments: '' },
+                issue.status.id
+              )
+            "
+          >
             play_circle_outline
           </v-icon>
         </v-list-tile-action>
@@ -86,9 +93,13 @@ export default {
   },
   methods: {
     ...mapActions({
-      startTimer: 'timer/start'
+      startTimer: 'timer/start',
+      updateStatus: 'issue/updateStatusIssue'
     }),
-    startNewTimer({ issueId, comments, activityId }) {
+    startNewTimer({ issueId, comments, activityId }, status_id) {
+      if (status_id === 1) {
+        this.updateStatus({ issueId: issueId, status_id: 2 })
+      }
       this.startTimer({ issueId: issueId, comments: comments })
       this.$router.push({ name: 'timers' })
     }
