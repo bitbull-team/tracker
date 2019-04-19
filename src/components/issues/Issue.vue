@@ -23,14 +23,7 @@
       </v-flex>
       <v-flex xs1>
         <v-list-tile-action>
-          <v-icon
-            @click="
-              startNewTimer(
-                { issueId: issue.id, comments: '' },
-                issue.status.id
-              )
-            "
-          >
+          <v-icon @click="startNewTimer({ issueId: issue.id, comments: '' })">
             play_circle_outline
           </v-icon>
         </v-list-tile-action>
@@ -96,8 +89,11 @@ export default {
       startTimer: 'timer/start',
       updateStatus: 'issue/updateStatusIssue'
     }),
-    startNewTimer({ issueId, comments, activityId }, status_id) {
-      if (status_id === 1) {
+    startNewTimer({ issueId, comments, activityId }) {
+      if (
+        this.issue.status.id === 1 &&
+        this.issue.assigned_to.id === this.$store.state.api.currentUser.id
+      ) {
         this.updateStatus({ issueId: issueId, status_id: 2 })
       }
       this.startTimer({ issueId: issueId, comments: comments })
