@@ -96,5 +96,19 @@ export default {
       commit('overrideItem', issue)
       return issue
     })
+  },
+  updateStatusIssue({ dispatch }, { issueId, status_id }) {
+    return dispatch(
+      'api/put',
+      {
+        path: `issues/${issueId}.json`,
+        data: {
+          issue: {
+            status_id: status_id
+          }
+        }
+      },
+      { root: true }
+    )
   }
 }

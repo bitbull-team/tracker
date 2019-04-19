@@ -86,9 +86,16 @@ export default {
   },
   methods: {
     ...mapActions({
-      startTimer: 'timer/start'
+      startTimer: 'timer/start',
+      updateStatus: 'issue/updateStatusIssue'
     }),
     startNewTimer({ issueId, comments, activityId }) {
+      if (
+        this.issue.status.id === 1 &&
+        this.issue.assigned_to.id === this.$store.state.api.currentUser.id
+      ) {
+        this.updateStatus({ issueId: issueId, status_id: 2 })
+      }
       this.startTimer({ issueId: issueId, comments: comments })
       this.$router.push({ name: 'timers' })
     }
