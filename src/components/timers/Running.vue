@@ -26,7 +26,7 @@
         />
       </template>
       <span>
-        ({{ progressPercent }}%) {{ spent_hours }} {{ $t('hours on') }}
+        ({{ progressPercent }}%) {{ current_spent }} {{ $t('hours on') }}
         {{ estimated_hours }}
         {{ $t('estimated') }}
       </span>
@@ -62,6 +62,7 @@ export default {
     duration: 0,
     estimated_hours: 0,
     spent_hours: 0,
+    current_spent: 0,
     done_ratio: 0,
     subject: '',
     comment: ''
@@ -69,22 +70,34 @@ export default {
   computed: {
     progressPercent() {
       if (!this.estimated_hours) return false
-      if (this.spent_hours === 0) return 0
-      return Math.round(this.spent_hours * (100 / this.estimated_hours))
+      if (this.current_spent === 0) return 0
+      return Math.round(this.current_spent * (100 / this.estimated_hours))
     },
     progress() {
       if (this.progressPercent > 100) return this.progressPercent - 100
       return this.progressPercent
     },
     status() {
-      if (this.progressPercent > 100) return 'warning'
-      if (this.progressPercent > 150) return 'error'
+      if (this.progressPercent > 100 && this.progressPercent < 150)
+        return 'warning'
+      if (this.progressPercent >= 150) return 'error'
       return 'success'
+    },
+    currentTimeRunning() {
+      return (this.duration / 60 / 60).toFixed(2)
     }
   },
   watch: {
     timer() {
       this.loadDuration()
+      this.loadIssue(this.timer.issueId).then(issue => {
+        this.estimated_hours = issue.estimated_hours
+        this.spent_hours = issue.spent_hours
+        this.done_ratio = issue.done_ratio
+        this.subject = issue.subject
+        this.comment = this.timer.comments
+        this.updateTimeSpent()
+      })
     },
     comment: debounce(async function() {
       if (this.comment !== this.timer.comments) {
@@ -100,7 +113,14 @@ export default {
       this.done_ratio = issue.done_ratio
       this.subject = issue.subject
       this.comment = this.timer.comments
+      this.updateTimeSpent()
     })
+    setInterval(
+      function() {
+        this.updateTimeSpent()
+      }.bind(this),
+      300000
+    )
   },
   methods: {
     ...mapActions({
@@ -117,6 +137,11 @@ export default {
           .duration(moment().diff(this.timer.startedAt))
           .as('seconds')
       }
+    },
+    updateTimeSpent() {
+      this.loadDuration()
+      this.current_spent =
+        parseFloat(this.currentTimeRunning) + parseFloat(this.spent_hours)
     }
   }
 }
