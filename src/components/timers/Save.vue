@@ -102,6 +102,7 @@ export default {
         this.loadIssue(this.timer.issueId).then(issue => {
           this.relatedIssue = issue
           this.form.issueId = issue.id
+          this.form.comments = this.timer.comments
           this.loading = false
         })
       } else {
