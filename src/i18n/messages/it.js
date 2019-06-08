@@ -27,5 +27,10 @@ export default {
   'New Timer for extra:': 'Timer per task extra',
   'Paused:': 'In pausa',
   'There is no running timer. Please choose an issue to start.':
-    "Nessun timer in esecuzione. Scegli un'attività dall'elenco per iniziare."
+    "Nessun timer in esecuzione. Scegli un'attività dall'elenco per iniziare.",
+  'Assigned to': 'Assegnato a',
+  'No tasks found.': 'Nessuna segnalazione.',
+  'hours on': 'ore di',
+  estimated: 'stimate',
+  'Add a comment': 'Aggiungi un commento'
 }

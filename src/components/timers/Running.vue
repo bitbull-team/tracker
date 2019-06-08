@@ -1,9 +1,10 @@
 <template>
   <div class="timer">
+    <p class="issue">
+      {{ subject }}
+    </p>
     <v-layout row align-center>
-      <v-flex>
-        {{ timer.issueId }}
-      </v-flex>
+      <v-flex>{{ timer.issueId }}</v-flex>
       <v-flex>
         <time-view :duration="duration" :running="true" />
       </v-flex>
@@ -11,14 +12,27 @@
         <timer-commands :id="timer.id" :running="true" @stop="$emit('stop')" />
       </v-flex>
     </v-layout>
+
+    <v-text-field v-model="comment" :label="$t('Add a comment')" />
+
+    <v-tooltip v-if="progress !== false" top>
+      <template v-slot:activator="{ on }">
+        <v-progress-linear
+          v-model="progress"
+          :color="status"
+          height="6"
+          dark
+          v-on="on"
+        />
+      </template>
+      <span>
+        ({{ progressPercent }}%) {{ current_spent }} {{ $t('hours on') }}
+        {{ estimated_hours }}
+        {{ $t('estimated') }}
+      </span>
+    </v-tooltip>
     <v-progress-linear
-      v-if="progress"
-      v-model="progress"
-      :color="status"
-      height="6"
-    />
-    <v-progress-linear
-      v-if="progress"
+      v-if="progress !== false"
       v-model="done_ratio"
       height="3"
       color="primary"
@@ -31,6 +45,7 @@ import { mapActions } from 'vuex'
 import moment from 'moment'
 import TimeView from '@/components/timers/TimeView'
 import TimerCommands from '@/components/timers/Commands'
+import debounce from 'debounce'
 
 export default {
   components: {
@@ -47,23 +62,48 @@ export default {
     duration: 0,
     estimated_hours: 0,
     spent_hours: 0,
-    done_ratio: 0
+    current_spent: 0,
+    done_ratio: 0,
+    subject: '',
+    comment: ''
   }),
   computed: {
+    progressPercent() {
+      if (!this.estimated_hours) return false
+      if (this.current_spent === 0) return 0
+      return Math.round(this.current_spent * (100 / this.estimated_hours))
+    },
     progress() {
-      if (this.getProgress() > 100) return this.getProgress() - 100
-      return this.getProgress()
+      if (this.progressPercent > 100) return this.progressPercent - 100
+      return this.progressPercent
     },
     status() {
-      if (this.getProgress() > 100) return 'warning'
-      if (this.getProgress() > 150) return 'error'
+      if (this.progressPercent > 100 && this.progressPercent < 150)
+        return 'warning'
+      if (this.progressPercent >= 150) return 'error'
       return 'success'
+    },
+    currentTimeRunning() {
+      return (this.duration / 60 / 60).toFixed(2)
     }
   },
   watch: {
     timer() {
       this.loadDuration()
-    }
+      this.loadIssue(this.timer.issueId).then(issue => {
+        this.estimated_hours = issue.estimated_hours
+        this.spent_hours = issue.spent_hours
+        this.done_ratio = issue.done_ratio
+        this.subject = issue.subject
+        this.comment = this.timer.comments
+        this.updateTimeSpent()
+      })
+    },
+    comment: debounce(async function() {
+      if (this.comment !== this.timer.comments) {
+        this.updateTimer({ id: this.timer.id, comments: this.comment })
+      }
+    }, 800)
   },
   mounted() {
     this.loadDuration()
@@ -71,11 +111,21 @@ export default {
       this.estimated_hours = issue.estimated_hours
       this.spent_hours = issue.spent_hours
       this.done_ratio = issue.done_ratio
+      this.subject = issue.subject
+      this.comment = this.timer.comments
+      this.updateTimeSpent()
     })
+    setInterval(
+      function() {
+        this.updateTimeSpent()
+      }.bind(this),
+      300000
+    )
   },
   methods: {
     ...mapActions({
-      loadIssue: 'issue/loadSingle'
+      loadIssue: 'issue/loadSingle',
+      updateTimer: 'timer/update'
     }),
     loadDuration() {
       if (this.timer.resumedAt !== undefined) {
@@ -88,10 +138,10 @@ export default {
           .as('seconds')
       }
     },
-    getProgress() {
-      if (!this.estimated_hours) return false
-      if (this.spent_hours === 0) return 0
-      return Math.round(this.spent_hours * (100 / this.estimated_hours))
+    updateTimeSpent() {
+      this.loadDuration()
+      this.current_spent =
+        parseFloat(this.currentTimeRunning) + parseFloat(this.spent_hours)
     }
   }
 }
@@ -109,5 +159,12 @@ export default {
   border-radius: 10px;
   padding: 1em;
   margin-bottom: 1rem;
+}
+.issue {
+  margin: 0;
+  font-weight: bold;
+  color: var(--v-secondary-base);
+  text-transform: uppercase;
+  font-size: 0.8em;
 }
 </style>
