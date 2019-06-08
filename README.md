@@ -36,3 +36,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Releases
+
+The Github releases are managed by Travis so you don't have to worry and create them.
