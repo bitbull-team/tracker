@@ -1,4 +1,13 @@
-# redmine-tracker
+# Time Tracker
+
+Currently working with:
+
+- Redmine
+
+In future (maybe) with:
+
+- Jira
+- Teamwork
 
 ## Project setup
 ```
