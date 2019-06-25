@@ -6,7 +6,12 @@
       </v-btn>
     </v-flex>
     <v-flex>
-      <v-btn v-if="running === false" text icon @click="start()">
+      <v-btn
+        v-if="running === false && showPlay === true"
+        text
+        icon
+        @click="start()"
+      >
         <v-icon>play_arrow</v-icon>
       </v-btn>
     </v-flex>
@@ -42,6 +47,10 @@ export default {
       default: () => undefined
     },
     running: {
+      type: Boolean,
+      default: () => false
+    },
+    showPlay: {
       type: Boolean,
       default: () => false
     },
