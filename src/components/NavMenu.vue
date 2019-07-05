@@ -31,7 +31,7 @@
     </v-toolbar>
     <v-list dense>
       <v-divider />
-      <v-list-tile :to="{ name: 'timers' }">
+      <v-list-tile :to="{ name: 'dashboard' }">
         <v-list-tile-action>
           <v-icon>timer</v-icon>
         </v-list-tile-action>

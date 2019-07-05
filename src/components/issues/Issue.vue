@@ -97,7 +97,7 @@ export default {
         this.updateStatus({ issueId: issueId, status_id: 2 })
       }
       this.startTimer({ issueId: issueId, comments: comments })
-      this.$router.push({ name: 'timers' })
+      this.$router.push({ name: 'dashboard' })
     }
   }
 }

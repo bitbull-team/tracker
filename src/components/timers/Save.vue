@@ -103,6 +103,7 @@ export default {
           this.relatedIssue = issue
           this.form.issueId = issue.id
           this.form.comments = this.timer.comments
+          this.form.activityId = this.timer.activityId
           this.loading = false
         })
       } else {
