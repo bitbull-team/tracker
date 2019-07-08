@@ -39,7 +39,6 @@
           <v-list-tile-title>{{ $t('Timers') }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-divider />
       <v-list-tile :to="{ name: 'issues' }">
         <v-list-tile-action>
           <v-icon>assignment</v-icon>
