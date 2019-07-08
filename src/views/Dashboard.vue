@@ -1,31 +1,23 @@
 <template>
   <div>
-    <h4>{{ $t('Running:') }}</h4>
     <p v-if="!runningTimer">
       <router-link :to="{ name: 'issues' }">
         {{ $t('There is no running timer. Please choose an issue to start.') }}
       </router-link>
     </p>
-    <running-timer
+    <current-timer
       v-if="runningTimer !== undefined"
       :timer="runningTimer"
       @stop="saveTimer(runningTimer)"
     />
-    {{ $t('New Timer for extra:') }}
-    <div>
-      <v-btn
-        v-if="$store.state.profile.current.extraIssueId !== null"
-        icon
-        @click="startExtraTimer($store.state.profile.current.extraIssueId)"
-      >
-        <v-icon>play_arrow</v-icon>
-      </v-btn>
-    </div>
+
+    <generic-timer />
+
+    <issues :items="issues" :disable="loading" />
+
     <h4 v-if="pausedTimers.length > 0">
       {{ $t('Paused:') }}
     </h4>
-
-    <issues :items="issues" :disable="loading" />
 
     <div v-for="timer in pausedTimers" :key="timer.id">
       <paused-timer :timer="timer" @stop="saveTimer(timer)" />
@@ -42,18 +34,20 @@
 </template>
 
 <script>
-import RunningTimer from '@/components/timers/Running'
+import CurrentTimer from '@/components/timer/Current'
 import PausedTimer from '@/components/timers/Paused'
 import SaveTimer from '@/components/timers/Save'
+import GenericTimer from '@/components/timers/Generic'
 import SummaryReport from '@/components/reports/Summary'
 import Issues from '@/components/issues/List'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
-    RunningTimer,
+    CurrentTimer,
     PausedTimer,
     SaveTimer,
+    GenericTimer,
     SummaryReport,
     Issues
   },
@@ -87,7 +81,6 @@ export default {
   methods: {
     ...mapActions({
       loadTodayEntries: 'timeEntry/loadToday',
-      executeStart: 'timer/start',
       loadIssues: 'issue/loadWithFilter'
     }),
     saveTimer(timer) {
@@ -96,11 +89,6 @@ export default {
     },
     savedTimer(timer) {
       this.timerToSave = {}
-    },
-    startExtraTimer(issueId) {
-      this.executeStart({
-        issueId: issueId
-      })
     },
     async loadIssuesWithFilters() {
       this.loading = true

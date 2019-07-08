@@ -59,7 +59,7 @@ export default {
     },
     label: {
       type: String,
-      default: () => 'Select an issue'
+      default: () => 'Issue'
     },
     placeholder: {
       type: String,
