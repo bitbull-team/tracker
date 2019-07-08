@@ -27,6 +27,12 @@ const router = new Router({
         {
           path: '/',
           name: 'dashboard',
+          component: Dashboard,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/timers',
+          name: 'timers',
           component: Timers,
           meta: { requiresAuth: true }
         },
