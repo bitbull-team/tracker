@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import Issues from '@/components/issues/List'
 import ProjectSelector from '@/components/project/Selector.vue'
 
@@ -51,6 +51,9 @@ export default {
     issues: []
   }),
   computed: {
+    ...mapGetters({
+      sortBy: 'issue/sortBy'
+    }),
     ...mapState({
       statuses: state =>
         [{ name: 'All open', id: 'open' }].concat(state.issueStatus.items),
@@ -77,7 +80,8 @@ export default {
     }),
     async loadIssuesWithFilters() {
       this.loading = true
-      this.issues = await this.loadIssues(this.filters)
+      await this.loadIssues(this.filters)
+      this.issues = this.sortBy('priority', true)
       this.loading = false
     }
   }
