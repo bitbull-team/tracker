@@ -9,7 +9,7 @@ module.exports = {
     electronBuilder: {
       builderOptions: {
         appId: 'com.bitbull.tracker',
-        productName: 'Redmine Tracker',
+        productName: 'Time Tracker',
         publish: null,
         asar: true,
         mac: {
