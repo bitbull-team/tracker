@@ -52,7 +52,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      sortBy: 'issue/sortBy'
+      issuesSortBy: 'issue/sortBy'
     }),
     ...mapState({
       statuses: state =>
@@ -80,8 +80,7 @@ export default {
     }),
     async loadIssuesWithFilters() {
       this.loading = true
-      await this.loadIssues(this.filters)
-      this.issues = this.sortBy('priority', true)
+      this.issues = await this.loadIssues(this.filters)
       this.loading = false
     }
   }

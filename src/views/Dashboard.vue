@@ -13,7 +13,10 @@
 
     <generic-timer />
 
-    <issues :items="issues" :disable="loading" />
+    <issues
+      :items="issuesSortBy('priority', true).slice(0, 4)"
+      :disable="loading"
+    />
 
     <h4 v-if="pausedTimers.length > 0">
       {{ $t('Paused:') }}
@@ -66,7 +69,7 @@ export default {
     ...mapGetters({
       runningTimer: 'timer/getRunning',
       pausedTimers: 'timer/getPaused',
-      sortBy: 'issue/sortBy'
+      issuesSortBy: 'issue/sortBy'
     }),
     dailyEntries() {
       return this.$store.state.timeEntry.todayItems
@@ -93,7 +96,6 @@ export default {
     async loadIssuesWithFilters() {
       this.loading = true
       await this.loadIssues(this.filters)
-      this.issues = this.sortBy('priority', true).slice(0, 4)
       this.loading = false
     }
   }

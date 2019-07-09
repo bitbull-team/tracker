@@ -1,11 +1,13 @@
 export default {
   sortBy: state => (index, descendant) => {
-    state.items.sort((a, b) => a[index].id - b[index].id)
+    let items = state.items.slice()
+
+    items.sort((a, b) => a[index].id - b[index].id)
 
     if (descendant) {
-      state.items.reverse()
+      items.reverse()
     }
 
-    return state.items
+    return items
   }
 }
