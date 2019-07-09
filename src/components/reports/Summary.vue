@@ -38,6 +38,10 @@ export default {
     type: {
       type: String,
       default: 'month'
+    },
+    approximate: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -72,10 +76,14 @@ export default {
         : this.$t(period[0] + ' you worked for')
     },
     totalHours() {
-      return this.entries.reduce(
+      let entries = this.entries.reduce(
         (tot, trakedTime) => tot + parseFloat(trakedTime.hours),
         0
       )
+      if (this.approximate) {
+        return Math.floor(entries)
+      }
+      return entries
     },
     progress() {
       return this.totalHours * (100 / this.totals[this.type])
