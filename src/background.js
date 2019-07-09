@@ -2,7 +2,7 @@
 /*global __static*/
 
 import path from 'path'
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, Menu } from 'electron'
 import {
   createProtocol,
   installVueDevtools
@@ -88,6 +88,51 @@ app.on('ready', async () => {
     await installVueDevtools()
   }
   createWindow()
+
+  if (process.platform === 'darwin') {
+    // Create the Application's main menu
+    var template = [
+      {
+        label: 'Time Tracker',
+        submenu: [
+          {
+            label: 'About Time Tracker',
+            selector: 'orderFrontStandardAboutPanel:'
+          },
+          { type: 'separator' },
+          {
+            label: 'Quit',
+            accelerator: 'Command+Q',
+            click: function() {
+              app.quit()
+            }
+          }
+        ]
+      },
+      {
+        label: 'Edit',
+        submenu: [
+          { label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
+          {
+            label: 'Redo',
+            accelerator: 'Shift+CmdOrCtrl+Z',
+            selector: 'redo:'
+          },
+          { type: 'separator' },
+          { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
+          { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
+          { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
+          {
+            label: 'Select All',
+            accelerator: 'CmdOrCtrl+A',
+            selector: 'selectAll:'
+          }
+        ]
+      }
+    ]
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+  }
 })
 
 // Exit cleanly on request from parent process in development mode.
