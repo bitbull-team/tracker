@@ -1,5 +1,6 @@
 import actions from './actions'
 import mutations from './mutations'
+import getters from './getters'
 
 export default function Issue() {
   return {
@@ -8,6 +9,7 @@ export default function Issue() {
       items: []
     },
     actions,
-    mutations
+    mutations,
+    getters
   }
 }

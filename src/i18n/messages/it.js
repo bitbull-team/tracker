@@ -18,6 +18,7 @@ export default {
   Timers: 'Timers',
   'Assigned to me': 'Assegnati a me',
   Issues: 'Segnalazioni',
+  Issue: 'Segnalazione',
   'View details': 'Dettagli',
   Reports: 'Resoconti',
   Settings: 'Impostazioni',
@@ -32,5 +33,10 @@ export default {
   'No tasks found.': 'Nessuna segnalazione.',
   'hours on': 'ore di',
   estimated: 'stimate',
-  'Add a comment': 'Aggiungi un commento'
+  'Add a comment': 'Aggiungi un commento',
+  Close: 'Chiudi',
+  Delete: 'Elimina',
+  Comments: 'Commenti',
+  'Start tracking on a generic task': 'Lancia un timer sul task generico',
+  Activity: 'Attività'
 }

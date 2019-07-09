@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import Issues from '@/components/issues/List'
 import ProjectSelector from '@/components/project/Selector.vue'
 
@@ -51,6 +51,9 @@ export default {
     issues: []
   }),
   computed: {
+    ...mapGetters({
+      issuesSortBy: 'issue/sortBy'
+    }),
     ...mapState({
       statuses: state =>
         [{ name: 'All open', id: 'open' }].concat(state.issueStatus.items),

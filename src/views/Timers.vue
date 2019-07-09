@@ -2,7 +2,9 @@
   <div>
     <h4>{{ $t('Running:') }}</h4>
     <p v-if="!runningTimer">
-      {{ $t('There is no running timer. Please choose an issue to start.') }}
+      <router-link :to="{ name: 'issues' }">
+        {{ $t('There is no running timer. Please choose an issue to start.') }}
+      </router-link>
     </p>
     <running-timer
       v-if="runningTimer !== undefined"
@@ -26,8 +28,6 @@
       <paused-timer :timer="timer" @stop="saveTimer(timer)" />
     </div>
 
-    <summary-report :entries="dailyEntries" type="day" />
-
     <save-timer
       v-model="modalSaveTimer"
       :timer="timerToSave"
@@ -40,15 +40,13 @@
 import RunningTimer from '@/components/timers/Running'
 import PausedTimer from '@/components/timers/Paused'
 import SaveTimer from '@/components/timers/Save'
-import SummaryReport from '@/components/reports/Summary'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     RunningTimer,
     PausedTimer,
-    SaveTimer,
-    SummaryReport
+    SaveTimer
   },
   data: () => ({
     timerToSave: {},
@@ -58,10 +56,7 @@ export default {
     ...mapGetters({
       runningTimer: 'timer/getRunning',
       pausedTimers: 'timer/getPaused'
-    }),
-    dailyEntries() {
-      return this.$store.state.timeEntry.todayItems
-    }
+    })
   },
   async mounted() {
     this.loading = true

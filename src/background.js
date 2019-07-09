@@ -21,7 +21,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 480,
     height: 800,
-    icon: path.join(__static, 'icons/png/64x64.png')
+    icon: path.join(__static, 'img/icons/png/64x64.png')
   })
   win.setMenuBarVisibility(false)
   win.axios = axios

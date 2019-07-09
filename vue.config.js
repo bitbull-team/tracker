@@ -13,13 +13,13 @@ module.exports = {
         publish: null,
         asar: true,
         mac: {
-          icon: 'public/icons/mac/icon.icns'
+          icon: 'public/img/icons/mac/icon.icns'
         },
         win: {
-          icon: 'public/icons/win/icon.ico'
+          icon: 'public/img/icons/win/icon.ico'
         },
         linux: {
-          icon: 'public/icons/png/1024x1024.png'
+          icon: 'public/img/icons/png/1024x1024.png'
         }
       }
     }

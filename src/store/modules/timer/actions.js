@@ -52,7 +52,7 @@ export default {
     )
   },
   async record(
-    { commit, dispatch, state },
+    { commit, dispatch, state, rootState },
     { id, issueId, comments, activityId }
   ) {
     let timer = state.items.find(timer => timer.id === id)
@@ -65,7 +65,20 @@ export default {
 
     timer = Object.assign(timer, { issueId, comments, activityId })
 
-    const hours = moment.duration(timer.duration, 'seconds').as('hours')
+    let hours = moment
+      .duration(Math.ceil(timer.duration), 'seconds')
+      .as('hours')
+
+    // perform approximation based on config
+    let approximation = rootState.profile.current.timerApproximation
+    let approximationEdge = approximation / 2
+    let leftHours = hours % approximation
+
+    if (leftHours < approximationEdge) {
+      hours = hours - leftHours
+    } else {
+      hours = hours - leftHours + approximation
+    }
 
     await dispatch(
       'timeEntry/add',
