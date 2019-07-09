@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import CurrentTimer from '@/components/timer/Current'
+import CurrentTimer from '@/components/timers/Running'
 import PausedTimer from '@/components/timers/Paused'
 import SaveTimer from '@/components/timers/Save'
 import GenericTimer from '@/components/timers/Generic'
