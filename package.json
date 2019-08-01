@@ -1,6 +1,6 @@
 {
-  "name": "redmine-tracker",
-  "version": "0.2.2",
+  "name": "time-tracker",
+  "version": "0.3.0",
   "private": true,
   "author": "Bitbull <devel@bitbull.it> (https://www.bitbull.it/)",
   "scripts": {

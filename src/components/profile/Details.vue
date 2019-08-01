@@ -5,6 +5,8 @@
       :error-messages="nameErrors"
       name="name"
       label="Workspace name"
+      hint="i.e. 'Bitbull'"
+      persistent-hint
       :disabled="loading"
       @input="$v.form.name.$touch()"
       @blur="$v.form.name.$touch()"
@@ -14,6 +16,8 @@
       :error-messages="urlErrors"
       name="url"
       label="Tracker URL"
+      hint="i.e. 'http://mybeautifultracker.mysite.com'"
+      persistent-hint
       :disabled="loading"
       @input="$v.form.url.$touch()"
       @blur="$v.form.url.$touch()"
@@ -23,6 +27,8 @@
       :error-messages="apiKeyErrors"
       name="apiKey"
       label="API access key"
+      hint="The API key can be found on your profile settings"
+      persistent-hint
       :type="showApiKey ? 'text' : 'password'"
       :append-icon="showApiKey ? 'visibility_off' : 'visibility'"
       counter="40"

@@ -141,6 +141,7 @@ export default {
       }
 
       await this.saveProfile()
+      await this.selectDefaultProfile(this.form.id)
       this.step = 2
     },
     async validateForm2() {
@@ -161,7 +162,6 @@ export default {
       }
 
       await this.saveProfile()
-      await this.selectDefaultProfile(this.form.id)
       this.$router.push({ name: 'dashboard' })
     },
     async saveProfile() {
