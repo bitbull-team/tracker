@@ -8,7 +8,10 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 import axios from 'axios'
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const isMac = process.platform === 'darwin'
+const isWin = process.platform === 'win32'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -89,7 +92,7 @@ app.on('ready', async () => {
   }
   createWindow()
 
-  if (process.platform === 'darwin') {
+  if (isMac) {
     // Create the Application's main menu
     var template = [
       {
@@ -128,6 +131,18 @@ app.on('ready', async () => {
             selector: 'selectAll:'
           }
         ]
+      },
+      {
+        label: 'View',
+        submenu: [
+          {
+            label: 'Reload',
+            accelerator: 'CmdOrCtrl+R',
+            click() {
+              win.reload()
+            }
+          }
+        ]
       }
     ]
 
@@ -137,7 +152,7 @@ app.on('ready', async () => {
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
-  if (process.platform === 'win32') {
+  if (isWin) {
     process.on('message', data => {
       if (data === 'graceful-exit') {
         app.quit()

@@ -23,7 +23,7 @@ export default {
     return currentWindow
       .axios({
         method: 'GET',
-        url: `${profile.url}${path}`,
+        url: `${profile.url}/${path}`,
         params,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
@@ -37,7 +37,7 @@ export default {
     return currentWindow
       .axios({
         method: 'POST',
-        url: `${profile.url}${path}`,
+        url: `${profile.url}/${path}`,
         data,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
@@ -51,7 +51,7 @@ export default {
     return currentWindow
       .axios({
         method: 'PUT',
-        url: `${profile.url}${path}`,
+        url: `${profile.url}/${path}`,
         data,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
@@ -65,7 +65,7 @@ export default {
     return currentWindow
       .axios({
         method: 'DELETE',
-        url: `${profile.url}${path}`,
+        url: `${profile.url}/${path}`,
         headers: { 'X-Redmine-API-Key': profile.apiKey }
       })
       .then(response => response.data)
