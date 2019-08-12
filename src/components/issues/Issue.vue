@@ -37,6 +37,9 @@
             >
               <v-icon>link</v-icon>
             </v-btn>
+            <v-btn class="mr-2" text icon @click="savePomodoro(issue.id)">
+              <v-icon>av_timer</v-icon>
+            </v-btn>
             <v-btn
               text
               icon
@@ -107,7 +110,8 @@ export default {
     ...mapActions({
       startTimer: 'timer/start',
       updateStatus: 'issue/updateStatusIssue',
-      openExternalLink: 'window/openExternalLink'
+      openExternalLink: 'window/openExternalLink',
+      savePomodoro: 'pomodoro/openModal'
     }),
     startNewTimer({ issueId, comments, activityId }) {
       if (
