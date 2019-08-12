@@ -22,9 +22,7 @@ export default {
     )
   },
   openModal({ commit }, issueId) {
-    if (issueId !== null && issueId !== undefined) {
-      commit('setIssue', issueId)
-    }
+    commit('setIssue', issueId || null)
     commit('setModalOpen', true)
   }
 }
