@@ -84,7 +84,7 @@ export default {
       this.$store.state.timeEntryActivity.items.length === 0
     ) {
       promises.push(
-        this.loadProjects().then(
+        this.loadTimeEntryActivity().then(
           () => (this.loadingMsg = 'loaded activities, still loading..')
         )
       )
