@@ -10,7 +10,7 @@
       </span>
       <v-flex xs2 />
       <v-flex xs11>
-        <span class="assignee">
+        <span v-if="issue.assigned_to" class="assignee">
           {{ $t('Assigned to') }}
           {{
             issue.assigned_to.id === $store.state.api.currentUser.id
@@ -92,6 +92,7 @@ export default {
     startNewTimer({ issueId, comments, activityId }) {
       if (
         this.issue.status.id === 1 &&
+        this.issue.issue.assigned_to &&
         this.issue.assigned_to.id === this.$store.state.api.currentUser.id
       ) {
         this.updateStatus({ issueId: issueId, status_id: 2 })
