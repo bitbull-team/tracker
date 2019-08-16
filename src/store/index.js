@@ -26,9 +26,10 @@ const store = new Vuex.Store({
         'notification/setSnackBar',
         'notification',
         'window',
-        'api'
+        'api',
+        'pomodoro'
       ],
-      excludeState: ['notification', 'window', 'api']
+      excludeState: ['notification', 'window', 'api', 'pomodoro']
     })
   ],
   modules: {
