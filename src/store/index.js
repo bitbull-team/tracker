@@ -27,9 +27,17 @@ const store = new Vuex.Store({
         'window',
         'api',
         'issue',
-        'timeEntry'
+        'timeEntry',
+        'pomodoro'
       ],
-      excludeState: ['notification', 'window', 'api', 'issue', 'timeEntry']
+      excludeState: [
+        'notification',
+        'window',
+        'api',
+        'issue',
+        'timeEntry',
+        'pomodoro'
+      ]
     })
   ],
   modules: {
