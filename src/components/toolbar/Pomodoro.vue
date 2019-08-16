@@ -8,7 +8,10 @@
 
     <save-pomodoro
       v-model="$store.state.pomodoro.modalOpen"
-      :issue-id="$store.state.pomodoro.issueId"
+      :issue-id="
+        $store.state.pomodoro.issueId ||
+          $store.state.profile.current.extraIssueId
+      "
     />
   </div>
 </template>
