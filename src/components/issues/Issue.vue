@@ -9,7 +9,7 @@
         <span class="status__title">{{ issue.status.name }}</span>
       </span>
       <v-flex xs2 />
-      <v-flex xs10>
+      <v-flex xs10 class="pr-2">
         <span class="assignee">
           {{ $t('Assigned to') }}
           {{
@@ -25,7 +25,7 @@
         <v-list-tile-action>
           <v-layout row align-center justify-end>
             <v-btn
-              class="mr-2"
+              class="mr-1"
               text
               icon
               target="_blank"
@@ -37,7 +37,7 @@
             >
               <v-icon>link</v-icon>
             </v-btn>
-            <v-btn class="mr-2" text icon @click="savePomodoro(issue.id)">
+            <v-btn class="mr-1" text icon @click="savePomodoro(issue.id)">
               <v-icon>av_timer</v-icon>
             </v-btn>
             <v-btn
