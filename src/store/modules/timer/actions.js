@@ -122,5 +122,12 @@ export default {
       return false
     }
     commit('overrideItem', { id, issueId, comments, activityId })
+    await dispatch(
+      'notification/send',
+      {
+        title: `Timer for issue ${timer.issueId} updated`
+      },
+      { root: true }
+    )
   }
 }
