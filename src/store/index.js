@@ -12,6 +12,7 @@ import TimeEntry from './modules/timeEntry'
 import TimeEntryActivity from './modules/timeEntryActivity'
 import Timer from './modules/timer'
 import Window from './modules/window'
+import Pomodoro from './modules/pomodoro'
 
 Vue.use(Vuex)
 
@@ -25,9 +26,10 @@ const store = new Vuex.Store({
         'notification/setSnackBar',
         'notification',
         'window',
-        'api'
+        'api',
+        'pomodoro'
       ],
-      excludeState: ['notification', 'window', 'api']
+      excludeState: ['notification', 'window', 'api', 'pomodoro']
     })
   ],
   modules: {
@@ -41,7 +43,8 @@ const store = new Vuex.Store({
     timeEntry: new TimeEntry(),
     timeEntryActivity: new TimeEntryActivity(),
     timer: new Timer(),
-    window: new Window()
+    window: new Window(),
+    pomodoro: new Pomodoro()
   }
 })
 

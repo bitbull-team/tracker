@@ -3,6 +3,7 @@ import electron from 'electron'
 const currentWindow = electron.remote.getCurrentWindow()
 const app = electron.remote.app
 const ipcRenderer = electron.ipcRenderer
+const shell = electron.shell
 
 export default {
   focus() {
@@ -25,5 +26,8 @@ export default {
   forceClose({ dispatch }) {
     dispatch('notification/stopPolling', null, { root: true })
     ipcRenderer.send('force-close')
+  },
+  openExternalLink({}, link) {
+    shell.openExternal(link)
   }
 }

@@ -9,7 +9,7 @@
         <span class="status__title">{{ issue.status.name }}</span>
       </span>
       <v-flex xs2 />
-      <v-flex xs11>
+      <v-flex xs10 class="pr-2">
         <span v-if="issue.assigned_to" class="assignee">
           {{ $t('Assigned to') }}
           {{
@@ -21,11 +21,33 @@
         <span class="issue">#{{ issue.id }} {{ issue.subject }}</span>
         <span class="project">{{ issue.project.name }}</span>
       </v-flex>
-      <v-flex xs1>
+      <v-flex xs2>
         <v-list-tile-action>
-          <v-icon @click="startNewTimer({ issueId: issue.id, comments: '' })">
-            play_circle_outline
-          </v-icon>
+          <v-layout row align-center justify-end>
+            <v-btn
+              class="mr-1"
+              text
+              icon
+              target="_blank"
+              @click="
+                openExternalLink(
+                  $store.state.profile.current.url + 'issues/' + issue.id
+                )
+              "
+            >
+              <v-icon>link</v-icon>
+            </v-btn>
+            <v-btn class="mr-1" text icon @click="savePomodoro(issue.id)">
+              <v-icon>av_timer</v-icon>
+            </v-btn>
+            <v-btn
+              text
+              icon
+              @click="startNewTimer({ issueId: issue.id, comments: '' })"
+            >
+              <v-icon>play_circle_outline</v-icon>
+            </v-btn>
+          </v-layout>
         </v-list-tile-action>
       </v-flex>
 
@@ -87,7 +109,9 @@ export default {
   methods: {
     ...mapActions({
       startTimer: 'timer/start',
-      updateStatus: 'issue/updateStatusIssue'
+      updateStatus: 'issue/updateStatusIssue',
+      openExternalLink: 'window/openExternalLink',
+      savePomodoro: 'pomodoro/openModal'
     }),
     startNewTimer({ issueId, comments, activityId }) {
       if (

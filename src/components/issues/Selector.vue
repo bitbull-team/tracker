@@ -111,7 +111,7 @@ export default {
     }
   },
   mounted() {
-    if (this.value !== null) {
+    if (this.value !== null && this.value != undefined) {
       this.selected = this.value
       this.issues.push(this.value)
     }
