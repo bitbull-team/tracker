@@ -2,6 +2,18 @@
   <div class="summary">
     <h4>{{ title }}</h4>
 
+    <div class="top-right-toolbar">
+      <v-btn
+        class="mr-1"
+        text
+        icon
+        :disabled="loading"
+        @click="$emit('reload')"
+      >
+        <v-icon>refresh</v-icon>
+      </v-btn>
+    </div>
+
     <v-progress-circular
       :rotate="-90"
       :value="progress"
@@ -42,6 +54,10 @@ export default {
     approximate: {
       type: Boolean,
       default: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -106,6 +122,13 @@ h4 {
 }
 .summary {
   text-align: center;
+  position: relative;
+
+  .top-right-toolbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 }
 .hours {
   font-size: 8em;
