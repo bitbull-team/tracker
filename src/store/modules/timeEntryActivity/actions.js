@@ -10,5 +10,8 @@ export default {
       const entries = response.time_entry_activities
       commit('setItems', entries)
     })
+  },
+  emptyItems({ commit }) {
+    commit('setItems', [])
   }
 }

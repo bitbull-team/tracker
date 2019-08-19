@@ -1,8 +1,13 @@
 import ElectronStore from 'electron-store'
+import debounce from 'debounce'
 
 export default options => {
   options = options || { key: 'db', excludes: [] }
   const storage = new ElectronStore(options.storage)
+
+  const saveState = debounce(storeToSave => {
+    storage.set(options.key, storeToSave)
+  }, 1500)
 
   return store => {
     const savedState = storage.get(options.key)
@@ -25,13 +30,15 @@ export default options => {
           return
         }
       }
+
       const storeToSave = Object.assign({}, store.state)
       if (Array.isArray(options.excludeState)) {
         for (const excludeState of options.excludeState) {
           delete storeToSave[excludeState]
         }
       }
-      storage.set(options.key, storeToSave)
+
+      saveState(storeToSave)
     })
   }
 }

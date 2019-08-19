@@ -31,6 +31,9 @@
         </v-card-text>
 
         <v-card-actions>
+          <v-btn color="error" flat :loading="loading" @click="cleanCache()">
+            Clean cache
+          </v-btn>
           <v-spacer />
           <v-btn color="warning" flat :loading="loading" @click="cancel()">
             Cancel
@@ -56,6 +59,7 @@ import profileValidation from '@/mixins/validations/profile'
 import ProfileDetails from '@/components/profile/Details'
 import ProfileSettings from '@/components/profile/Settings'
 import IssuesPreference from '@/components/profile/IssuesPreference'
+import { Promise } from 'q'
 
 export default {
   components: {
@@ -83,7 +87,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      save: 'profile/save'
+      save: 'profile/save',
+      cleanCacheProject: 'project/emptyItems',
+      cleanCacheTimeEntryActivity: 'timeEntryActivity/emptyItems',
+      cleanCacheIssueStatus: 'issueStatus/emptyItems'
     }),
     async validateForm() {
       this.$v.$touch()
@@ -104,6 +111,14 @@ export default {
       this.$router.push({ name: 'dashboard' })
     },
     cancel() {
+      this.$router.push({ name: 'dashboard' })
+    },
+    async cleanCache() {
+      await Promise.all([
+        this.cleanCacheProject(),
+        this.cleanCacheTimeEntryActivity(),
+        this.cleanCacheIssueStatus()
+      ])
       this.$router.push({ name: 'dashboard' })
     }
   }

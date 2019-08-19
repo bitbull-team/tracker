@@ -65,17 +65,45 @@ export default {
       })
     }
     this.loadingMsg = 'loading data..'
-    await Promise.all([
-      this.loadIssueStatuses().then(
-        () => (this.loadingMsg = 'loaded issues statuses, still loading..')
-      ),
-      this.loadTimeEntryActivity().then(
-        () => (this.loadingMsg = 'loaded activities, still loading..')
-      ),
-      this.loadProjects().then(
-        () => (this.loadingMsg = 'loaded projects, still loading..')
+
+    const promises = []
+
+    if (
+      !this.$store.state.project ||
+      this.$store.state.project.items.length === 0
+    ) {
+      promises.push(
+        this.loadProjects().then(
+          () => (this.loadingMsg = 'loaded projects, still loading..')
+        )
       )
-    ])
+    }
+
+    if (
+      !this.$store.state.timeEntryActivity ||
+      this.$store.state.timeEntryActivity.items.length === 0
+    ) {
+      promises.push(
+        this.loadTimeEntryActivity().then(
+          () => (this.loadingMsg = 'loaded activities, still loading..')
+        )
+      )
+    }
+
+    if (
+      !this.$store.state.issueStatus ||
+      this.$store.state.issueStatus.items.length === 0
+    ) {
+      promises.push(
+        this.loadIssueStatuses().then(
+          () => (this.loadingMsg = 'loaded issues statuses, still loading..')
+        )
+      )
+    }
+
+    if (promises.length > 0) {
+      await Promise.all(promises)
+    }
     this.loadingMsg = 'all data loaded!'
 
     this.startPolling()
