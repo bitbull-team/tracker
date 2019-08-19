@@ -28,4 +28,7 @@ html {
 .theme--light.application {
   background-color: white;
 }
+.v-dialog--fullscreen .v-card {
+  height: 100vh;
+}
 </style>
