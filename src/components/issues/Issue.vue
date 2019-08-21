@@ -116,7 +116,7 @@ export default {
     startNewTimer({ issueId, comments, activityId }) {
       if (
         this.issue.status.id === 1 &&
-        this.issue.issue.assigned_to &&
+        this.issue.assigned_to &&
         this.issue.assigned_to.id === this.$store.state.api.currentUser.id
       ) {
         this.updateStatus({ issueId: issueId, status_id: 2 })
