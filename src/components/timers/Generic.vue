@@ -33,6 +33,8 @@ export default {
 
 <style lang="scss" scoped>
 .generic-timer {
+  display: inline-block;
+  width: auto;
   cursor: pointer;
   margin-bottom: 1em;
   color: var(--v-primary-base);
