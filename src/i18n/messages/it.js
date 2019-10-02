@@ -38,5 +38,7 @@ export default {
   Delete: 'Elimina',
   Comments: 'Commenti',
   'Start tracking on a generic task': 'Lancia un timer sul task generico',
-  Activity: 'Attività'
+  Activity: 'Attività',
+  'Ordered by': 'Ordinati per',
+  'Show last N tasks': 'Mostra gli ultimi N task'
 }

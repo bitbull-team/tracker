@@ -13,8 +13,32 @@
 
     <generic-timer />
 
+    <v-layout row wrap>
+      <v-flex xs5>
+        <v-select
+          v-model="tasksShown"
+          :items="totalTasks"
+          :label="$t('Show last N tasks')"
+          @change="setTasksNumber"
+        />
+      </v-flex>
+      <v-flex xs6>
+        <v-select
+          v-model="sortedBy"
+          :items="sorting"
+          :label="$t('Ordered by')"
+          @change="sort"
+        />
+      </v-flex>
+      <v-flex xs1 class="text-xs-right">
+        <v-icon class="pt-4" @click="invertOrder">
+          sort
+        </v-icon>
+      </v-flex>
+    </v-layout>
+
     <issues
-      :items="issuesSortBy('priority', true).slice(0, 4)"
+      :items="issuesSortBy(sortedBy, sortDirection).slice(0, tasksShown)"
       :disable="loading"
     />
 
@@ -63,7 +87,12 @@ export default {
       assigned_to_id: 'me',
       project_id: null
     },
-    issues: []
+    issues: [],
+    sortedBy: 'priority',
+    sortDirection: true,
+    sorting: ['start_date', 'priority'],
+    totalTasks: ['3', '5', '10'],
+    tasksShown: 5
   }),
   computed: {
     ...mapGetters({
@@ -97,6 +126,15 @@ export default {
       this.loading = true
       await this.loadIssues(this.filters)
       this.loading = false
+    },
+    sort(order) {
+      this.sortedBy = order
+    },
+    invertOrder() {
+      this.sortDirection = !this.sortDirection
+    },
+    setTasksNumber(num) {
+      this.tasksShown = num
     }
   }
 }
