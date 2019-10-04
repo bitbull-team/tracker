@@ -14,8 +14,6 @@
     <generic-timer />
 
     <Sorter
-      :custom-sorting="{ text: 'Stato', value: 'status' }"
-      :custom-limit="1"
       @change-sort="sort"
       @change-limit="setTasksNumber"
       @change-order="invertOrder"

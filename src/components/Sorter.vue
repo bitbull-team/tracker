@@ -52,8 +52,10 @@ export default {
   data: function() {
     return {
       sortingOptions: [
-        { text: this.$t('Creation date'), value: 'start_date' },
-        { text: this.$t('Priority'), value: 'priority' }
+        { text: this.$t('Creation date'), value: 'created_on' },
+        { text: this.$t('Starting date'), value: 'start_date' },
+        { text: this.$t('Priority'), value: 'priority' },
+        { text: this.$t('Status'), value: 'status' }
       ],
       tasksLimits: [3, 5, 10],
       totalSortingOptions: [],

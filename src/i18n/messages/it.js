@@ -42,5 +42,7 @@ export default {
   'Ordered by': 'Ordinati per',
   'Show last': 'Mostra gli ultimi',
   Priority: 'Priorità',
-  'Creation date': 'Data creazione'
+  'Creation date': 'Data creazione',
+  'Starting date': 'Data inizio',
+  Status: 'Stato'
 }
