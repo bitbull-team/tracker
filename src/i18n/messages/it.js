@@ -40,5 +40,7 @@ export default {
   'Start tracking on a generic task': 'Lancia un timer sul task generico',
   Activity: 'Attività',
   'Ordered by': 'Ordinati per',
-  'Show last N tasks': 'Mostra gli ultimi N task'
+  'Show last': 'Mostra gli ultimi',
+  Priority: 'Priorità',
+  'Creation date': 'Data creazione'
 }

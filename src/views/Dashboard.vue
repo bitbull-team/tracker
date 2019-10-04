@@ -13,29 +13,13 @@
 
     <generic-timer />
 
-    <v-layout row wrap>
-      <v-flex xs5>
-        <v-select
-          v-model="tasksShown"
-          :items="totalTasks"
-          :label="$t('Show last N tasks')"
-          @change="setTasksNumber"
-        />
-      </v-flex>
-      <v-flex xs6>
-        <v-select
-          v-model="sortedBy"
-          :items="sorting"
-          :label="$t('Ordered by')"
-          @change="sort"
-        />
-      </v-flex>
-      <v-flex xs1 class="text-xs-right">
-        <v-icon class="pt-4" @click="invertOrder">
-          sort
-        </v-icon>
-      </v-flex>
-    </v-layout>
+    <Sorter
+      :custom-sorting="{ text: 'Stato', value: 'status' }"
+      :custom-limit="1"
+      @change-sort="sort"
+      @change-limit="setTasksNumber"
+      @change-order="invertOrder"
+    />
 
     <issues
       :items="issuesSortBy(sortedBy, sortDirection).slice(0, tasksShown)"
@@ -67,6 +51,7 @@ import SaveTimer from '@/components/timers/Save'
 import GenericTimer from '@/components/timers/Generic'
 import SummaryReport from '@/components/reports/Summary'
 import Issues from '@/components/issues/List'
+import Sorter from '@/components/Sorter'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -76,24 +61,30 @@ export default {
     SaveTimer,
     GenericTimer,
     SummaryReport,
-    Issues
+    Issues,
+    Sorter
   },
-  data: () => ({
-    loading: false,
-    timerToSave: {},
-    modalSaveTimer: false,
-    filters: {
-      status_id: 'open',
-      assigned_to_id: 'me',
-      project_id: null
-    },
-    issues: [],
-    sortedBy: 'priority',
-    sortDirection: true,
-    sorting: ['start_date', 'priority'],
-    totalTasks: ['3', '5', '10'],
-    tasksShown: 5
-  }),
+  data: function() {
+    return {
+      loading: false,
+      timerToSave: {},
+      modalSaveTimer: false,
+      filters: {
+        status_id: 'open',
+        assigned_to_id: 'me',
+        project_id: null
+      },
+      issues: [],
+      sortedBy: 'priority',
+      sortDirection: true,
+      sorting: [
+        { text: this.$t('Creation date'), value: 'start_date' },
+        { text: this.$t('Priority'), value: 'priority' }
+      ],
+      totalTasks: [3, 5, 10],
+      tasksShown: 5
+    }
+  },
   computed: {
     ...mapGetters({
       runningTimer: 'timer/getRunning',
