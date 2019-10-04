@@ -14,13 +14,15 @@
     <generic-timer />
 
     <Sorter
-      @change-sort="sort"
-      @change-limit="setTasksNumber"
-      @change-order="invertOrder"
+      :default-sort="defaultSort"
+      :default-limit="defaultLimit"
+      @change-sort="setSort"
+      @change-limit="setLimit"
+      @change-order="setDirection"
     />
 
     <issues
-      :items="issuesSortBy(sortedBy, sortDirection).slice(0, tasksShown)"
+      :items="issuesSortBy(defaultSort, isDescendant).slice(0, defaultLimit)"
       :disable="loading"
     />
 
@@ -73,14 +75,9 @@ export default {
         project_id: null
       },
       issues: [],
-      sortedBy: 'priority',
-      sortDirection: true,
-      sorting: [
-        { text: this.$t('Creation date'), value: 'start_date' },
-        { text: this.$t('Priority'), value: 'priority' }
-      ],
-      totalTasks: [3, 5, 10],
-      tasksShown: 5
+      defaultSort: 'priority',
+      isDescendant: true,
+      defaultLimit: 5
     }
   },
   computed: {
@@ -116,14 +113,14 @@ export default {
       await this.loadIssues(this.filters)
       this.loading = false
     },
-    sort(order) {
-      this.sortedBy = order
+    setSort(order) {
+      this.defaultSort = order
     },
-    invertOrder() {
-      this.sortDirection = !this.sortDirection
+    setLimit(num) {
+      this.defaultLimit = num
     },
-    setTasksNumber(num) {
-      this.tasksShown = num
+    setDirection() {
+      this.isDescendant = !this.isDescendant
     }
   }
 }
