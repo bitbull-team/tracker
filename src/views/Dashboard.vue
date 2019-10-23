@@ -34,7 +34,13 @@
       <paused-timer :timer="timer" @stop="saveTimer(timer)" />
     </div>
 
-    <summary-report :entries="dailyEntries" type="day" :approximate="false" />
+    <summary-report
+      :entries="dailyEntries"
+      type="day"
+      :approximate="false"
+      :loading="loading"
+      @reload="loadTodayEntries()"
+    />
 
     <save-timer
       v-model="modalSaveTimer"

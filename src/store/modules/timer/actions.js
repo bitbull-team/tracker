@@ -101,6 +101,13 @@ export default {
     await dispatch('systemTray/removeTimerControl', id, {
       root: true
     })
+    await dispatch(
+      'timeEntry/loadToday',
+      {},
+      {
+        root: true
+      }
+    )
     commit('delete', timer.id)
   },
   async recordFixedTime(
@@ -124,6 +131,13 @@ export default {
         title: `Tracked ${hours} hours on issue ${issueId}`
       },
       { root: true }
+    )
+    await dispatch(
+      'timeEntry/loadToday',
+      {},
+      {
+        root: true
+      }
     )
   },
   async discard({ commit, state, dispatch }, id) {

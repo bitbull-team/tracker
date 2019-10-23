@@ -20,6 +20,13 @@ export default {
       },
       { root: true }
     )
+    await dispatch(
+      'timeEntry/loadToday',
+      {},
+      {
+        root: true
+      }
+    )
   },
   openModal({ commit }, issueId) {
     commit('setIssue', issueId || null)
