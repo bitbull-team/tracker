@@ -13,8 +13,16 @@
 
     <generic-timer />
 
+    <Sorter
+      :default-sort="defaultSort"
+      :default-limit="defaultLimit"
+      @change-sort="setSort"
+      @change-limit="setLimit"
+      @change-order="setDirection"
+    />
+
     <issues
-      :items="issuesSortBy('priority', true).slice(0, 4)"
+      :items="issuesSortBy(defaultSort, isDescendant).slice(0, defaultLimit)"
       :disable="loading"
     />
 
@@ -43,6 +51,7 @@ import SaveTimer from '@/components/timers/Save'
 import GenericTimer from '@/components/timers/Generic'
 import SummaryReport from '@/components/reports/Summary'
 import Issues from '@/components/issues/List'
+import Sorter from '@/components/Sorter'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -52,19 +61,25 @@ export default {
     SaveTimer,
     GenericTimer,
     SummaryReport,
-    Issues
+    Issues,
+    Sorter
   },
-  data: () => ({
-    loading: false,
-    timerToSave: {},
-    modalSaveTimer: false,
-    filters: {
-      status_id: 'open',
-      assigned_to_id: 'me',
-      project_id: null
-    },
-    issues: []
-  }),
+  data: function() {
+    return {
+      loading: false,
+      timerToSave: {},
+      modalSaveTimer: false,
+      filters: {
+        status_id: 'open',
+        assigned_to_id: 'me',
+        project_id: null
+      },
+      issues: [],
+      defaultSort: 'priority',
+      isDescendant: true,
+      defaultLimit: 5
+    }
+  },
   computed: {
     ...mapGetters({
       runningTimer: 'timer/getRunning',
@@ -97,6 +112,15 @@ export default {
       this.loading = true
       await this.loadIssues(this.filters)
       this.loading = false
+    },
+    setSort(order) {
+      this.defaultSort = order
+    },
+    setLimit(num) {
+      this.defaultLimit = num
+    },
+    setDirection() {
+      this.isDescendant = !this.isDescendant
     }
   }
 }

@@ -22,9 +22,20 @@
     <v-flex xs6>
       <v-switch v-model="assignedToMe" :label="$t('Assigned to me')" />
     </v-flex>
+    <Sorter
+      :default-sort="defaultSort"
+      :custom-limit="100"
+      :default-limit="defaultLimit"
+      @change-sort="setSort"
+      @change-limit="setLimit"
+      @change-order="setDirection"
+    />
     <v-progress-linear v-if="loading" height="2" :indeterminate="true" />
     <v-flex>
-      <issues :items="issues" :disable="loading" />
+      <issues
+        :items="issuesSortBy(defaultSort, isDescendant).slice(0, defaultLimit)"
+        :disable="loading"
+      />
     </v-flex>
   </v-layout>
 </template>
@@ -33,11 +44,13 @@
 import { mapActions, mapState, mapGetters } from 'vuex'
 import Issues from '@/components/issues/List'
 import ProjectSelector from '@/components/project/Selector.vue'
+import Sorter from '@/components/Sorter'
 
 export default {
   components: {
     Issues,
-    ProjectSelector
+    ProjectSelector,
+    Sorter
   },
   data: () => ({
     loading: false,
@@ -48,7 +61,10 @@ export default {
       project_id: null
     },
     assignedToMe: true,
-    issues: []
+    issues: [],
+    defaultSort: 'priority',
+    isDescendant: true,
+    defaultLimit: 100
   }),
   computed: {
     ...mapGetters({
@@ -82,6 +98,15 @@ export default {
       this.loading = true
       this.issues = await this.loadIssues(this.filters)
       this.loading = false
+    },
+    setSort(order) {
+      this.defaultSort = order
+    },
+    setLimit(num) {
+      this.defaultLimit = num
+    },
+    setDirection() {
+      this.isDescendant = !this.isDescendant
     }
   }
 }
