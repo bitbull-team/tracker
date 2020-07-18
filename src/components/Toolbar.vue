@@ -10,6 +10,7 @@
       <v-spacer />
       <v-flex xs5 sm3 class="text-xs-right">
         <v-layout row justify-end align-center>
+          <pomodoro />
           <notification />
           <profile-switcher />
         </v-layout>
@@ -21,11 +22,13 @@
 <script>
 import ProfileSwitcher from '@/components/toolbar/ProfileSwitcher'
 import Notification from '@/components/toolbar/Notification'
+import Pomodoro from '@/components/toolbar/Pomodoro'
 
 export default {
   components: {
     ProfileSwitcher,
-    Notification
+    Notification,
+    Pomodoro
   }
 }
 </script>

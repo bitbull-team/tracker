@@ -38,5 +38,11 @@ export default {
   Delete: 'Elimina',
   Comments: 'Commenti',
   'Start tracking on a generic task': 'Lancia un timer sul task generico',
-  Activity: 'Attività'
+  Activity: 'Attività',
+  'Ordered by': 'Ordinati per',
+  'Show last': 'Mostra gli ultimi',
+  Priority: 'Priorità',
+  'Creation date': 'Data creazione',
+  'Starting date': 'Data inizio',
+  Status: 'Stato'
 }

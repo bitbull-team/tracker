@@ -47,12 +47,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .timer {
   background-color: var(--v-line-lighten);
   border-radius: 10px;
   margin-bottom: 0.5rem;
   padding: 1rem;
+}
+.theme--dark .timer {
+  background-color: #424242;
 }
 .date {
   display: block;

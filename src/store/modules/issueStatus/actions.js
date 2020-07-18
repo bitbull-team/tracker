@@ -10,5 +10,8 @@ export default {
       const issueStatuses = response.issue_statuses
       commit('setItems', issueStatuses)
     })
+  },
+  emptyItems({ commit }) {
+    commit('setItems', [])
   }
 }

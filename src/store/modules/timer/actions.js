@@ -101,7 +101,44 @@ export default {
     await dispatch('systemTray/removeTimerControl', id, {
       root: true
     })
+    await dispatch(
+      'timeEntry/loadToday',
+      {},
+      {
+        root: true
+      }
+    )
     commit('delete', timer.id)
+  },
+  async recordFixedTime(
+    { dispatch },
+    { issueId, comments, activityId, hours }
+  ) {
+    await dispatch(
+      'timeEntry/add',
+      {
+        issue_id: issueId,
+        spent_on: moment().format('YYYY-MM-DD'),
+        hours,
+        activity_id: activityId,
+        comments: comments
+      },
+      { root: true }
+    )
+    await dispatch(
+      'notification/send',
+      {
+        title: `Tracked ${hours} hours on issue ${issueId}`
+      },
+      { root: true }
+    )
+    await dispatch(
+      'timeEntry/loadToday',
+      {},
+      {
+        root: true
+      }
+    )
   },
   async discard({ commit, state, dispatch }, id) {
     let timer = state.items.find(timer => timer.id === id)
@@ -122,5 +159,12 @@ export default {
       return false
     }
     commit('overrideItem', { id, issueId, comments, activityId })
+    await dispatch(
+      'notification/send',
+      {
+        title: `Timer for issue ${timer.issueId} updated`
+      },
+      { root: true }
+    )
   }
 }

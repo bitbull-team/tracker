@@ -22,5 +22,8 @@ export default {
     } while (response.projects.length === pagination)
 
     commit('setItems', projects)
+  },
+  emptyItems({ commit }) {
+    commit('setItems', [])
   }
 }
