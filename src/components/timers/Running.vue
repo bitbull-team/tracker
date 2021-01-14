@@ -4,7 +4,19 @@
       {{ subject }}
     </p>
     <v-layout row align-center>
-      <v-flex>{{ timer.issueId }}</v-flex>
+      <v-flex>
+        <span v-show="!newId" @click="editIssueId">{{ timer.issueId }}</span>
+        <input
+          v-show="newId"
+          ref="issueId"
+          v-model="newId"
+          pattern="[0-9]"
+          :size="newId.length"
+          class="timer__newid"
+          title="Press Enter to confirm"
+          @keypress.enter="updateIssueId"
+        />
+      </v-flex>
       <v-flex>
         <time-view :duration="duration" :running="true" />
       </v-flex>
@@ -41,7 +53,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import moment from 'moment'
 import TimeView from '@/components/timers/TimeView'
 import TimerCommands from '@/components/timers/Commands'
@@ -65,7 +77,8 @@ export default {
     current_spent: 0,
     done_ratio: 0,
     subject: '',
-    comment: ''
+    comment: '',
+    newId: 0
   }),
   computed: {
     progressPercent() {
@@ -123,6 +136,9 @@ export default {
     )
   },
   methods: {
+    ...mapMutations({
+      updateTimeEntry: 'timer/overrideItem'
+    }),
     ...mapActions({
       loadIssue: 'issue/loadSingle',
       updateTimer: 'timer/update'
@@ -137,6 +153,21 @@ export default {
           .duration(moment().diff(this.timer.startedAt))
           .as('seconds')
       }
+    },
+    editIssueId() {
+      this.newId = this.timer.issueId
+      this.$refs.issueId.focus()
+    },
+    async updateIssueId() {
+      this.updateTimeEntry({ id: this.timer.id, issueId: this.newId })
+      this.newId = null
+      await this.$store.dispatch(
+        'notification/send',
+        {
+          title: `Updated the issue ID for this running time`
+        },
+        { root: true }
+      )
     },
     updateTimeSpent() {
       this.loadDuration()
@@ -159,6 +190,12 @@ export default {
   border-radius: 10px;
   padding: 1em;
   margin-bottom: 1rem;
+  &__newid:focus {
+    outline: none;
+    background-color: white;
+    padding: 0 5px;
+    text-align: center;
+  }
 }
 .issue {
   margin: 0;
