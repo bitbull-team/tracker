@@ -7,6 +7,7 @@
     </p>
     <current-timer
       v-if="runningTimer !== undefined"
+      :key="runningTimer.issueId"
       :timer="runningTimer"
       @stop="saveTimer(runningTimer)"
     />
